@@ -453,3 +453,52 @@ body {
   .move-card { transition: opacity 0.3s ease; transform: none !important; }
   .move-card:hover { transform: none; }
 }
+
+/* ============================================
+   FLOATING CLIMBING HOLDS
+   ============================================ */
+.holds-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.climbing-hold {
+  position: absolute;
+  opacity: 0;
+  animation: float-in 1.5s ease-out forwards;
+  will-change: transform;
+}
+
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  to {
+    opacity: var(--hold-opacity, 0.6);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hold-animate {
+  animation: float-hold var(--float-duration, 20s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+@keyframes float-hold {
+  0%, 100% {
+    transform: translate(0, 0) rotate(var(--start-rotation, 0deg));
+  }
+  25% {
+    transform: translate(var(--drift-x, 10px), var(--drift-y, -15px)) rotate(calc(var(--start-rotation, 0deg) + 5deg));
+  }
+  50% {
+    transform: translate(calc(var(--drift-x, 10px) * -0.5), calc(var(--drift-y, -15px) * -1)) rotate(calc(var(--start-rotation, 0deg) - 3deg));
+  }
+  75% {
+    transform: translate(calc(var(--drift-x, 10px) * -1), calc(var(--drift-y, -15px) * 0.5)) rotate(calc(var(--start-rotation, 0deg) + 2deg));
+  }
+}

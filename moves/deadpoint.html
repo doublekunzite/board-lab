@@ -7,9 +7,12 @@
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-  <!-- Background atmosphere -->
+    <!-- Background atmosphere -->
   <div class="bg-atmosphere" aria-hidden="true"></div>
   <div class="noise-overlay" aria-hidden="true"></div>
+  
+  <!-- Add this container -->
+  <div class="holds-container" aria-hidden="true" id="holdsContainer"></div>
 
   <!-- Header -->
   <header class="site-header" id="siteHeader">
@@ -105,8 +108,49 @@
     BOARD LAB / CLIMBING MOVEMENT ARCHIVE
   </footer>
 
-  <script>
-    // Simple header scroll effect
+    <script>
+    // Generate Holds
+    function generateClimbingHolds() {
+      const container = document.getElementById('holdsContainer');
+      if (!container) return;
+      const holdCount = 8; // Fewer holds on detail pages for focus
+      
+      for (let i = 0; i < holdCount; i++) {
+        const hold = document.createElement('div');
+        hold.className = 'climbing-hold hold-animate';
+        
+        // Simple loop to assign one of the 6 shapes
+        // Note: We use innerHTML strings for simplicity, matching index.html
+        
+        const shapes = [
+          `<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M85 40c0 22-15 38-35 38S15 62 15 40s15-38 35-38 35 16 35 38z" fill="#3d3d42" /><ellipse cx="50" cy="40" rx="10" ry="8" fill="#1a1a1d" /></svg>`,
+          `<svg viewBox="0 0 120 35" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="110" height="25" rx="6" fill="#3d3d42" /><circle cx="35" cy="17" r="4" fill="#1a1a1d" /><circle cx="85" cy="17" r="4" fill="#1a1a1d" /></svg>`,
+          `<svg viewBox="0 0 45 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.5 5c10 0 17.5 20 17.5 45s-7.5 45-17.5 45S5 75 5 50 12.5 5 22.5 5z" fill="#3d3d42" /><ellipse cx="22.5" cy="50" rx="5" ry="10" fill="#1a1a1d" /></svg>`,
+          `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 45 C10 10, 90 10, 90 45 L90 50 L10 50 Z" fill="#3d3d42" /><circle cx="50" cy="35" r="5" fill="#1a1a1d" /></svg>`,
+          `<svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="25" r="20" fill="#3d3d42" /><circle cx="25" cy="25" r="8" fill="#0a0a0b" /></svg>`,
+          `<svg viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 5 L95 45 L75 85 L25 85 L5 45 Z" fill="#3d3d42" /><circle cx="50" cy="50" r="6" fill="#1a1a1d" /></svg>`
+        ];
+
+        hold.innerHTML = shapes[i % shapes.length];
+        
+        // Random positioning
+        hold.style.left = `${Math.random() * 100}%`;
+        hold.style.top = `${Math.random() * 100}%`;
+        hold.style.width = `${70 + Math.random() * 50}px`;
+        hold.style.height = 'auto';
+        hold.style.setProperty('--hold-opacity', 0.1 + Math.random() * 0.2);
+        hold.style.setProperty('--float-duration', `${18 + Math.random() * 15}s`);
+        hold.style.setProperty('--float-delay', `${Math.random() * -20}s`);
+        hold.style.setProperty('--start-rotation', `${Math.random() * 360}deg`);
+        hold.style.setProperty('--drift-x', `${-30 + Math.random() * 60}px`);
+        hold.style.setProperty('--drift-y', `${-30 + Math.random() * 60}px`);
+        hold.style.animationDelay = `${i * 0.15}s`;
+
+        container.appendChild(hold);
+      }
+    }
+
+    // Header scroll
     const header = document.getElementById('siteHeader');
     window.addEventListener('scroll', function() {
       if (window.pageYOffset > 100) {
@@ -115,6 +159,9 @@
         header.classList.remove('scrolled');
       }
     }, { passive: true });
+
+    // Init
+    generateClimbingHolds();
   </script>
 </body>
 </html>
