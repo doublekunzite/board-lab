@@ -35,7 +35,6 @@ body {
   line-height: 1.6;
 }
 
-/* Display font */
 .font-display {
   font-family: Impact, 'Arial Narrow Bold', 'Helvetica Neue Condensed', sans-serif;
   font-weight: 400;
@@ -64,6 +63,55 @@ body {
   z-index: 1;
   opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ============================================
+   FLOATING HOLDS (Updated Visibility)
+   ============================================ */
+.holds-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.climbing-hold {
+  position: absolute;
+  opacity: 0;
+  animation: float-in 1.5s ease-out forwards;
+  will-change: transform;
+}
+
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  to {
+    opacity: var(--hold-opacity, 0.5); /* Increased default opacity */
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hold-animate {
+  animation: float-hold var(--float-duration, 20s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+@keyframes float-hold {
+  0%, 100% {
+    transform: translate(0, 0) rotate(var(--start-rotation, 0deg));
+  }
+  25% {
+    transform: translate(var(--drift-x, 10px), var(--drift-y, -15px)) rotate(calc(var(--start-rotation, 0deg) + 5deg));
+  }
+  50% {
+    transform: translate(calc(var(--drift-x, 10px) * -0.5), calc(var(--drift-y, -15px) * -1)) rotate(calc(var(--start-rotation, 0deg) - 3deg));
+  }
+  75% {
+    transform: translate(calc(var(--drift-x, 10px) * -1), calc(var(--drift-y, -15px) * 0.5)) rotate(calc(var(--start-rotation, 0deg) + 2deg));
+  }
 }
 
 /* ============================================
@@ -280,7 +328,9 @@ body {
   line-height: 1.7;
 }
 
-/* GIF Gallery */
+/* ============================================
+   GIF GALLERY (Updated Aspect Ratio)
+   ============================================ */
 .gif-gallery {
   display: grid;
   gap: 2rem;
@@ -297,7 +347,8 @@ body {
 
 .gif-media {
   position: relative;
-  aspect-ratio: 16/9;
+  /* Changed from 16/9 to 3/4 for vertical phone video cropping */
+  aspect-ratio: 3/4; 
   background: var(--bg-elevated);
   overflow: hidden;
 }
@@ -341,7 +392,6 @@ body {
   font-weight: 600;
 }
 
-/* Play overlay icon */
 .play-overlay {
   position: absolute;
   top: 1rem;
@@ -363,7 +413,9 @@ body {
   opacity: 0;
 }
 
-/* Description Block */
+/* ============================================
+   DESCRIPTION BLOCK
+   ============================================ */
 .description-block {
   background: var(--card);
   border: 1px solid var(--border);
@@ -395,7 +447,6 @@ body {
   font-weight: 500;
 }
 
-/* Back Link */
 .back-link {
   display: inline-flex;
   align-items: center;
@@ -407,9 +458,7 @@ body {
   transition: color 0.2s ease;
 }
 
-.back-link:hover {
-  color: var(--fg);
-}
+.back-link:hover { color: var(--fg); }
 
 .back-link svg {
   transition: transform 0.2s ease;
@@ -445,60 +494,9 @@ body {
   .description-block { padding: 1.5rem; }
 }
 
-/* ============================================
-   REDUCED MOTION
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .move-card { transition: opacity 0.3s ease; transform: none !important; }
   .move-card:hover { transform: none; }
-}
-
-/* ============================================
-   FLOATING CLIMBING HOLDS
-   ============================================ */
-.holds-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  overflow: hidden;
-}
-
-.climbing-hold {
-  position: absolute;
-  opacity: 0;
-  animation: float-in 1.5s ease-out forwards;
-  will-change: transform;
-}
-
-@keyframes float-in {
-  from {
-    opacity: 0;
-    transform: translateY(40px) scale(0.9);
-  }
-  to {
-    opacity: var(--hold-opacity, 0.6);
-    transform: translateY(0) scale(1);
-  }
-}
-
-.hold-animate {
-  animation: float-hold var(--float-duration, 20s) ease-in-out infinite;
-  animation-delay: var(--float-delay, 0s);
-}
-
-@keyframes float-hold {
-  0%, 100% {
-    transform: translate(0, 0) rotate(var(--start-rotation, 0deg));
-  }
-  25% {
-    transform: translate(var(--drift-x, 10px), var(--drift-y, -15px)) rotate(calc(var(--start-rotation, 0deg) + 5deg));
-  }
-  50% {
-    transform: translate(calc(var(--drift-x, 10px) * -0.5), calc(var(--drift-y, -15px) * -1)) rotate(calc(var(--start-rotation, 0deg) - 3deg));
-  }
-  75% {
-    transform: translate(calc(var(--drift-x, 10px) * -1), calc(var(--drift-y, -15px) * 0.5)) rotate(calc(var(--start-rotation, 0deg) + 2deg));
-  }
+  .climbing-hold { animation: none; opacity: 0.4; }
 }

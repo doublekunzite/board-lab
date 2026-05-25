@@ -7,29 +7,22 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Background atmosphere -->
   <div class="bg-atmosphere" aria-hidden="true"></div>
   <div class="noise-overlay" aria-hidden="true"></div>
-
-  <!-- Floating climbing holds -->
   <div class="holds-container" aria-hidden="true" id="holdsContainer"></div>
 
-  <!-- Header -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
       <a href="index.html" class="logo font-display">BOARD LAB</a>
       <nav>
         <ul class="nav-links">
           <li><a href="#moves" class="nav-link">Moves</a></li>
-          <li><a href="#about" class="nav-link">About</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- Main content -->
   <main class="main-content">
-    <!-- Hero -->
     <section class="hero-section">
       <h1 class="hero-title font-display">
         <span>BOARD</span>
@@ -38,188 +31,110 @@
       <p class="hero-subtitle">A visual archive of board climbing movements</p>
     </section>
 
-    <!-- Moves Section -->
     <section class="moves-section" id="moves">
       <header class="section-header">
         <h2 class="section-title font-display">THE ARCHIVE</h2>
       </header>
-
-      <div class="moves-grid" id="movesGrid">
-        <!-- Cards injected via JS -->
-      </div>
+      <div class="moves-grid" id="movesGrid"></div>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    BOARD LAB / CLIMBING MOVEMENT ARCHIVE
-  </footer>
+  <footer class="site-footer">BOARD LAB</footer>
 
-    <script>
-    // ============================================
-    // DATA: List of moves
-    // ============================================
+  <script>
+    // DATA
     const movesData = [
-      { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing through to a hold on the opposite side, often with body rotation.' },
-      { id: 'drop-knee', title: 'Drop Knee', desc: 'Dropping the inside knee to bring hips closer to the wall and extend reach.' },
-      { id: 'flag', title: 'Flag', desc: 'Extending a leg for counterbalance to prevent barn-dooring.' },
-      { id: 'smear', title: 'Smear', desc: 'Using the ball of the foot on the wall surface when no hold is available.' },
-      { id: 'gaston', title: 'Gaston', desc: 'Pressing outward on a hold in a direction opposite to the body.' },
-      { id: 'deadpoint', title: 'Deadpoint', desc: 'Timing a grab at the apex of upward momentum.' },
-      { id: 'heel-hook', title: 'Heel Hook', desc: 'Using the heel to pull or maintain body position.' },
-      { id: 'toe-hook', title: 'Toe Hook', desc: 'Hooking the top of the foot on a hold to create tension.' },
-      { id: 'layback', title: 'Layback', desc: 'Leaning away from a hold to generate opposing force.' },
-      { id: 'feet-pinch', title: 'Feet Pinch', desc: 'Squeezing a hold between feet for stability.' },
-      { id: 'foot-swap', title: 'Foot Swap', desc: 'Switching feet on a hold efficiently.' },
-      { id: 'campus', title: 'Campus', desc: 'Moving hands without using feet.' }
+      { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing through to a hold on the opposite side.' },
+      { id: 'drop-knee', title: 'Drop Knee', desc: 'Dropping the inside knee to extend reach.' },
+      { id: 'flag', title: 'Flag', desc: 'Extending a leg for counterbalance.' },
+      { id: 'smear', title: 'Smear', desc: 'Using the foot on the wall surface.' },
+      { id: 'gaston', title: 'Gaston', desc: 'Pressing outward on a hold.' },
+      { id: 'deadpoint', title: 'Deadpoint', desc: 'Timing a grab at the apex of momentum.' },
+      { id: 'heel-hook', title: 'Heel Hook', desc: 'Using the heel to pull.' },
+      { id: 'toe-hook', title: 'Toe Hook', desc: 'Hooking the foot to create tension.' },
+      { id: 'layback', title: 'Layback', desc: 'Leaning away to generate force.' },
+      { id: 'feet-pinch', title: 'Feet Pinch', desc: 'Squeezing a hold between feet.' },
+      { id: 'foot-swap', title: 'Foot Swap', desc: 'Switching feet efficiently.' },
+      { id: 'campus', title: 'Campus', desc: 'Moving hands without feet.' }
     ];
 
-    // ============================================
-    // 1. RENDER MOVE CARDS
-    // ============================================
+    // 1. RENDER CARDS
     function renderMoveCards() {
       const grid = document.getElementById('movesGrid');
-      if (!grid) return;
-
+      if(!grid) return;
       let html = '';
-      
-      movesData.forEach(function(move, index) {
-        html += '<a href="moves/' + move.id + '.html" class="move-card" style="transition-delay: ' + (index * 0.05) + 's">' +
-          '<div class="move-card-content">' +
-            '<h3 class="move-card-title">' +
-              move.title +
-              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' +
-            '</h3>' +
-            '<p class="move-card-desc">' + move.desc + '</p>' +
-          '</div>' +
-        '</a>';
+      movesData.forEach((move, i) => {
+        html += `<a href="moves/${move.id}.html" class="move-card" style="transition-delay:${i*0.05}s">
+          <div class="move-card-content">
+            <h3 class="move-card-title">${move.title}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </h3>
+            <p class="move-card-desc">${move.desc}</p>
+          </div>
+        </a>`;
       });
-
       grid.innerHTML = html;
-      requestAnimationFrame(function() {
-        observeMoveCards();
-      });
+      requestAnimationFrame(observeMoveCards);
     }
 
     function observeMoveCards() {
-      const cards = document.querySelectorAll('.move-card');
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '50px' });
-      
-      cards.forEach(function(card) { observer.observe(card); });
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.move-card').forEach(c => observer.observe(c));
     }
 
-    // ============================================
-    // 2. FLOATING HOLDS GENERATOR
-    // ============================================
-    function generateClimbingHolds() {
+    // 2. GENERATE HOLDS (Fixed Visibility)
+    function generateHolds() {
       const container = document.getElementById('holdsContainer');
-      if (!container) return;
+      if(!container) return;
       
-      const holdCount = 12; // Number of holds floating
-      
-      for (let i = 0; i < holdCount; i++) {
-        const hold = createHoldSVG(i);
+      const shapes = [
+        `<svg viewBox="0 0 100 80"><path d="M85 40c0 22-15 38-35 38S15 62 15 40s15-38 35-38 35 16 35 38z" fill="#4a4a50" /><ellipse cx="50" cy="40" rx="10" ry="8" fill="#1a1a1d" /></svg>`,
+        `<svg viewBox="0 0 120 35"><rect x="5" y="5" width="110" height="25" rx="6" fill="#4a4a50" /><circle cx="35" cy="17" r="4" fill="#1a1a1d" /></svg>`,
+        `<svg viewBox="0 0 45 100"><path d="M22.5 5c10 0 17.5 20 17.5 45s-7.5 45-17.5 45S5 75 5 50 12.5 5 22.5 5z" fill="#4a4a50" /><ellipse cx="22.5" cy="50" rx="5" ry="10" fill="#1a1a1d" /></svg>`,
+        `<svg viewBox="0 0 100 50"><path d="M10 45 C10 10, 90 10, 90 45 L90 50 L10 50 Z" fill="#4a4a50" /><circle cx="50" cy="35" r="5" fill="#1a1a1d" /></svg>`,
+        `<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="#4a4a50" /><circle cx="25" cy="25" r="8" fill="#0a0a0b" /></svg>`,
+        `<svg viewBox="0 0 100 90"><path d="M50 5 L95 45 L75 85 L25 85 L5 45 Z" fill="#4a4a50" /><circle cx="50" cy="50" r="6" fill="#1a1a1d" /></svg>`
+      ];
+
+      for(let i=0; i<12; i++) {
+        const div = document.createElement('div');
+        div.className = 'climbing-hold hold-animate';
+        div.innerHTML = shapes[i % shapes.length];
+        
         const x = Math.random() * 100;
         const y = Math.random() * 100;
-        const opacity = 0.1 + Math.random() * 0.2;
+        // Increased opacity range to 0.3 - 0.5
+        const op = 0.3 + (Math.random() * 0.2); 
         
-        hold.style.left = `${x}%`;
-        hold.style.top = `${y}%`;
-        hold.style.width = `${70 + Math.random() * 50}px`;
-        hold.style.height = 'auto';
-        hold.style.setProperty('--hold-opacity', opacity);
-        hold.style.setProperty('--float-duration', `${18 + Math.random() * 15}s`);
-        hold.style.setProperty('--float-delay', `${Math.random() * -20}s`);
-        hold.style.setProperty('--start-rotation', `${Math.random() * 360}deg`);
-        hold.style.setProperty('--drift-x', `${-30 + Math.random() * 60}px`);
-        hold.style.setProperty('--drift-y', `${-30 + Math.random() * 60}px`);
-        hold.style.animationDelay = `${i * 0.15}s`;
-        
-        hold.classList.add('hold-animate');
-        container.appendChild(hold);
+        div.style.cssText = `
+          left: ${x}%; top: ${y}%;
+          width: ${70 + Math.random()*50}px;
+          --hold-opacity: ${op};
+          --float-duration: ${18 + Math.random() * 15}s;
+          --float-delay: ${Math.random() * -20}s;
+          --start-rotation: ${Math.random()*360}deg;
+          --drift-x: ${-30 + Math.random()*60}px;
+          --drift-y: ${-30 + Math.random()*60}px;
+          animation-delay: ${i*0.15}s;
+        `;
+        container.appendChild(div);
       }
     }
 
-    function createHoldSVG(index) {
-      const hold = document.createElement('div');
-      hold.className = 'climbing-hold';
-      
-      // 6 Unique Hold Shapes
-      const shapes = [
-        // 1. Blob / Sloper
-        `<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M85 40c0 22-15 38-35 38S15 62 15 40s15-38 35-38 35 16 35 38z" fill="url(#hg1)" />
-          <ellipse cx="50" cy="40" rx="10" ry="8" fill="#1a1a1d" />
-          <defs><linearGradient id="hg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3d3d42" /><stop offset="100%" stop-color="#2d2d32" /></linearGradient></defs>
-        </svg>`,
-        
-        // 2. Crimp / Edge
-        `<svg viewBox="0 0 120 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="5" y="5" width="110" height="25" rx="6" fill="url(#hg2)" />
-          <circle cx="35" cy="17" r="4" fill="#1a1a1d" />
-          <circle cx="85" cy="17" r="4" fill="#1a1a1d" />
-          <defs><linearGradient id="hg2" x1="0%" y1="50%" x2="100%" y2="50%"><stop offset="0%" stop-color="#2d2d32" /><stop offset="50%" stop-color="#3d3d42" /><stop offset="100%" stop-color="#2d2d32" /></linearGradient></defs>
-        </svg>`,
-        
-        // 3. Pinch / Vertical
-        `<svg viewBox="0 0 45 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.5 5c10 0 17.5 20 17.5 45s-7.5 45-17.5 45S5 75 5 50 12.5 5 22.5 5z" fill="url(#hg3)" />
-          <ellipse cx="22.5" cy="50" rx="5" ry="10" fill="#1a1a1d" />
-          <defs><linearGradient id="hg3" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#3d3d42" /><stop offset="100%" stop-color="#2d2d32" /></linearGradient></defs>
-        </svg>`,
-        
-        // 4. Jug / Large Curve
-        `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 45 C10 10, 90 10, 90 45 L90 50 L10 50 Z" fill="url(#hg4)" />
-          <circle cx="50" cy="35" r="5" fill="#1a1a1d" />
-          <defs><linearGradient id="hg4" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#3d3d42" /><stop offset="100%" stop-color="#252528" /></linearGradient></defs>
-        </svg>`,
-        
-        // 5. Pocket / Hueco
-        `<svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="25" cy="25" r="20" fill="url(#hg5)" />
-          <circle cx="25" cy="25" r="8" fill="#0a0a0b" />
-          <defs><radialGradient id="hg5" cx="40%" cy="40%"><stop offset="0%" stop-color="#4a4a50" /><stop offset="100%" stop-color="#2d2d32" /></radialGradient></defs>
-        </svg>`,
-        
-        // 6. Volume / Large Geometric
-        `<svg viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50 5 L95 45 L75 85 L25 85 L5 45 Z" fill="url(#hg6)" />
-          <circle cx="50" cy="50" r="6" fill="#1a1a1d" />
-          <defs><linearGradient id="hg6" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#3d3d42" /><stop offset="100%" stop-color="#2d2d32" /></linearGradient></defs>
-        </svg>`
-      ];
-      
-      hold.innerHTML = shapes[index % shapes.length];
-      return hold;
+    // 3. INIT
+    function initHeader() {
+      const h = document.getElementById('siteHeader');
+      window.addEventListener('scroll', () => {
+        window.pageYOffset > 100 ? h.classList.add('scrolled') : h.classList.remove('scrolled');
+      }, {passive:true});
     }
 
-    // ============================================
-    // 3. HEADER SCROLL & INIT
-    // ============================================
-    function initHeaderScroll() {
-      const header = document.getElementById('siteHeader');
-      if (!header) return;
-      
-      window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 100) {
-          header.classList.add('scrolled');
-        } else {
-          header.classList.remove('scrolled');
-        }
-      }, { passive: true });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      generateClimbingHolds(); // Initialize holds
+    document.addEventListener('DOMContentLoaded', () => {
+      generateHolds();
       renderMoveCards();
-      initHeaderScroll();
+      initHeader();
     });
   </script>
 </body>
