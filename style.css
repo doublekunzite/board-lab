@@ -207,7 +207,8 @@ body {
 .hero-subtitle {
   font-size: clamp(0.875rem, 2vw, 1.125rem);
   color: var(--fg-muted);
-  max-width: 400px;
+  /* Increased from 400px to 450px to prevent wrapping */
+  max-width: 450px; 
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -707,4 +708,10 @@ body {
   .variation-media {
     margin-top: 1.5rem; /* Keep margin even on mobile */
   }
+}
+
+/* Aligns the image to the top of the crop box */
+/* Crops the bottom, preserves the top */
+.align-top {
+  object-position: top center;
 }
