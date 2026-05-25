@@ -715,3 +715,9 @@ body {
 .align-top {
   object-position: top center;
 }
+
+/* Aligns the image to the bottom of the crop box */
+/* Crops the top, preserves the bottom */
+.align-bottom {
+  object-position: bottom center;
+}
