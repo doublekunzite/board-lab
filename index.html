@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Board Lab | Climbing Movement Archive</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background atmosphere -->
+  <div class="bg-atmosphere" aria-hidden="true"></div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Floating climbing holds -->
+  <div class="holds-container" aria-hidden="true" id="holdsContainer"></div>
+
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="#" class="logo font-display">BOARD LAB</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#moves" class="nav-link">Moves</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="main-content">
+    <!-- Hero -->
+    <section class="hero-section">
+      <h1 class="hero-title font-display">
+        <span>BOARD</span>
+        <span class="accent-line">MOVES</span>
+      </h1>
+      <p class="hero-subtitle">A visual archive of board climbing movements</p>
+      
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- Moves Section -->
+    <section class="moves-section" id="moves">
+      <header class="section-header">
+        <h2 class="section-title font-display">THE ARCHIVE</h2>
+        <span class="move-count">24 MOVES DOCUMENTED</span>
+      </header>
+
+      <div class="filter-tabs" role="tablist" aria-label="Filter moves by category">
+        <button class="filter-tab active" role="tab" aria-selected="true" data-filter="all">All Moves</button>
+        <button class="filter-tab" role="tab" aria-selected="false" data-filter="dynamic">Dynamic</button>
+        <button class="filter-tab" role="tab" aria-selected="false" data-filter="static">Static</button>
+        <button class="filter-tab" role="tab" aria-selected="false" data-filter="tension">Body Tension</button>
+        <button class="filter-tab" role="tab" aria-selected="false" data-filter="coordination">Coordination</button>
+      </div>
+
+      <div class="moves-grid" id="movesGrid">
+        <!-- Cards injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="about">
+      <h2 class="cta-title font-display">CONTRIBUTE A MOVE</h2>
+      <p class="cta-text">Got a sick board move you want to document? Submit your movement and join the archive.</p>
+      <button class="cta-button">
+        Submit Move
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    BOARD LAB / CLIMBING MOVEMENT ARCHIVE
+  </footer>
+
+  <script>
+    // ============================================
+    // DATA: Climbing moves dataset
+    // ============================================
+    const movesData = [
+      {
+        id: 1,
+        title: "Dyno to Crimp Catch",
+        description: "Explosive dynamic movement from a sidepull to a shallow crimp. Focus on hip engagement at the moment of release.",
+        difficulty: "V6",
+        category: "dynamic",
+        tags: ["power", "coordination", "accuracy"]
+      },
+      {
+        id: 2,
+        title: "Bicycle Hold Transfer",
+        description: "Using opposing pressure between feet to maintain tension while crossing through to a distant hold.",
+        difficulty: "V5",
+        category: "tension",
+        tags: ["feet", "compression", "control"]
+      },
+      {
+        id: 3,
+        title: "Deadpoint to Sloper",
+        description: "Timing the reach to catch the sloper at the apex of movement. Keep core engaged throughout the extension.",
+        difficulty: "V7",
+        category: "dynamic",
+        tags: ["timing", "core", "precision"]
+      },
+      {
+        id: 4,
+        title: "Heel Hook Rotate",
+        description: "Using a heel hook to pivot the body into position for a cross-through. Maximize hip rotation.",
+        difficulty: "V4",
+        category: "static",
+        tags: ["technique", "flexibility", "heels"]
+      },
+      {
+        id: 5,
+        title: "Running Dyno",
+        description: "Multi-step dynamic sequence requiring momentum management. Start small, finish big.",
+        difficulty: "V8",
+        category: "coordination",
+        tags: ["power", "momentum", "commitment"]
+      },
+      {
+        id: 6,
+        title: "Drop Knee Lock-Off",
+        description: "Deep drop knee to generate tension and reach a distant hold. Patience in the lock-off is key.",
+        difficulty: "V5",
+        category: "static",
+        tags: ["flexibility", "strength", "control"]
+      },
+      {
+        id: 7,
+        title: "Campus Bump Sequence",
+        description: "Hand-over-hand movement on similar-sized holds. Minimal foot engagement, maximum shoulder stability.",
+        difficulty: "V7",
+        category: "dynamic",
+        tags: ["power", "shoulders", "contact"]
+      },
+      {
+        id: 8,
+        title: "Toe Hook Tension",
+        description: "Critical toe hook placement to prevent barn-dooring on steep terrain. Maintain tension through the entire chain.",
+        difficulty: "V5",
+        category: "tension",
+        tags: ["feet", "core", "steep"]
+      },
+      {
+        id: 9,
+        title: "Coordination Dyno",
+        description: "Both hands and feet release simultaneously. Trust the movement and commit fully.",
+        difficulty: "V6",
+        category: "coordination",
+        tags: ["commitment", "timing", "full-body"]
+      }
+    ];
+
+    // ============================================
+    // CLIMBING HOLDS: SVG shape generators
+    // ============================================
+    function generateClimbingHolds() {
+      const container = document.getElementById('holdsContainer');
+      if (!container) return;
+      
+      const holdCount = 15;
+      
+      for (let i = 0; i < holdCount; i++) {
+        const hold = createHoldSVG(i);
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const opacity = 0.15 + Math.random() * 0.25;
+        
+        hold.style.left = `${x}%`;
+        hold.style.top = `${y}%`;
+        hold.style.width = `${80 + Math.random() * 60}px`;
+        hold.style.height = 'auto';
+        hold.style.setProperty('--hold-opacity', opacity);
+        hold.style.setProperty('--float-duration', `${18 + Math.random() * 15}s`);
+        hold.style.setProperty('--float-delay', `${Math.random() * -20}s`);
+        hold.style.setProperty('--start-rotation', `${Math.random() * 360}deg`);
+        hold.style.setProperty('--drift-x', `${-30 + Math.random() * 60}px`);
+        hold.style.setProperty('--drift-y', `${-30 + Math.random() * 60}px`);
+        hold.style.animationDelay = `${i * 0.15}s`;
+        
+        hold.classList.add('hold-animate');
+        container.appendChild(hold);
+      }
+    }
+
+    function createHoldSVG(index) {
+      const hold = document.createElement('div');
+      hold.className = 'climbing-hold';
+      
+      const shapes = [
+        // Rounded blob hold
+        `<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M85 40c0 22-15 38-35 38S15 62 15 40s15-38 35-38 35 16 35 38z" fill="url(#holdGrad1${index})" />
+          <ellipse cx="50" cy="40" rx="12" ry="10" fill="#1a1a1d" />
+          <ellipse cx="50" cy="40" rx="8" ry="6" fill="#252528" />
+          <defs>
+            <linearGradient id="holdGrad1${index}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#4a4a50" />
+              <stop offset="50%" stop-color="#3d3d42" />
+              <stop offset="100%" stop-color="#2d2d32" />
+            </linearGradient>
+          </defs>
+        </svg>`,
+        // Irregular hold
+        `<svg viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M80 35c5 18-8 32-28 34S8 58 5 40 15 8 38 5s37 12 42 30z" fill="url(#holdGrad2${index})" />
+          <ellipse cx="42" cy="35" rx="10" ry="8" fill="#1a1a1d" />
+          <ellipse cx="42" cy="35" rx="7" ry="5" fill="#252528" />
+          <defs>
+            <linearGradient id="holdGrad2${index}" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4a4a50" />
+              <stop offset="100%" stop-color="#2d2d32" />
+            </linearGradient>
+          </defs>
+        </svg>`,
+        // Pinch-style hold
+        `<svg viewBox="0 0 50 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M25 5c12 0 20 20 20 45s-8 45-20 45S5 75 5 50 13 5 25 5z" fill="url(#holdGrad3${index})" />
+          <ellipse cx="25" cy="50" rx="7" ry="12" fill="#1a1a1d" />
+          <ellipse cx="25" cy="50" rx="5" ry="8" fill="#252528" />
+          <defs>
+            <linearGradient id="holdGrad3${index}" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#3d3d42" />
+              <stop offset="100%" stop-color="#2d2d32" />
+            </linearGradient>
+          </defs>
+        </svg>`,
+        // Crimp rail
+        `<svg viewBox="0 0 120 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="5" width="110" height="25" rx="8" fill="url(#holdGrad4${index})" />
+          <circle cx="35" cy="17" r="5" fill="#1a1a1d" />
+          <circle cx="35" cy="17" r="3" fill="#252528" />
+          <circle cx="85" cy="17" r="5" fill="#1a1a1d" />
+          <circle cx="85" cy="17" r="3" fill="#252528" />
+          <defs>
+            <linearGradient id="holdGrad4${index}" x1="0%" y1="50%" x2="100%" y2="50%">
+              <stop offset="0%" stop-color="#2d2d32" />
+              <stop offset="50%" stop-color="#3d3d42" />
+              <stop offset="100%" stop-color="#2d2d32" />
+            </linearGradient>
+          </defs>
+        </svg>`,
+        // Large sloper
+        `<svg viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 5c25 0 45 18 45 40s-20 45-45 45S5 67 5 45 25 5 50 5z" fill="url(#holdGrad5${index})" />
+          <ellipse cx="50" cy="45" rx="11" ry="9" fill="#1a1a1d" />
+          <ellipse cx="50" cy="45" rx="7" ry="5" fill="#252528" />
+          <defs>
+            <radialGradient id="holdGrad5${index}" cx="40%" cy="30%">
+              <stop offset="0%" stop-color="#4a4a50" />
+              <stop offset="100%" stop-color="#2d2d32" />
+            </radialGradient>
+          </defs>
+        </svg>`,
+        // Triangular hold
+        `<svg viewBox="0 0 80 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 5l35 60H5L40 5z" fill="url(#holdGrad6${index})" />
+          <ellipse cx="40" cy="45" rx="8" ry="6" fill="#1a1a1d" />
+          <ellipse cx="40" cy="45" rx="5" ry="4" fill="#252528" />
+          <defs>
+            <linearGradient id="holdGrad6${index}" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#3d3d42" />
+              <stop offset="100%" stop-color="#2d2d32" />
+            </linearGradient>
+          </defs>
+        </svg>`
+      ];
+      
+      hold.innerHTML = shapes[index % shapes.length];
+      return hold;
+    }
+
+    // ============================================
+    // MOVE CARDS: Render and interactions
+    // ============================================
+    function renderMoveCards(filter) {
+      if (filter === undefined) {
+        filter = 'all';
+      }
+      
+      const grid = document.getElementById('movesGrid');
+      if (!grid) return;
+      
+      const filtered = filter === 'all' 
+        ? movesData 
+        : movesData.filter(function(m) { return m.category === filter; });
+      
+      let html = '';
+      for (let i = 0; i < filtered.length; i++) {
+        const move = filtered[i];
+        html += '<article class="move-card" data-category="' + move.category + '" style="transition-delay: ' + (i * 0.08) + 's">' +
+          '<div class="move-media">' +
+            '<img src="gifs/move-' + move.id + '-static.jpg" alt="' + move.title + ' - climbing movement demonstration" class="move-static" loading="lazy" />' +
+            '<img src="gifs/move-' + move.id + '.gif" alt="" class="move-gif" loading="lazy" />' +
+            '<span class="move-difficulty v-grade">' + move.difficulty + '</span>' +
+            '<div class="play-indicator">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+                '<polygon points="5 3 19 12 5 21 5 3"></polygon>' +
+              '</svg>' +
+              '<span>Hover to play</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="move-content">' +
+            '<h3 class="move-title">' + move.title + '</h3>' +
+            '<p class="move-description">' + move.description + '</p>' +
+            '<div class="move-tags">';
+        
+        for (let j = 0; j < move.tags.length; j++) {
+          html += '<span class="move-tag">' + move.tags[j] + '</span>';
+        }
+        
+        html += '</div></div></article>';
+      }
+      
+      grid.innerHTML = html;
+      
+      requestAnimationFrame(function() {
+        observeMoveCards();
+      });
+    }
+
+    function observeMoveCards() {
+      const cards = document.querySelectorAll('.move-card');
+      
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '50px' });
+      
+      cards.forEach(function(card) {
+        observer.observe(card);
+      });
+    }
+
+    // ============================================
+    // FILTER TABS: Category filtering
+    // ============================================
+    function initFilterTabs() {
+      const tabs = document.querySelectorAll('.filter-tab');
+      
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          tabs.forEach(function(t) {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+          
+          const filter = tab.dataset.filter;
+          renderMoveCards(filter);
+        });
+      });
+    }
+
+    // ============================================
+    // HEADER: Scroll behavior
+    // ============================================
+    function initHeaderScroll() {
+      const header = document.getElementById('siteHeader');
+      if (!header) return;
+      
+      window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 100) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }, { passive: true });
+    }
+
+    // ============================================
+    // PARALLAX: Subtle mouse movement effect
+    // ============================================
+    function initParallax() {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+      
+      const container = document.getElementById('holdsContainer');
+      if (!container) return;
+      
+      let rafId = null;
+      let targetX = 0;
+      let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
+      
+      document.addEventListener('mousemove', function(e) {
+        targetX = (e.clientX / window.innerWidth - 0.5) * 20;
+        targetY = (e.clientY / window.innerHeight - 0.5) * 20;
+      });
+      
+      function animate() {
+        currentX += (targetX - currentX) * 0.03;
+        currentY += (targetY - currentY) * 0.03;
+        
+        container.style.transform = 'translate(' + currentX + 'px, ' + currentY + 'px)';
+        rafId = requestAnimationFrame(animate);
+      }
+      
+      animate();
+    }
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+      generateClimbingHolds();
+      renderMoveCards('all');
+      initFilterTabs();
+      initHeaderScroll();
+      initParallax();
+    });
+  </script>
+</body>
+</html>
