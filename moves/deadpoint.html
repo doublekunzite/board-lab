@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deadpoint | Board Lab</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <!-- Background atmosphere -->
+  <div class="bg-atmosphere" aria-hidden="true"></div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="../index.html" class="logo font-display">BOARD LAB</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html#moves" class="nav-link">Moves</a></li>
+          <li><a href="../index.html#about" class="nav-link">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="main-content">
+    <div class="detail-page">
+      
+      <a href="../index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Archive
+      </a>
+
+      <!-- Header -->
+      <header class="detail-header">
+        <h1 class="detail-title font-display">DEADPOINT</h1>
+        <p class="detail-intro">Timing a grab at the apex of upward momentum, momentarily reducing weight on the holds.</p>
+      </header>
+
+      <!-- GIF Gallery -->
+      <section class="gif-gallery">
+        
+        <!-- GIF 1: Static Example -->
+        <figure class="gif-item">
+          <div class="gif-media">
+            <!-- Static Poster Image -->
+            <img src="../gifs/deadpoint-static-1.jpg" alt="Deadpoint move demonstration static" class="gif-static" loading="lazy">
+            <!-- Animated GIF -->
+            <img src="../gifs/deadpoint-1.gif" alt="Deadpoint move demonstration animated" class="gif-animated" loading="lazy">
+            
+            <div class="play-overlay">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Hover to play
+            </div>
+          </div>
+          <figcaption class="gif-caption">
+            <p>Standard deadpoint to a distant sloper</p>
+            <span class="variation-tag">Static</span>
+          </figcaption>
+        </figure>
+
+        <!-- GIF 2: Dynamic Variation -->
+        <figure class="gif-item">
+          <div class="gif-media">
+            <img src="../gifs/deadpoint-static-2.jpg" alt="Deadpoint dynamic variation static" class="gif-static" loading="lazy">
+            <img src="../gifs/deadpoint-2.gif" alt="Deadpoint dynamic variation animated" class="gif-animated" loading="lazy">
+            
+            <div class="play-overlay">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Hover to play
+            </div>
+          </div>
+          <figcaption class="gif-caption">
+            <p>Deadpoint with foot cut to generate upward momentum</p>
+            <span class="variation-tag">Dynamic</span>
+          </figcaption>
+        </figure>
+
+      </section>
+
+      <!-- Description / Notes -->
+      <section class="description-block">
+        <h2>Technique Notes</h2>
+        <p>
+          The deadpoint is all about timing. You generate upward momentum—usually by a quick pull with the arms or a subtle hop of the body—and grab the target hold exactly when your body stops moving up and before it starts coming down.
+        </p>
+        <p>
+          <strong>Key Considerations:</strong> Focus on hip positioning. If your hips swing away during the movement, you'll barn-door off. Keep tension through your core. Often used on steep terrain where static reaches are impossible.
+        </p>
+        <p>
+          <strong>Common Mistake:</strong> Grabbing too early or late. If you grab early, you're still accelerating and might dynamically pop off the hold. If you grab late, you're already falling.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    BOARD LAB / CLIMBING MOVEMENT ARCHIVE
+  </footer>
+
+  <script>
+    // Simple header scroll effect
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
