@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross / Rose | Board Lab</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <!-- Background atmosphere -->
+  <div class="bg-atmosphere" aria-hidden="true"></div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  
+  <!-- Floating Holds -->
+  <div class="holds-container" aria-hidden="true" id="holdsContainer"></div>
+
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="../index.html" class="logo font-display">BOARD LAB</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html#moves" class="nav-link">Moves</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="main-content">
+    <div class="detail-page">
+      
+      <a href="../index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Archive
+      </a>
+
+      <!-- Header -->
+      <header class="detail-header">
+        <h1 class="detail-title font-display">CROSS / ROSE</h1>
+        <p class="detail-intro">Reaching across your body to a hold on the opposite side, often crossing arms or twisting the torso.</p>
+      </header>
+
+      <!-- Variations List (Accordion) -->
+      <section class="variations-list">
+        
+        <!-- Variation 1 -->
+        <details class="variation-item">
+          <summary class="variation-header">
+            <div class="variation-header-content">
+              <h3 class="variation-name">Toe Hook on "hinter my land"</h3>
+              <span class="variation-tag">Static</span>
+            </div>
+            <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="variation-body">
+            <div class="variation-media">
+              <img src="../gifs/toe-hook-static-1.jpg" alt="Toe hook demonstration static" class="gif-static" loading="lazy">
+              <img src="../gifs/toe-hook-1.gif" alt="Toe hook demonstration animated" class="gif-animated" loading="lazy">
+              <div class="play-overlay">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Hover to play
+              </div>
+            </div>
+            <div class="variation-details">
+              <p>A toe hook with the right foot on "hinter my land" V11 / 8a @ 60.</p>
+            </div>
+          </div>
+        </details>
+		
+		<!-- Variation 2 -->
+        <details class="variation-item">
+          <summary class="variation-header">
+            <div class="variation-header-content">
+              <h3 class="variation-name">Toe Hook on "dddd69"</h3>
+              <span class="variation-tag">Static</span>
+            </div>
+            <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="variation-body">
+            <div class="variation-media">
+              <img src="../gifs/toe-hook-static-2.jpg" alt="Toe hook demonstration static" class="gif-static" loading="lazy">
+              <img src="../gifs/toe-hook-2.gif" alt="Toe hook demonstration animated" class="gif-animated" loading="lazy">
+              <div class="play-overlay">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Hover to play
+              </div>
+            </div>
+            <div class="variation-details">
+              <p>A toe hook with the right foot on "dddd69" V7 / 7a+ @ 60.</p>
+            </div>
+          </div>
+        </details>
+
+        
+
+      </section>
+
+      <!-- Description / Notes -->
+      <section class="description-block">
+        <h2>Technique Notes</h2>
+        <p>
+          Both static and dynamic cross moves are heavily dependent on body tension.</p> 
+		  <p><strong>Static cross moves</strong> require you to keep tension through the foot and maintain it throughout the move.</p>
+		  
+		  <p><strong>Dynamic crosses</strong> require anti-rotation strength, and like all dynamic moves, benefit from optimizing the starting body position to minimize swing. The closer your starting body position is to the ending position, the less swing there will be to hold.</p>
+		  <p>Dynamic crosses often require you to bear down on the lower handhold, especially on steeper terrain. Squeezing and staying engaged on the lower hold throughout the movement also cuts down on the swing and keeps you from flying off the wall.</p>
+	
+       
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    BOARD LAB / CLIMBING MOVEMENT ARCHIVE
+  </footer>
+
+  <script>
+    // Generate Holds (High Visibility Version)
+    function generateClimbingHolds() {
+      const container = document.getElementById('holdsContainer');
+      if (!container) return;
+      const holdCount = 8;
+      
+      // Updated shapes with brighter fill (#6b6b73) for better contrast
+      const shapes = [
+        `<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M85 40c0 22-15 38-35 38S15 62 15 40s15-38 35-38 35 16 35 38z" fill="#6b6b73" /><ellipse cx="50" cy="40" rx="10" ry="8" fill="#1a1a1d" /></svg>`,
+        `<svg viewBox="0 0 120 35" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="110" height="25" rx="6" fill="#6b6b73" /><circle cx="35" cy="17" r="4" fill="#1a1a1d" /><circle cx="85" cy="17" r="4" fill="#1a1a1d" /></svg>`,
+        `<svg viewBox="0 0 45 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.5 5c10 0 17.5 20 17.5 45s-7.5 45-17.5 45S5 75 5 50 12.5 5 22.5 5z" fill="#6b6b73" /><ellipse cx="22.5" cy="50" rx="5" ry="10" fill="#1a1a1d" /></svg>`,
+        `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 45 C10 10, 90 10, 90 45 L90 50 L10 50 Z" fill="#6b6b73" /><circle cx="50" cy="35" r="5" fill="#1a1a1d" /></svg>`,
+        `<svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="25" r="20" fill="#6b6b73" /><circle cx="25" cy="25" r="8" fill="#0a0a0b" /></svg>`,
+        `<svg viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 5 L95 45 L75 85 L25 85 L5 45 Z" fill="#6b6b73" /><circle cx="50" cy="50" r="6" fill="#1a1a1d" /></svg>`
+      ];
+
+      for (let i = 0; i < holdCount; i++) {
+        const hold = document.createElement('div');
+        hold.className = 'climbing-hold hold-animate';
+        hold.innerHTML = shapes[i % shapes.length];
+        
+        hold.style.left = `${Math.random() * 100}%`;
+        hold.style.top = `${Math.random() * 100}%`;
+        hold.style.width = `${70 + Math.random() * 50}px`;
+        hold.style.height = 'auto';
+        
+        // Increased opacity range to 0.55 - 0.75
+        hold.style.setProperty('--hold-opacity', 0.55 + Math.random() * 0.2);
+        hold.style.setProperty('--float-duration', `${18 + Math.random() * 15}s`);
+        hold.style.setProperty('--float-delay', `${Math.random() * -20}s`);
+        hold.style.setProperty('--start-rotation', `${Math.random() * 360}deg`);
+        hold.style.setProperty('--drift-x', `${-30 + Math.random() * 60}px`);
+        hold.style.setProperty('--drift-y', `${-30 + Math.random() * 60}px`);
+        hold.style.animationDelay = `${i * 0.15}s`;
+
+        container.appendChild(hold);
+      }
+    }
+
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 100) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    }, { passive: true });
+
+    generateClimbingHolds();
+  </script>
+</body>
+</html>
