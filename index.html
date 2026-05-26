@@ -45,100 +45,173 @@
   <footer class="site-footer">BOARD LAB</footer>
 
   <script>
-    // DATA
-    const movesData = [
-      { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing through to a hold on the opposite side.' },
-      { id: 'drop-knee', title: 'Drop Knee', desc: 'Dropping the inside knee to extend reach.' },
-      { id: 'flag', title: 'Flag', desc: 'Extending a leg for counterbalance.' },
-      { id: 'smear', title: 'Smear', desc: 'Using the foot on the wall surface.' },
-      { id: 'gaston', title: 'Gaston', desc: 'Pressing outward on a hold.' },
-      { id: 'deadpoint', title: 'Deadpoint', desc: 'Timing a grab at the apex of momentum.' },
-      { id: 'heel-hook', title: 'Heel Hook', desc: 'Using the heel to pull.' },
-      { id: 'toe-hook', title: 'Toe Hook', desc: 'Hooking the foot to create tension.' },
-      { id: 'layback', title: 'Layback', desc: 'Leaning away to generate force.' },
-      { id: 'feet-pinch', title: 'Feet Pinch', desc: 'Squeezing a hold between feet.' },
-      { id: 'foot-swap', title: 'Foot Swap', desc: 'Switching feet efficiently.' },
-      { id: 'campus', title: 'Campus', desc: 'Moving hands without feet.' }
-    ];
+    // ============================================
+    // 1. MOVE CARDS (Index Page Only)
+    // ============================================
+    // Only run this if the grid exists (prevents errors on detail pages)
+    const movesGrid = document.getElementById('movesGrid');
+    if (movesGrid) {
+        const movesData = [
+            { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing through to a hold on the opposite side.' },
+            { id: 'drop-knee', title: 'Drop Knee', desc: 'Dropping the inside knee to extend reach.' },
+            { id: 'flag', title: 'Flag', desc: 'Extending a leg for counterbalance.' },
+            { id: 'smear', title: 'Smear', desc: 'Using the foot on the wall surface.' },
+            { id: 'gaston', title: 'Gaston', desc: 'Pressing outward on a hold.' },
+            { id: 'deadpoint', title: 'Deadpoint', desc: 'Timing a grab at the apex of momentum.' },
+            { id: 'heel-hook', title: 'Heel Hook', desc: 'Using the heel to pull.' },
+            { id: 'toe-hook', title: 'Toe Hook', desc: 'Hooking the foot to create tension.' },
+            { id: 'layback', title: 'Layback', desc: 'Leaning away to generate force.' },
+            { id: 'feet-pinch', title: 'Feet Pinch', desc: 'Squeezing a hold between feet.' },
+            { id: 'foot-swap', title: 'Foot Swap', desc: 'Switching feet efficiently.' },
+            { id: 'campus', title: 'Campus', desc: 'Moving hands without feet.' }
+        ];
 
-    // 1. RENDER CARDS
-    function renderMoveCards() {
-      const grid = document.getElementById('movesGrid');
-      if(!grid) return;
-      let html = '';
-      movesData.forEach((move, i) => {
-        html += `<a href="moves/${move.id}.html" class="move-card" style="transition-delay:${i*0.05}s">
-          <div class="move-card-content">
-            <h3 class="move-card-title">${move.title}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </h3>
-            <p class="move-card-desc">${move.desc}</p>
-          </div>
-        </a>`;
-      });
-      grid.innerHTML = html;
-      requestAnimationFrame(observeMoveCards);
+        let html = '';
+        movesData.forEach((move, i) => {
+            html += `<a href="moves/${move.id}.html" class="move-card" style="transition-delay:${i*0.05}s">
+                <div class="move-card-content">
+                    <h3 class="move-card-title">${move.title}
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </h3>
+                    <p class="move-card-desc">${move.desc}</p>
+                </div>
+            </a>`;
+        });
+        movesGrid.innerHTML = html;
+
+        // Reveal animation observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.move-card').forEach(c => observer.observe(c));
     }
 
-    function observeMoveCards() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.move-card').forEach(c => observer.observe(c));
-    }
-
-    // 2. GENERATE HOLDS (Fixed Visibility)
-    function generateHolds() {
-      const container = document.getElementById('holdsContainer');
-      if(!container) return;
-      
-      const shapes = [
-        `<svg viewBox="0 0 100 80"><path d="M85 40c0 22-15 38-35 38S15 62 15 40s15-38 35-38 35 16 35 38z" fill="#4a4a50" /><ellipse cx="50" cy="40" rx="10" ry="8" fill="#1a1a1d" /></svg>`,
-        `<svg viewBox="0 0 120 35"><rect x="5" y="5" width="110" height="25" rx="6" fill="#4a4a50" /><circle cx="35" cy="17" r="4" fill="#1a1a1d" /></svg>`,
-        `<svg viewBox="0 0 45 100"><path d="M22.5 5c10 0 17.5 20 17.5 45s-7.5 45-17.5 45S5 75 5 50 12.5 5 22.5 5z" fill="#4a4a50" /><ellipse cx="22.5" cy="50" rx="5" ry="10" fill="#1a1a1d" /></svg>`,
-        `<svg viewBox="0 0 100 50"><path d="M10 45 C10 10, 90 10, 90 45 L90 50 L10 50 Z" fill="#4a4a50" /><circle cx="50" cy="35" r="5" fill="#1a1a1d" /></svg>`,
-        `<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="#4a4a50" /><circle cx="25" cy="25" r="8" fill="#0a0a0b" /></svg>`,
-        `<svg viewBox="0 0 100 90"><path d="M50 5 L95 45 L75 85 L25 85 L5 45 Z" fill="#4a4a50" /><circle cx="50" cy="50" r="6" fill="#1a1a1d" /></svg>`
-      ];
-
-      for(let i=0; i<12; i++) {
-        const div = document.createElement('div');
-        div.className = 'climbing-hold hold-animate';
-        div.innerHTML = shapes[i % shapes.length];
+    // ============================================
+    // 2. GENERATE FLOATING HOLDS (New Shapes)
+    // ============================================
+    function generateClimbingHolds() {
+        const container = document.getElementById('holdsContainer');
+        if (!container) return;
         
-        const x = Math.random() * 100;
-        const y = Math.random() * 100;
-        // Increased opacity range to 0.3 - 0.5
-        const op = 0.3 + (Math.random() * 0.2); 
-        
-        div.style.cssText = `
-          left: ${x}%; top: ${y}%;
-          width: ${70 + Math.random()*50}px;
-          --hold-opacity: ${op};
-          --float-duration: ${18 + Math.random() * 15}s;
-          --float-delay: ${Math.random() * -20}s;
-          --start-rotation: ${Math.random()*360}deg;
-          --drift-x: ${-30 + Math.random()*60}px;
-          --drift-y: ${-30 + Math.random()*60}px;
-          animation-delay: ${i*0.15}s;
-        `;
-        container.appendChild(div);
-      }
+        // 4 Custom Shapes based on your images
+        const shapes = [
+            // Shape 1: Trapezoid / Sloper (Wide top, narrow bottom, curved edges)
+            `<svg viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 85 Q50 95 80 85 L75 10 Q50 0 25 10 Z" fill="#55555a" />
+                <ellipse cx="50" cy="50" rx="10" ry="8" fill="#1a1a1d" />
+            </svg>`,
+            
+            // Shape 2: Rounded Rect / Rung (Symmetrical, smooth corners)
+            `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="5" width="90" height="40" rx="12" fill="#55555a" />
+                <circle cx="50" cy="25" r="6" fill="#1a1a1d" />
+            </svg>`,
+            
+            // Shape 3: Organic Blob (Irregular natural shape)
+            `<svg viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 80 Q5 50 25 20 Q50 -5 75 20 Q95 50 75 80 Q50 100 25 80 Z" fill="#55555a" />
+                <ellipse cx="50" cy="45" rx="9" ry="7" fill="#1a1a1d" />
+            </svg>`,
+            
+            // Shape 4: Pebble / Smooth Oval
+            `<svg viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 45 Q5 20 30 10 Q60 0 80 25 Q95 50 70 65 Q40 80 10 45 Z" fill="#55555a" />
+                <circle cx="45" cy="40" r="6" fill="#1a1a1d" />
+            </svg>`
+        ];
+
+        const holdCount = 10; // Total holds to generate
+
+        for (let i = 0; i < holdCount; i++) {
+            const hold = document.createElement('div');
+            hold.className = 'climbing-hold';
+            
+            // Pick a shape from the array
+            const shapeIndex = i % shapes.length;
+            hold.innerHTML = shapes[shapeIndex];
+
+            // Random Position
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            
+            // Random Animation Settings
+            const duration = 20 + Math.random() * 20; // 20s - 40s
+            const delay = Math.random() * -20; // Start at random point in cycle
+            const rotation = Math.random() * 360;
+            const driftX = -30 + Math.random() * 60;
+            const driftY = -30 + Math.random() * 60;
+            
+            // Opacity: 0.15 (subtle) to 0.35 (visible)
+            const opacity = 0.15 + Math.random() * 0.2;
+
+            hold.style.cssText = `
+                left: ${x}%; 
+                top: ${y}%; 
+                width: ${60 + Math.random() * 40}px; 
+                height: auto;
+                --hold-opacity: ${opacity};
+                --float-duration: ${duration}s;
+                --float-delay: ${delay}s;
+                --start-rotation: ${rotation}deg;
+                --drift-x: ${driftX}px;
+                --drift-y: ${driftY}px;
+            `;
+
+            container.appendChild(hold);
+        }
     }
 
-    // 3. INIT
-    function initHeader() {
-      const h = document.getElementById('siteHeader');
-      window.addEventListener('scroll', () => {
-        window.pageYOffset > 100 ? h.classList.add('scrolled') : h.classList.remove('scrolled');
-      }, {passive:true});
+    // ============================================
+    // 3. MOUSE PARALLAX EFFECT
+    // ============================================
+    function initParallax() {
+        const container = document.getElementById('holdsContainer');
+        if (!container) return;
+
+        // Current position
+        let currentX = 0;
+        let currentY = 0;
+        // Target position from mouse
+        let targetX = 0;
+        let targetY = 0;
+
+        // Listen for mouse movement
+        document.addEventListener('mousemove', (e) => {
+            // Calculate how far the mouse is from the center (0 to 1)
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            // Move max 30px in either direction
+            targetX = ((e.clientX - centerX) / centerX) * 30;
+            targetY = ((e.clientY - centerY) / centerY) * 30;
+        });
+
+        // Animation loop to smooth the movement
+        function animate() {
+            // Lerp (Linear Interpolation) for smoothness
+            currentX += (targetX - currentX) * 0.05;
+            currentY += (targetY - currentY) * 0.05;
+
+            container.style.transform = `translate(${currentX}px, ${currentY}px)`;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      generateHolds();
-      renderMoveCards();
-      initHeader();
-    });
-  </script>
+    // ============================================
+    // 4. HEADER SCROLL & INIT
+    // ============================================
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 100) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+    }, { passive: true });
+
+    // Initialize
+    generateClimbingHolds();
+    initParallax();
+</script>
 </body>
 </html>

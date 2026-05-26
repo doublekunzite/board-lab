@@ -66,7 +66,7 @@ body {
 }
 
 /* ============================================
-   FLOATING HOLDS (Updated Visibility)
+   FLOATING CLIMBING HOLDS
    ============================================ */
 .holds-container {
   position: fixed;
@@ -74,44 +74,29 @@ body {
   pointer-events: none;
   z-index: 2;
   overflow: hidden;
+  /* Smooth transition for JS parallax */
+  transition: transform 0.1s ease-out; 
 }
 
 .climbing-hold {
   position: absolute;
   opacity: 0;
-  animation: float-in 1.5s ease-out forwards;
-  will-change: transform;
+  /* Animation to fade in and float */
+  animation: float-in 2s ease-out forwards, float-hold var(--float-duration, 20s) ease-in-out infinite;
+  animation-delay: 0s, var(--float-delay, 0s);
+  will-change: transform, opacity;
 }
 
 @keyframes float-in {
-  from {
-    opacity: 0;
-    transform: translateY(40px) scale(0.9);
-  }
-  to {
-    opacity: var(--hold-opacity, 0.5); /* Increased default opacity */
-    transform: translateY(0) scale(1);
-  }
-}
-
-.hold-animate {
-  animation: float-hold var(--float-duration, 20s) ease-in-out infinite;
-  animation-delay: var(--float-delay, 0s);
+  from { opacity: 0; transform: translateY(40px) scale(0.9); }
+  to { opacity: var(--hold-opacity, 0.25); transform: translateY(0) scale(1); }
 }
 
 @keyframes float-hold {
-  0%, 100% {
-    transform: translate(0, 0) rotate(var(--start-rotation, 0deg));
-  }
-  25% {
-    transform: translate(var(--drift-x, 10px), var(--drift-y, -15px)) rotate(calc(var(--start-rotation, 0deg) + 5deg));
-  }
-  50% {
-    transform: translate(calc(var(--drift-x, 10px) * -0.5), calc(var(--drift-y, -15px) * -1)) rotate(calc(var(--start-rotation, 0deg) - 3deg));
-  }
-  75% {
-    transform: translate(calc(var(--drift-x, 10px) * -1), calc(var(--drift-y, -15px) * 0.5)) rotate(calc(var(--start-rotation, 0deg) + 2deg));
-  }
+  0%, 100% { transform: translate(0, 0) rotate(var(--start-rotation, 0deg)); }
+  25% { transform: translate(var(--drift-x, 10px), var(--drift-y, -15px)) rotate(calc(var(--start-rotation, 0deg) + 5deg)); }
+  50% { transform: translate(calc(var(--drift-x, 10px) * -0.5), calc(var(--drift-y, -15px) * -1)) rotate(calc(var(--start-rotation, 0deg) - 3deg)); }
+  75% { transform: translate(calc(var(--drift-x, 10px) * -1), calc(var(--drift-y, -15px) * 0.5)) rotate(calc(var(--start-rotation, 0deg) + 2deg)); }
 }
 
 /* ============================================
@@ -721,18 +706,3 @@ body {
 .align-bottom {
   object-position: bottom center;
 }
-
-/* --- DEBUG MODE: Make holds bright red and fully visible --- */
-.climbing-hold {
-  opacity: 1 !important;
-  animation: none !important;
-}
-
-.climbing-hold svg path,
-.climbing-hold svg rect,
-.climbing-hold svg circle,
-.climbing-hold svg ellipse {
-  fill: red !important;
-  stroke: white !important;
-}
-/* --- END DEBUG MODE --- */
