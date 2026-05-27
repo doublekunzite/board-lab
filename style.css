@@ -190,45 +190,6 @@ body {
 }
 
 /* ============================================
-   MOVES SECTION (Main Container)
-   ============================================ */
-.moves-section {
-  padding: 4rem 2rem 8rem;
-  max-width: 1500px;
-  margin: 0 auto;
-}
-
-/* Category Sections */
-.category-section {
-  margin-top: 5rem;
-  width: 100%;
-}
-
-.category-title {
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 1;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
-  width: 100%;
-  text-align: center;      /* Centers the text */
-  color: var(--fg);        /* Forces text color to be visible */
-}
-
-/* Cards Grid - Centered */
-.cards-grid {
-  display: grid;
-  /* Use auto-fit so columns flow naturally */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-  gap: 1.5rem;
-  width: 100%;
-  /* This centers the grid tracks if they don't fill the width */
-  justify-content: center; 
-  /* This ensures cards inside are sized correctly */
-  justify-items: center; 
-}
-
-/* ============================================
    MOVE CARD
    ============================================ */
 .move-card {
@@ -545,4 +506,38 @@ body {
   .move-card { transition: opacity 0.3s ease; transform: none !important; }
   .move-card:hover { transform: none; }
   .climbing-hold { animation: none; opacity: 0.4; }
+}
+
+/* ============================================
+   MOVES SECTION (Clean Block)
+   ============================================ */
+.moves-section {
+  padding: 4rem 2rem 8rem;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.category-section {
+  margin-top: 5rem;
+  width: 100%;
+}
+
+.category-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  color: var(--fg); /* Ensure text is visible */
+  width: 100%;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  justify-items: center;
 }
