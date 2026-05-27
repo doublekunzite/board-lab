@@ -40,7 +40,7 @@
       
       
 
-      <div class="moves-grid" id="movesGrid"></div>
+      <div class="cards-grid" id="Grid"></div>
     </section>
   </main>
 
@@ -88,8 +88,8 @@
 
                 if (filteredMoves.length > 0) {
                     fullHtml += `<div class="category-section">
-                        <h3 class="category-title font-display">${cat.title}</h3>
-                        <div class="moves-grid">`;
+    <h3 class="category-title font-display">${cat.title}</h3>
+    <div class="cards-grid">`; 
                     
                     // Add cards
                     filteredMoves.forEach((move, i) => {
@@ -122,23 +122,7 @@
         renderGroupedMoves();
     }
 
-        // Filter Button Logic
-        const filterTabs = document.querySelectorAll('.filter-tab');
-        filterTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Update active state
-                filterTabs.forEach(t => {
-                    t.classList.remove('active');
-                    t.setAttribute('aria-selected', 'false');
-                });
-                tab.classList.add('active');
-                tab.setAttribute('aria-selected', 'true');
-                
-                // Render filtered list
-                renderMoves(tab.dataset.filter);
-            });
-        });
-    }
+        
 
    // ============================================
     // 2. GENERATE FLOATING HOLDS (Your Custom Shapes)

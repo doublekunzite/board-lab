@@ -723,3 +723,10 @@ body {
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--border);
 }
+
+/* Inner grid for categorized cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
