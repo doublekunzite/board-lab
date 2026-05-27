@@ -523,17 +523,29 @@ body {
 }
 
 .category-title {
-    font-family: var(--font-display);
-    font-size: 2rem;  /* changed from larger size */
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin: 0 0 1.5rem 0;  /* simplified margins */
-    padding: 0;
-    color: var(--accent);  /* or any color that contrasts with your bg */
-    text-align: center;
-    line-height: 1.3;
-    height: auto;  /* remove fixed height */
+  /* Force visibility with hardcoded colors */
+  color: #f5f2ed !important; 
+  background-color: transparent;
+  
+  /* Layout fixes */
+  display: block;
+  width: 100%;
+  height: auto; /* Ensure no fixed height clipping */
+  overflow: visible;
+  
+  /* Typography */
+  font-family: Impact, 'Arial Narrow Bold', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-align: center;
+  
+  /* Spacing */
+  margin: 0 0 2rem 0;
+  padding: 0 0 1rem 0;
+  border-bottom: 1px solid #2a2a2d;
 }
 
 .cards-grid {
