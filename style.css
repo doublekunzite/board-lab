@@ -716,20 +716,27 @@ body {
 
 /* Category Section Headers */
 .category-section {
-  margin-top: 5rem; /* Consistent space between categories */
+  margin-top: 5rem;
+  width: 100%;             /* Ensure full width */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns everything to the left */
 }
 
 .category-title {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: clamp(2rem, 5vw, 3rem); /* Slightly larger titles */
   line-height: 1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;     /* More space under title */
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--border);
+  width: 100%;             /* Title line spans full width */
 }
 
 /* Inner grid for cards */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;             /* Grid fills the section */
+  justify-items: start;    /* Cards start from the left, not centered */
 }
