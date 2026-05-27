@@ -38,14 +38,7 @@
         <h2 class="section-title font-display">THE ARCHIVE</h2>
       </header>
       
-      <!-- Filter Tabs -->
-      <div class="filter-tabs" role="tablist" aria-label="Filter moves by category">
-        <button class="filter-tab active" role="tab" aria-selected="true" data-filter="all">All Moves</button>
-        <button class="filter-tab" role="tab" aria-selected="false" data-filter="dynamic">Dynamic</button>
-        <button class="filter-tab" role="tab" aria-selected="false" data-filter="footwork">Footwork</button>
-        <button class="filter-tab" role="tab" aria-selected="false" data-filter="hooks">Hooks</button>
-        <button class="filter-tab" role="tab" aria-selected="false" data-filter="hand-technique">Hand Technique</button>
-      </div>
+      
 
       <div class="moves-grid" id="movesGrid"></div>
     </section>
@@ -54,8 +47,8 @@
   <footer class="site-footer">BOARD LAB</footer>
 
   <script>
-    // ============================================
-    // 1. MOVE CARDS & FILTERING
+        // ============================================
+    // 1. MOVE CARDS (Grouped by Category)
     // ============================================
     const movesGrid = document.getElementById('movesGrid');
     if (movesGrid) {
@@ -77,27 +70,44 @@
             { id: 'pogo', title: 'Pogo', desc: 'Swinging a leg or arm to generate momentum.', category: 'dynamic' }
         ];
 
-        function renderMoves(filter) {
-            // Filter data
-            const filteredData = filter === 'all' 
-                ? movesData 
-                : movesData.filter(m => m.category === filter);
-            
-            // Build HTML
-            let html = '';
-            filteredData.forEach((move, i) => {
-                html += `<a href="moves/${move.id}.html" class="move-card" style="transition-delay:${i*0.05}s">
-                    <div class="move-card-content">
-                        <h3 class="move-card-title">${move.title}
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </h3>
-                        <p class="move-card-desc">${move.desc}</p>
-                    </div>
-                </a>`;
-            });
-            movesGrid.innerHTML = html;
+        // Define the order and titles of categories
+        const categories = [
+            { key: 'dynamic', title: 'Dynamic' },
+            { key: 'footwork', title: 'Footwork' },
+            { key: 'hooks', title: 'Hooks' },
+            { key: 'hand-technique', title: 'Hand Technique' }
+        ];
 
-            // Re-trigger reveal animation
+        function renderGroupedMoves() {
+            let fullHtml = '';
+
+            // Loop through each category
+            categories.forEach(cat => {
+                // Filter moves for this category
+                const filteredMoves = movesData.filter(m => m.category === cat.key);
+
+                if (filteredMoves.length > 0) {
+                    fullHtml += `<div class="category-section">
+                        <h3 class="category-title font-display">${cat.title}</h3>
+                        <div class="moves-grid">`;
+                    
+                    // Add cards
+                    filteredMoves.forEach((move, i) => {
+                        fullHtml += `<a href="moves/${move.id}.html" class="move-card" style="transition-delay:${i*0.05}s">
+                            <div class="move-card-content">
+                                <h4 class="move-card-title">${move.title}
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </h4>
+                                <p class="move-card-desc">${move.desc}</p>
+                            </div>
+                        </a>`;
+                    });
+
+                    fullHtml += `</div></div>`; // Close moves-grid and category-section
+                }
+            });
+
+            movesGrid.innerHTML = fullHtml;
             observeCards();
         }
 
@@ -109,7 +119,8 @@
         }
 
         // Initial Render
-        renderMoves('all');
+        renderGroupedMoves();
+    }
 
         // Filter Button Logic
         const filterTabs = document.querySelectorAll('.filter-tab');

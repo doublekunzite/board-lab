@@ -706,3 +706,20 @@ body {
 .align-bottom {
   object-position: bottom center;
 }
+
+/* Category Section Headers */
+.category-section {
+  margin-top: 4rem;
+}
+
+.category-section:first-of-type {
+  margin-top: 0;
+}
+
+.category-title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
