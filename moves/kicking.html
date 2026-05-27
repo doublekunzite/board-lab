@@ -3,70 +3,142 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Board Lab | Climbing Movement Archive</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
+  <title>Kicking | Board Lab</title>
+  <link rel="stylesheet" href="../style.css">
+  
+   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
 
 </head>
 <body>
+  <!-- Background atmosphere -->
   <div class="bg-atmosphere" aria-hidden="true"></div>
   <div class="noise-overlay" aria-hidden="true"></div>
+  
+  <!-- Floating Holds -->
   <div class="holds-container" aria-hidden="true" id="holdsContainer"></div>
 
+  <!-- Header -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <a href="index.html" class="logo font-display">BOARD LAB</a>
+      <a href="../index.html" class="logo font-display">BOARD LAB</a>
       <nav>
         <ul class="nav-links">
-          <li><a href="#moves" class="nav-link">Moves</a></li>
+          <li><a href="../index.html#moves" class="nav-link">Moves</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
+  <!-- Main content -->
   <main class="main-content">
-    <section class="hero-section">
-      <h1 class="hero-title font-display">
-        <span>BOARD</span>
-        <span class="accent-line">MOVES</span>
-      </h1>
-      <p class="hero-subtitle">A visual archive of<br> 
-	  board climbing movements</p>
-    </section>
+    <div class="detail-page">
+      
+      <a href="../index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Archive
+      </a>
 
-    <section class="moves-section" id="moves">
-      <header class="section-header">
-        <h2 class="section-title font-display">THE ARCHIVE</h2>
+      <!-- Header -->
+      <header class="detail-header">
+        <h1 class="detail-title font-display">KICKING THE WALL</h1>
+        <p class="detail-intro">Kicking the wall to stop rotation.</p>
       </header>
-      <div class="moves-grid" id="movesGrid"></div>
-    </section>
+
+      <!-- Variations List (Accordion) -->
+      <section class="variations-list">
+        
+        <!-- Variation 1 -->
+        <details class="variation-item">
+          <summary class="variation-header">
+            <div class="variation-header-content">
+              <h3 class="variation-name">Bicycle on "CAPITALS"</h3>
+              <span class="variation-tag">Bicycle</span>
+            </div>
+            <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="variation-body">
+            <div class="variation-media">
+              <img src="../gifs/feet-pinch-static-1.jpg" alt="Drop Knee demonstration static" class="gif-static align-bottom" loading="lazy">
+              <img src="../gifs/feet-pinch-1.gif" alt="Drop Knee demonstration animated" class="gif-animated align-bottom" loading="lazy">
+              <div class="play-overlay">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Hover to play
+              </div>
+            </div>
+            <div class="variation-details">
+              <p>Using a bicycle on a pinch twice on "CAPITALS MEANS SHOUTING" V8 / 7b @ 60.</p>
+            </div>
+          </div>
+        </details>
+		
+		<!-- Variation 2 -->
+        <details class="variation-item">
+          <summary class="variation-header">
+            <div class="variation-header-content">
+              <h3 class="variation-name">Feet Pinch on "One Giant Leap"</h3>
+              <span class="variation-tag">Feet Pinch</span>
+            </div>
+            <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="variation-body">
+            <div class="variation-media">
+              <img src="../gifs/feet-pinch-static-2.jpg" alt="Drop Knee demonstration static" class="gif-static" loading="lazy">
+              <img src="../gifs/feet-pinch-2.gif" alt="Drop Knee demonstration animated" class="gif-animated" loading="lazy">
+              <div class="play-overlay">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Hover to play
+              </div>
+            </div>
+            <div class="variation-details">
+              <p>Using a feet pinch after a deadpoint on "One Giant Leap" V8 / 7b @ 60.</p>
+            </div>
+          </div>
+        </details>
+        
+
+      </section>
+
+      <!-- Description / Notes -->
+      <section class="description-block">
+        <h2>Technique Notes</h2>
+		<p>During a bicycle you squeeze a hold with the top of one foot and the bottom of the other. A feet pinch (I'm making this name up) is similar but with the bottoms of the feet, often used on a vertical pinch.</p>
+		<p>These techniques allow you to use footholds that are otherwise unusable. For example, a totally vertical pinch directly below the hold you're on would be very hard to use with just one foot, especially when the wall is steep.</p> 
+		</section>
+
+    </div>
   </main>
 
-  <footer class="site-footer">BOARD LAB</footer>
+  <!-- Footer -->
+  <footer class="site-footer">
+    BOARD LAB / CLIMBING MOVEMENT ARCHIVE
+  </footer>
 
   <script>
     // ============================================
     // 1. MOVE CARDS (Index Page Only)
     // ============================================
-    // Only run this if the grid exists (prevents errors on detail pages)
     const movesGrid = document.getElementById('movesGrid');
     if (movesGrid) {
         const movesData = [
-            { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing an arm over or through the other.' },
-            { id: 'drop-knee', title: 'Drop Knee', desc: 'Twisting the leg to put more force through a foothold.' },
+            { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing through to a hold on the opposite side.' },
+            { id: 'drop-knee', title: 'Drop Knee', desc: 'Dropping the inside knee to extend reach.' },
             { id: 'flag', title: 'Flag', desc: 'Extending a leg for counterbalance.' },
             { id: 'smear', title: 'Smear', desc: 'Using the foot on the wall surface.' },
-			{ id: 'kicking', title: 'Kicking The Wall', desc: 'Kicking the wall to stop rotation.' },
             { id: 'gaston', title: 'Gaston', desc: 'Pressing outward on a hold.' },
             { id: 'deadpoint', title: 'Deadpoint', desc: 'Timing a grab at the apex of momentum.' },
-            { id: 'heel-hook', title: 'Heel Hook', desc: 'Using the heel to pull.' },
-            { id: 'toe-hook', title: 'Toe Hook', desc: 'Using the toe to pull.' },
-            { id: 'layback', title: 'Layback', desc: 'Holding tension between a handhold and a high foot.' },
-            { id: 'feet-pinch', title: 'Bicycle / Feet Pinch', desc: 'Squeezing a hold between feet.' },
+            { id: 'heel-hook', title: 'Drop Knee', desc: 'Using the heel to pull.' },
+            { id: 'toe-hook', title: 'Toe Hook', desc: 'Hooking the foot to create tension.' },
+            { id: 'layback', title: 'Layback', desc: 'Leaning away to generate force.' },
+            { id: 'feet-pinch', title: 'Feet Pinch', desc: 'Squeezing a hold between feet.' },
             { id: 'foot-swap', title: 'Foot Swap', desc: 'Switching feet efficiently.' },
             { id: 'campus', title: 'Campus', desc: 'Moving hands without feet.' }
-			{ id: 'hand-flip', title: 'Hand Flip', desc: 'Flipping a hand to use a hold in the opposite orientation.' }
-			{ id: 'pogo', title: 'Pogo', desc: 'Swinging a leg or arm to generate momentum.' }
         ];
 
         let html = '';
@@ -82,14 +154,13 @@
         });
         movesGrid.innerHTML = html;
 
-        // Reveal animation observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.move-card').forEach(c => observer.observe(c));
     }
 
-   // ============================================
+    // ============================================
     // 2. GENERATE FLOATING HOLDS (Your Custom Shapes)
     // ============================================
     function generateClimbingHolds() {
@@ -149,7 +220,7 @@
             const hold = document.createElement('div');
             hold.className = 'climbing-hold';
             
-            // Pick a shape from the array
+            // Cycle through the 4 shapes
             const shapeIndex = i % shapes.length;
             hold.innerHTML = shapes[shapeIndex];
 
@@ -158,8 +229,8 @@
             const y = Math.random() * 100;
             
             // Random Animation Settings
-            const duration = 20 + Math.random() * 20; // 20s - 40s
-            const delay = Math.random() * -20; // Start at random point in cycle
+            const duration = 20 + Math.random() * 20; 
+            const delay = Math.random() * -20; 
             const rotation = Math.random() * 360;
             const driftX = -30 + Math.random() * 60;
             const driftY = -30 + Math.random() * 60;
@@ -170,7 +241,7 @@
             hold.style.cssText = `
                 left: ${x}%; 
                 top: ${y}%; 
-                width: ${60 + Math.random() * 40}px; 
+                width: ${50 + Math.random() * 40}px; 
                 height: auto;
                 --hold-opacity: ${opacity};
                 --float-duration: ${duration}s;
@@ -191,32 +262,22 @@
         const container = document.getElementById('holdsContainer');
         if (!container) return;
 
-        // Current position
         let currentX = 0;
         let currentY = 0;
-        // Target position from mouse
         let targetX = 0;
         let targetY = 0;
 
-        // Listen for mouse movement
         document.addEventListener('mousemove', (e) => {
-            // Calculate how far the mouse is from the center (0 to 1)
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            
-            // Move max 30px in either direction
             targetX = ((e.clientX - centerX) / centerX) * 30;
             targetY = ((e.clientY - centerY) / centerY) * 30;
         });
 
-        // Animation loop to smooth the movement
         function animate() {
-            // Lerp (Linear Interpolation) for smoothness
             currentX += (targetX - currentX) * 0.05;
             currentY += (targetY - currentY) * 0.05;
-
             container.style.transform = `translate(${currentX}px, ${currentY}px)`;
-
             requestAnimationFrame(animate);
         }
 
@@ -232,7 +293,7 @@
         else header.classList.remove('scrolled');
     }, { passive: true });
 
-    // Initialize
+    // Initialize Everything
     generateClimbingHolds();
     initParallax();
 </script>
