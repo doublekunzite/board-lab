@@ -6,7 +6,6 @@
   <title>Board Lab | Climbing Movement Archive</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
-
 </head>
 <body>
   <div class="bg-atmosphere" aria-hidden="true"></div>
@@ -31,13 +30,23 @@
         <span class="accent-line">MOVES</span>
       </h1>
       <p class="hero-subtitle">A visual archive of<br> 
-	  board climbing movements</p>
+      board climbing movements</p>
     </section>
 
     <section class="moves-section" id="moves">
       <header class="section-header">
         <h2 class="section-title font-display">THE ARCHIVE</h2>
       </header>
+      
+      <!-- Filter Tabs -->
+      <div class="filter-tabs" role="tablist" aria-label="Filter moves by category">
+        <button class="filter-tab active" role="tab" aria-selected="true" data-filter="all">All Moves</button>
+        <button class="filter-tab" role="tab" aria-selected="false" data-filter="dynamic">Dynamic</button>
+        <button class="filter-tab" role="tab" aria-selected="false" data-filter="footwork">Footwork</button>
+        <button class="filter-tab" role="tab" aria-selected="false" data-filter="hooks">Hooks</button>
+        <button class="filter-tab" role="tab" aria-selected="false" data-filter="hand-technique">Hand Technique</button>
+      </div>
+
       <div class="moves-grid" id="movesGrid"></div>
     </section>
   </main>
@@ -46,47 +55,78 @@
 
   <script>
     // ============================================
-    // 1. MOVE CARDS (Index Page Only)
+    // 1. MOVE CARDS & FILTERING
     // ============================================
-    // Only run this if the grid exists (prevents errors on detail pages)
     const movesGrid = document.getElementById('movesGrid');
     if (movesGrid) {
         const movesData = [
-            { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing an arm over or through the other.' },
-            { id: 'drop-knee', title: 'Drop Knee', desc: 'Twisting the leg to put more force through a foothold.' },
-            { id: 'flag', title: 'Flag', desc: 'Extending a leg for counterbalance.' },
-            { id: 'smear', title: 'Smear', desc: 'Using the foot on the wall surface.' },
-			{ id: 'kicking', title: 'Kicking The Wall', desc: 'Kicking the wall to stop rotation.' },
-            { id: 'gaston', title: 'Gaston', desc: 'Pressing outward on a hold.' },
-            { id: 'deadpoint', title: 'Deadpoint', desc: 'Timing a grab at the apex of momentum.' },
-            { id: 'heel-hook', title: 'Heel Hook', desc: 'Using the heel to pull.' },
-            { id: 'toe-hook', title: 'Toe Hook', desc: 'Using the toe to pull.' },
-            { id: 'layback', title: 'Layback', desc: 'Holding tension between a handhold and a high foot.' },
-            { id: 'feet-pinch', title: 'Bicycle / Feet Pinch', desc: 'Squeezing a hold between feet.' },
-            { id: 'foot-swap', title: 'Foot Swap', desc: 'Switching feet efficiently.' },
-            { id: 'campus', title: 'Campus', desc: 'Moving hands without feet.' },
-			{ id: 'hand-flip', title: 'Hand Flip', desc: 'Flipping a hand to use a hold in the opposite orientation.' },
-			{ id: 'pogo', title: 'Pogo', desc: 'Swinging a leg or arm to generate momentum.' }
+            { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing an arm over or through the other.', category: 'hand-technique' },
+            { id: 'drop-knee', title: 'Drop Knee', desc: 'Twisting the leg to put more force through a foothold.', category: 'footwork' },
+            { id: 'flag', title: 'Flag', desc: 'Extending a leg for counterbalance.', category: 'footwork' },
+            { id: 'smear', title: 'Smear', desc: 'Using the foot on the wall surface.', category: 'footwork' },
+            { id: 'kicking', title: 'Kicking the Wall', desc: 'Kicking the wall to stop rotation.', category: 'dynamic' },
+            { id: 'gaston', title: 'Gaston', desc: 'Pressing outward on a hold.', category: 'hand-technique' },
+            { id: 'deadpoint', title: 'Deadpoint', desc: 'Timing a grab at the apex of momentum.', category: 'dynamic' },
+            { id: 'heel-hook', title: 'Heel Hook', desc: 'Using the heel to pull.', category: 'hooks' },
+            { id: 'toe-hook', title: 'Toe Hook', desc: 'Using the toe to pull.', category: 'hooks' },
+            { id: 'layback', title: 'Layback', desc: 'Holding tension between a handhold and a high foot.', category: 'hand-technique' },
+            { id: 'feet-pinch', title: 'Bicycle / Feet Pinch', desc: 'Squeezing a hold between feet.', category: 'footwork' },
+            { id: 'foot-swap', title: 'Foot Swap', desc: 'Switching feet efficiently.', category: 'footwork' },
+            { id: 'campus', title: 'Campus', desc: 'Moving hands without feet.', category: 'dynamic' },
+            { id: 'hand-flip', title: 'Hand Flip', desc: 'Flipping a hand to use a hold in the opposite orientation.', category: 'hand-technique' },
+            { id: 'pogo', title: 'Pogo', desc: 'Swinging a leg or arm to generate momentum.', category: 'dynamic' }
         ];
 
-        let html = '';
-        movesData.forEach((move, i) => {
-            html += `<a href="moves/${move.id}.html" class="move-card" style="transition-delay:${i*0.05}s">
-                <div class="move-card-content">
-                    <h3 class="move-card-title">${move.title}
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                    </h3>
-                    <p class="move-card-desc">${move.desc}</p>
-                </div>
-            </a>`;
-        });
-        movesGrid.innerHTML = html;
+        function renderMoves(filter) {
+            // Filter data
+            const filteredData = filter === 'all' 
+                ? movesData 
+                : movesData.filter(m => m.category === filter);
+            
+            // Build HTML
+            let html = '';
+            filteredData.forEach((move, i) => {
+                html += `<a href="moves/${move.id}.html" class="move-card" style="transition-delay:${i*0.05}s">
+                    <div class="move-card-content">
+                        <h3 class="move-card-title">${move.title}
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </h3>
+                        <p class="move-card-desc">${move.desc}</p>
+                    </div>
+                </a>`;
+            });
+            movesGrid.innerHTML = html;
 
-        // Reveal animation observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.move-card').forEach(c => observer.observe(c));
+            // Re-trigger reveal animation
+            observeCards();
+        }
+
+        function observeCards() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.move-card').forEach(c => observer.observe(c));
+        }
+
+        // Initial Render
+        renderMoves('all');
+
+        // Filter Button Logic
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active state
+                filterTabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+                
+                // Render filtered list
+                renderMoves(tab.dataset.filter);
+            });
+        });
     }
 
    // ============================================
@@ -97,8 +137,6 @@
         if (!container) return;
         
         // Your Custom SVG Paths
-        // Note: I removed the black fill="fill:#000000" from your paths 
-        // and applied the grey fill via a wrapper path.
         const shapes = [
             // Shape 1: Pinch
             `<svg viewBox="0 0 54 69" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -131,40 +169,31 @@
                 </g>
                 <circle cx="36" cy="43" r="6" fill="#1a1a1d" />
             </svg>`,
-			
-			// Shape 5: Half Moon
-			
-			`<svg viewBox="0 0 100 87" fill="none" xmlns="http://www.w3.org/2000/svg">
+            
+            // Shape 5: Half Moon
+            `<svg viewBox="0 0 100 87" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g fill="#55555a">
                     <path d="M 12.173083711786823 4.75 C 9.976041526740259 6.8125, 6.563307706796448 10.964738300897206, 4.589230778578354 13.977196224216016 L 1.0000000000000018 19.45439244843203 1.0002286295579443 33.977196224216016 C 1.0005187195372274 52.40403431269857, 3.4502856022861685 57.97046720680666, 16.022623671371058 68.11152733052987 C 25.051247042469072 75.39416735640549, 28.80535265727733 76.5, 44.5 76.5 C 69.73837656731261 76.5, 78.93994318278322 70.37076754194305, 73.44745798658249 57.217881369103516 C 66.71383807036547 41.09284267979924, 50.98263846613027 20.084585921188427, 36.097399672025034 7.338683675237788 C 28.71388074878891 1.0163389867559953, 28.678654034952082 1.000000000000001, 22.431252605233503 1.0000000000000004 C 16.570198090090827 1, 15.91101354483017 1.2409730304115607, 12.173083711786823 4.75 M 33.523780647313316 13.149571394683841 C 44.63123592880508 22.265998630901045, 53.946424827493146 34.08251637795626, 62.967844063727895 50.5 C 64.78119647296079 53.8, 66.69780087866515 57.047369996656414, 67.22696496529313 57.71637777034759 C 70.52794701186718 61.88971966141506, 59.1859768304711 65.98921193318097, 44.32167080374647 65.99536941783111 C 33.21196738810582 65.99997157202023, 33.105177464773185 65.97726573761429, 26.926853474251622 62.29685714738989 C 20.606999130171054 58.532139361044486, 12.001856902787951 49.05858289084755, 12.000628849379547 45.86430691938838 C 12.000282982220797 44.964675725052, 11.327772333708689 42.939675725052, 10.506160741574861 41.36430691938838 C 8.482779205817257 37.48464871603984, 8.616677554506555 34.072479957574586, 11.115080667725262 25.847031547765702 C 13.106127056848596 19.29194471305097, 13.314702180097433 19.004287813160005, 14.671784636374321 20.941794424971896 C 17.143288690634243 24.470360743179075, 23 23.073164139203325, 23 18.9549875621121 C 23 16.836453002600855, 19.449223829233233 13.60433041622759, 18.063013269695904 14.461055657585668 C 15.763011330886743 15.882535029960389, 17.185568308756224 13.561140720260198, 20.57120208104734 10.36807708104734 C 25.16088560291421 6.039448364879341, 24.75447002757516 5.952172877145722, 33.523780647313316 13.149571394683841 M 4.662280701754385 36.25 C 4.384868421052632 36.9375, 4.157894736842105 36.375, 4.157894736842105 35 C 4.157894736842105 33.625, 4.384868421052632 33.0625, 4.662280701754385 33.75 C 4.93969298245614 34.4375, 4.93969298245614 35.5625, 4.662280701754385 36.25 M 30.45225110053757 38.64602272683515 C 25.566592098746646 43.91773603199856, 28.837074415591637 52.02992795370541, 35.82258014903288 51.96673071529425 C 40.89409511991674 51.920849178158505, 44.4 48.85057072688892, 44.4 44.455098701110515 C 44.4 36.820878315793806, 35.557024298208496 33.137881291639054, 30.45225110053757 38.64602272683515 M 34.8125 53.68311403508772 C 35.534375 53.97198464912281, 36.396875 53.936458333333334, 36.72916666666667 53.60416666666667 C 37.061458333333334 53.271875, 36.47083333333334 53.035526315789475, 35.41666666666667 53.078947368421055 C 34.25172368072129 53.12693129003894, 34.01476730310262 53.36388766765761, 34.8125 53.68311403508772 M 47.26374974414486 71.7039311899189 C 46.03381210342453 71.94129308515772, 43.78381210342453 71.9474356019636, 42.26374974414486 71.71758122726533 C 40.74368738486519 71.48772685256705, 41.75 71.29352166555348, 44.5 71.28601414501296 C 47.25 71.27850662447241, 48.49368738486519 71.4665692946801, 47.26374974414486 71.7039311899189" stroke="none" fill-rule="evenodd" />
                 </g>
                 <circle cx="36" cy="43" r="6" fill="#1a1a1d" />
             </svg>`
-			
         ];
 
-        const holdCount = 10; // Number of holds to generate
+        const holdCount = 10;
 
         for (let i = 0; i < holdCount; i++) {
             const hold = document.createElement('div');
             hold.className = 'climbing-hold';
-            
-            // Pick a shape from the array
             const shapeIndex = i % shapes.length;
             hold.innerHTML = shapes[shapeIndex];
 
-            // Random Position
             const x = Math.random() * 100;
             const y = Math.random() * 100;
-            
-            // Random Animation Settings
-            const duration = 20 + Math.random() * 20; // 20s - 40s
-            const delay = Math.random() * -20; // Start at random point in cycle
+            const duration = 20 + Math.random() * 20;
+            const delay = Math.random() * -20;
             const rotation = Math.random() * 360;
             const driftX = -30 + Math.random() * 60;
             const driftY = -30 + Math.random() * 60;
-            
-            // Opacity: 0.15 (subtle) to 0.35 (visible)
             const opacity = 0.15 + Math.random() * 0.2;
 
             hold.style.cssText = `
@@ -191,32 +220,22 @@
         const container = document.getElementById('holdsContainer');
         if (!container) return;
 
-        // Current position
         let currentX = 0;
         let currentY = 0;
-        // Target position from mouse
         let targetX = 0;
         let targetY = 0;
 
-        // Listen for mouse movement
         document.addEventListener('mousemove', (e) => {
-            // Calculate how far the mouse is from the center (0 to 1)
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            
-            // Move max 30px in either direction
             targetX = ((e.clientX - centerX) / centerX) * 30;
             targetY = ((e.clientY - centerY) / centerY) * 30;
         });
 
-        // Animation loop to smooth the movement
         function animate() {
-            // Lerp (Linear Interpolation) for smoothness
             currentX += (targetX - currentX) * 0.05;
             currentY += (targetY - currentY) * 0.05;
-
             container.style.transform = `translate(${currentX}px, ${currentY}px)`;
-
             requestAnimationFrame(animate);
         }
 
