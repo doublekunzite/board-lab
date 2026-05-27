@@ -709,11 +709,13 @@ body {
 
 /* Category Section Headers */
 .category-section {
-  margin-top: 4rem;
+  margin-top: 4rem; /* Space above every section */
+  padding-top: 1rem; /* Adds a little breathing room inside */
 }
 
 .category-section:first-of-type {
-  margin-top: 0;
+  margin-top: 0; /* No space above the first one */
+  padding-top: 0; /* No extra padding at the very top */
 }
 
 .category-title {
@@ -724,7 +726,7 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
-/* Inner grid for categorized cards */
+/* Inner grid for cards */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
