@@ -246,5 +246,15 @@
     generateClimbingHolds();
     initParallax();
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Your existing JavaScript code for generating the moves goes here
+        const movesGrid = document.getElementById('movesGrid');
+        if (movesGrid) {
+            // ... (your entire renderGroupedMoves() logic) ...
+            renderGroupedMoves(); // Make sure this function is called
+        }
+    });
+</script>
 </body>
 </html>
