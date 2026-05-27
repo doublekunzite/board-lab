@@ -707,15 +707,16 @@ body {
   object-position: bottom center;
 }
 
-/* Category Section Headers */
-.category-section {
-  margin-top: 4rem; /* Space above every section */
-  padding-top: 1rem; /* Adds a little breathing room inside */
+/* Main Section Container */
+.moves-section {
+  padding: 4rem 2rem 8rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.category-section:first-of-type {
-  margin-top: 0; /* No space above the first one */
-  padding-top: 0; /* No extra padding at the very top */
+/* Category Section Headers */
+.category-section {
+  margin-top: 5rem; /* Consistent space between categories */
 }
 
 .category-title {
