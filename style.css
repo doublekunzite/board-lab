@@ -597,3 +597,7 @@ body {
 .variation-details p {
     color: #f5f2ed !important;
 }
+
+.detail-page {
+    background: red !important;
+}
