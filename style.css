@@ -554,3 +554,25 @@ body {
     position: relative;
     clear: both;
 }
+
+/* Fix detail page text visibility */
+.detail-title,
+.detail-intro,
+.variation-name,
+.variation-details p,
+.description-block p,
+.description-block h2,
+.back-link {
+    color: var(--fg) !important;
+}
+
+/* Ensure no parent is hiding content */
+.detail-page,
+.detail-header,
+.variations-list,
+.variation-item,
+.variation-body {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
