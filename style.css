@@ -559,3 +559,19 @@ body {
     position: relative;
     clear: both;
 }
+
+/* ============================================
+   FIX: FORCE CONTENT ABOVE BACKGROUND
+   ============================================ */
+.main-content {
+  position: relative;
+  z-index: 10;
+  /* Optional: ensures background doesn't hide footer if needed */
+  pointer-events: auto; 
+}
+
+/* Also apply to moves section on the homepage */
+.moves-section {
+  position: relative;
+  z-index: 10;
+}
