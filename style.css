@@ -154,6 +154,8 @@ body {
    HERO SECTION
    ============================================ */
 .hero-section {
+  position: relative; /* Create stacking context */
+  z-index: 10;        /* Sit above backgrounds */
   min-height: 60vh;
   display: flex;
   flex-direction: column;
@@ -161,7 +163,6 @@ body {
   align-items: center;
   text-align: center;
   padding: 10rem 2rem 4rem;
-  position: relative;
 }
 
 .hero-title {
@@ -253,6 +254,8 @@ body {
    DETAIL PAGE LAYOUT
    ============================================ */
 .detail-page {
+  position: relative; /* Create stacking context */
+  z-index: 10;        /* Sit above the background layers (z-index 0-2) */
   padding: 8rem 2rem 4rem;
   max-width: 900px;
   margin: 0 auto;
@@ -512,6 +515,8 @@ body {
    MOVES SECTION (Clean Block)
    ============================================ */
 .moves-section {
+  position: relative; /* Create stacking context */
+  z-index: 10;        /* Sit above backgrounds */
   padding: 4rem 2rem 8rem;
   max-width: 1500px;
   margin: 0 auto;
@@ -553,51 +558,4 @@ body {
     overflow: visible;
     position: relative;
     clear: both;
-}
-
-/* Fix detail page text visibility */
-.detail-title,
-.detail-intro,
-.variation-name,
-.variation-details p,
-.description-block p,
-.description-block h2,
-.back-link {
-    color: var(--fg) !important;
-}
-
-/* Ensure no parent is hiding content */
-.detail-page,
-.detail-header,
-.variations-list,
-.variation-item,
-.variation-body {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-}
-
-body {
-    background: var(--bg) !important;
-    color: var(--fg) !important;
-}
-
-.detail-page,
-.main-content,
-.detail-header,
-.variations-list {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-}
-
-.detail-title,
-.detail-intro,
-.variation-name,
-.variation-details p {
-    color: #f5f2ed !important;
-}
-
-.detail-page {
-    background: red !important;
 }
