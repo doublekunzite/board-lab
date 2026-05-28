@@ -581,3 +581,19 @@ body {
     background: var(--bg) !important;
     color: var(--fg) !important;
 }
+
+.detail-page,
+.main-content,
+.detail-header,
+.variations-list {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
+
+.detail-title,
+.detail-intro,
+.variation-name,
+.variation-details p {
+    color: #f5f2ed !important;
+}
