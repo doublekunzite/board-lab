@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hold Quality | Board Lab</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ============================================
+       CHALKBOARD THEME OVERRIDES
+       ============================================ */
+    :root {
+      --chalk-white: rgba(245, 242, 237, 0.95);
+      --chalk-dim: rgba(245, 242, 237, 0.6);
+      --chalk-accent: #e85d3b; /* Your brand accent */
+      --chalk-blue: #6bb3d9;
+      --chalk-green: #7dcfb6;
+      --chalk-red: #d9534f;
+      --chalk-yellow: #f4d35e;
+    }
+
+    body {
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* Import Handwritten Font */
+    .font-chalk {
+      font-family: 'Caveat', cursive;
+    }
+
+    /* Main Container for this page */
+    .quality-page {
+      position: relative;
+      z-index: 10;
+      padding: 8rem 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* "Chalk" Text Styles */
+    .chalk-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: var(--chalk-white);
+      text-shadow: 0 0 15px rgba(255,255,255,0.2);
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+
+    .chalk-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--chalk-dim);
+      margin-bottom: 4rem;
+    }
+
+    /* Diagram Sections */
+    .diagram-section {
+      margin-bottom: 8rem;
+      border-bottom: 1px dashed rgba(255,255,255,0.1);
+      padding-bottom: 4rem;
+    }
+
+    .diagram-section h2 {
+      font-size: 2.5rem;
+      color: var(--chalk-accent);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .diagram-section h2::before {
+      content: '►';
+      font-size: 1rem;
+      opacity: 0.6;
+    }
+
+    /* The "Bolted" Hold Component */
+    .hold-display {
+      position: relative;
+      display: inline-block;
+      /* The "lifted" shadow to simulate being on a wall */
+      filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.8));
+    }
+
+    /* The Fake Bolt */
+    .hold-display::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      background: #555;
+      border-radius: 50%;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.2);
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      pointer-events: none;
+    }
+    
+    /* Slot for the bolt head */
+    .hold-display::before {
+      content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 6px;
+        height: 2px;
+        background: #333;
+        z-index: 6;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    .hold-display img {
+      display: block;
+      max-width: 150px;
+      height: auto;
+      /* Use a filter to make placeholder images look 'drawn' if needed */
+      filter: contrast(1.1) brightness(1.05);
+    }
+
+    /* ============================================
+       SPECTRUM BAR (Size / Incut)
+       ============================================ */
+    .spectrum-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .spectrum-track {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .spectrum-line {
+      position: absolute;
+      bottom: 80px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--chalk-dim);
+      border-radius: 2px;
+    }
+
+    .spectrum-end-labels {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.5rem;
+      color: var(--chalk-white);
+    }
+
+    .spectrum-item {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .spectrum-item:hover {
+      transform: translateY(-10px);
+    }
+
+    .spectrum-label {
+      font-size: 1.2rem;
+      color: var(--chalk-blue);
+      text-align: center;
+    }
+
+    /* ============================================
+       ROTATION COMPASS (Interactive)
+       ============================================ */
+    .compass-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .compass-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .compass-ui {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+      border: 2px dashed var(--chalk-dim);
+      border-radius: 50%;
+    }
+
+    .compass-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Orientation Labels around the circle */
+    .compass-label {
+      position: absolute;
+      font-size: 1.4rem;
+      color: var(--chalk-white);
+    }
+    .compass-label.top { top: -40px; left: 50%; transform: translateX(-50%); }
+    .compass-label.bottom { bottom: -40px; left: 50%; transform: translateX(-50%); }
+    .compass-label.left { left: -50px; top: 50%; transform: translateY(-50%); }
+    .compass-label.right { right: -50px; top: 50%; transform: translateY(-50%); }
+
+    /* Quality Zones (Colored Arcs) */
+    .quality-zone {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%); /* Example quadrant */
+      opacity: 0.2;
+      transition: opacity 0.3s;
+    }
+    
+    /* Controls for Compass */
+    .compass-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .control-group h3 {
+      font-size: 1.5rem;
+      color: var(--chalk-white);
+      margin-bottom: 1rem;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .chalk-btn {
+      background: transparent;
+      border: 1px solid var(--chalk-dim);
+      color: var(--chalk-white);
+      padding: 0.5rem 1.5rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1.25rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .chalk-btn:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: var(--chalk-white);
+    }
+
+    .chalk-btn.active {
+      background: var(--chalk-accent);
+      border-color: var(--chalk-accent);
+      color: white;
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    /* Info Display */
+    .info-box {
+      background: rgba(255,255,255,0.03);
+      border-left: 3px solid var(--chalk-accent);
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .info-box h4 {
+      color: var(--chalk-accent);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .info-box p {
+      color: var(--chalk-dim);
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       WALL ANGLE DIAGRAM
+       ============================================ */
+    .angle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .angle-card {
+      background: rgba(255,255,255,0.02);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .angle-visual {
+      height: 100px;
+      position: relative;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    
+    .wall-surface {
+      width: 80px;
+      height: 100px;
+      background: #222;
+      transform-origin: bottom;
+      border: 1px solid #444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quality-badge {
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      display: inline-block;
+    }
+    
+    .q-good { background: rgba(125, 207, 182, 0.2); color: var(--chalk-green); }
+    .q-medium { background: rgba(244, 211, 94, 0.2); color: var(--chalk-yellow); }
+    .q-bad { background: rgba(217, 83, 79, 0.2); color: var(--chalk-red); }
+
+  </style>
+</head>
+<body>
+
+  <!-- Backgrounds -->
+  <div class="bg-atmosphere" aria-hidden="true"></div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="../index.html" class="logo font-display">BOARD LAB</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html#moves" class="nav-link">Moves</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="quality-page">
+    
+    <header>
+      <h1 class="chalk-title font-chalk">Hold Quality 101</h1>
+      <p class="chalk-subtitle font-chalk">A visual guide to geometry, friction, and gravity.</p>
+    </header>
+
+    <!-- SECTION 1: SIZE SPECTRUM -->
+    <section class="diagram-section">
+      <h2 class="font-chalk">1. The Size Spectrum</h2>
+      
+      <div class="spectrum-container">
+        <div class="spectrum-track">
+          <div class="spectrum-line"></div>
+          
+          <!-- Micro -->
+          <div class="spectrum-item">
+            <div class="hold-display">
+               <!-- Placeholder SVG for Micro -->
+               <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <path d="M10 25C10 25 20 10 40 25C20 40 10 25 10 25Z" fill="#555"/>
+               </svg>
+            </div>
+            <span class="spectrum-label font-chalk">Micro / Foot</span>
+          </div>
+
+          <!-- Crimp -->
+          <div class="spectrum-item">
+            <div class="hold-display">
+               <svg width="60" height="30" viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <rect x="0" y="10" width="60" height="10" rx="5" fill="#555"/>
+               </svg>
+            </div>
+            <span class="spectrum-label font-chalk">Crimp</span>
+          </div>
+
+          <!-- Edge -->
+          <div class="spectrum-item">
+            <div class="hold-display">
+               <svg width="80" height="40" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <rect x="0" y="5" width="80" height="30" rx="8" fill="#666"/>
+               </svg>
+            </div>
+            <span class="spectrum-label font-chalk">Edge</span>
+          </div>
+
+          <!-- Jug -->
+          <div class="spectrum-item">
+            <div class="hold-display">
+               <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <path d="M10 30C10 10 90 10 90 30C90 50 10 50 10 30Z" fill="#777"/>
+               </svg>
+            </div>
+            <span class="spectrum-label font-chalk">Jug</span>
+          </div>
+
+        </div>
+        <div class="spectrum-end-labels font-chalk">
+          <span>Small / Precise</span>
+          <span>Large / Secure</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ROTATION COMPASS -->
+    <section class="diagram-section">
+      <h2 class="font-chalk">2. The Orientation Compass</h2>
+      
+      <div class="compass-wrapper">
+        
+        <!-- Visual Circle -->
+        <div class="compass-ui">
+          <span class="compass-label top font-chalk">Sloper</span>
+          <span class="compass-label bottom font-chalk">Undercling</span>
+          <span class="compass-label left font-chalk">Sidepull L</span>
+          <span class="compass-label right font-chalk">Sidepull R</span>
+          
+          <!-- Rotating Hold -->
+          <div class="compass-center hold-display" id="compassHold">
+             <!-- Initial SVG -->
+             <svg width="120" height="60" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M10 30C10 5 110 5 110 30C110 55 10 55 10 30Z" fill="#777"/>
+             </svg>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="compass-controls">
+          
+          <div class="control-group">
+            <h3 class="font-chalk">Select Hold Type</h3>
+            <div class="btn-group">
+              <button class="chalk-btn active" data-hold="jug">Jug</button>
+              <button class="chalk-btn" data-hold="crimp">Crimp</button>
+              <button class="chalk-btn" data-hold="pinch">Pinch</button>
+              <button class="chalk-btn" data-hold="sloper">Sloper</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <h3 class="font-chalk">Rotate</h3>
+            <input type="range" min="0" max="360" value="0" id="rotationSlider" style="width: 100%;">
+          </div>
+
+          <div class="info-box" id="holdInfo">
+            <h4 class="font-chalk">Jug (Neutral)</h4>
+            <p>Excellent quality. Can be held comfortably. Gravity pulls you directly into the hold.</p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: WALL ANGLE -->
+    <section class="diagram-section" style="border-bottom: none;">
+      <h2 class="font-chalk">3. Wall Steepness vs. Hold Type</h2>
+      <p style="color: var(--chalk-dim); margin-bottom: 2rem; font-family: 'Caveat'; font-size: 1.2rem;">
+        Notice how "Good" holds degrade slower on steep terrain than "Bad" holds.
+      </p>
+
+      <div class="angle-grid">
+        
+        <!-- SLAB -->
+        <div class="angle-card">
+          <h4 class="font-chalk" style="color: var(--chalk-white); margin-bottom: 1rem;">Slab (0° - 10°)</h4>
+          <div class="angle-visual">
+            <div class="wall-surface" style="transform: rotate(0deg);">
+               <div class="hold-display">
+                 <svg width="40" height="20" viewBox="0 0 40 20" fill="none"><rect width="40" height="20" rx="5" fill="#777"/></svg>
+               </div>
+            </div>
+          </div>
+          <div class="quality-badge q-good font-chalk">High Quality</div>
+          <p style="font-size: 0.9rem; opacity: 0.7;">Even bad holds feel good. Friction is king.</p>
+        </div>
+
+        <!-- VERTICAL -->
+        <div class="angle-card">
+          <h4 class="font-chalk" style="color: var(--chalk-white); margin-bottom: 1rem;">Vertical (90°)</h4>
+          <div class="angle-visual">
+            <div class="wall-surface" style="transform: rotate(0deg); border-bottom: none; border-left: 1px solid #444; border-right: 1px solid #444;">
+               <div class="hold-display">
+                 <svg width="40" height="20" viewBox="0 0 40 20" fill="none"><rect width="40" height="20" rx="5" fill="#777"/></svg>
+               </div>
+            </div>
+          </div>
+          <div class="quality-badge q-medium font-chalk">Medium Quality</div>
+          <p style="font-size: 0.9rem; opacity: 0.7;">Slopers start to feel difficult. Friction drops.</p>
+        </div>
+
+        <!-- OVERHANG -->
+        <div class="angle-card">
+          <h4 class="font-chalk" style="color: var(--chalk-white); margin-bottom: 1rem;">Overhang (45°)</h4>
+          <div class="angle-visual">
+            <!-- Tilted div to simulate wall -->
+            <div style="width: 80px; height: 80px; background: #222; transform: rotate(45deg); border: 1px solid #444; display: flex; align-items: center; justify-content: center;">
+               <div class="hold-display" style="transform: rotate(-45deg);">
+                 <svg width="40" height="20" viewBox="0 0 40 20" fill="none"><rect width="40" height="20" rx="5" fill="#777"/></svg>
+               </div>
+            </div>
+          </div>
+          <div class="quality-badge q-bad font-chalk">Poor Quality</div>
+          <p style="font-size: 0.9rem; opacity: 0.7;">Open hand strength required. Jugs survive, Slopers don't.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // ============================================
+    // ROTATION COMPASS LOGIC
+    // ============================================
+    const slider = document.getElementById('rotationSlider');
+    const hold = document.getElementById('compassHold');
+    const infoBox = document.getElementById('holdInfo');
+    const btns = document.querySelectorAll('.chalk-btn');
+    
+    let currentHold = 'jug';
+
+    // Rotation Logic
+    slider.addEventListener('input', (e) => {
+      const angle = e.target.value;
+      hold.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+      updateInfo(angle);
+    });
+
+    // Hold Type Switching
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentHold = btn.dataset.hold;
+        updateHoldSVG(currentHold);
+        updateInfo(slider.value);
+      });
+    });
+
+    function updateHoldSVG(type) {
+      // Simple SVG switcher. In production, replace with your <img> tags
+      const svgs = {
+        jug: `<svg width="120" height="60" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 30C10 5 110 5 110 30C110 55 10 55 10 30Z" fill="#777"/></svg>`,
+        crimp: `<svg width="100" height="25" viewBox="0 0 100 25" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="5" width="100" height="15" rx="7" fill="#666"/></svg>`,
+        pinch: `<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 40C10 40 20 10 40 10C60 10 70 40 70 40C70 40 60 70 40 70C20 70 10 40 10 40Z" fill="#888"/></svg>`,
+        sloper: `<svg width="100" height="50" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="40" rx="45" ry="10" fill="#888"/></svg>`
+      };
+      hold.innerHTML = svgs[type];
+    }
+
+    function updateInfo(angle) {
+      // Logic to change text based on hold + angle
+      // This is a simplified example
+      let quality = "Neutral";
+      let text = "";
+
+      if (currentHold === 'jug') {
+        if (angle > 315 || angle < 45) { quality = "Neutral"; text = "Comfortable jug. Pull straight down."; }
+        else if (angle > 45 && angle < 135) { quality = "Sidepull"; text = "Good for compression moves."; }
+        else if (angle >= 135 && angle <= 225) { quality = "Undercling"; text = "Excellent for tension and locking off."; }
+        else { quality = "Sidepull"; text = "Good for compression moves."; }
+      } else if (currentHold === 'pinch') {
+         if (angle > 315 || angle < 45 || (angle > 135 && angle < 225)) { 
+           quality = "Vertical Pinch"; text = "Hard to squeeze, requires specific thumb strength."; 
+         } else { 
+           quality = "Horizontal Pinch"; text = "Easier to clamp. Gravity assists the squeeze."; 
+         }
+      } else if (currentHold === 'sloper') {
+        if (angle > 315 || angle < 45) { quality = "Bad Sloper"; text = "Very difficult. Requires open hand and friction."; }
+        else { quality = "Usable"; text = "Better as a sidepull or undercling."; }
+      }
+       else {
+         if (angle > 315 || angle < 45) { quality = "Neutral Crimp"; text = "Painful but solid. Focus on body tension."; }
+         else { quality = "Difficult"; text = "Very hard to hold when rotated."; }
+      }
+
+      infoBox.innerHTML = `<h4 class="font-chalk">${currentHold.toUpperCase()} - ${quality}</h4><p>${text}</p>`;
+    }
+  </script>
+
+</body>
+</html>

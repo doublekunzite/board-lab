@@ -75,6 +75,16 @@
       <p class="hero-subtitle">A visual archive of<br> 
       board climbing movements</p>
     </section>
+	
+	 <!-- NEW SECTION: Concepts -->
+        <section class="moves-section" id="concepts">
+            <div class="category-section">
+                <h2 class="category-title">Concepts & Analysis</h2>
+                <div class="cards-grid" id="conceptsGrid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
 
     <section class="moves-section" id="moves">
       
@@ -150,6 +160,60 @@
             movesGrid.innerHTML = fullHtml;
             observeCards();
         }
+
+
+		  // ============================================
+        // 1. DATA SETUP
+        // ============================================
+        
+        // NEW: Special pages (Concepts)
+        const conceptsData = [
+            { 
+                id: 'hold-quality', 
+                title: 'Hold Quality', 
+                desc: 'An interactive diagram of geometry, friction, and grip.' 
+            }
+        ];
+
+        // Existing: Standard moves
+        const movesData = [
+            { id: 'campus', title: 'Campus', desc: 'Moving hands without using feet.' },
+            { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing through to a hold on the opposite side.' },
+            // ... rest of your moves data ...
+            { id: 'foot-swap', title: 'Foot Swap', desc: 'Switching feet efficiently.' }
+        ];
+
+        // ============================================
+        // 2. RENDER FUNCTIONS
+        // ============================================
+
+        function renderGrid(gridId, data, folderPrefix) {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+
+            let html = '';
+            data.forEach((move, i) => {
+                // If folderPrefix is empty, it links to root (for hold-quality)
+                // If folderPrefix is 'moves/', it links to the subfolder
+                const linkHref = folderPrefix ? `${folderPrefix}${move.id}.html` : `${move.id}.html`;
+                
+                html += `<a href="${linkHref}" class="move-card" style="transition-delay:${i*0.05}s">
+                    <div class="move-card-content">
+                        <h3 class="move-card-title">${move.title}
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </h3>
+                        <p class="move-card-desc">${move.desc}</p>
+                    </div>
+                </a>`;
+            });
+            grid.innerHTML = html;
+        }
+
+        // Render the two grids
+        renderGrid('conceptsGrid', conceptsData, ''); // No folder prefix
+        renderGrid('movesGrid', movesData, 'moves/'); // 'moves/' prefix
+
+        // ... Intersection Observer code follows
 
         function observeCards() {
             const observer = new IntersectionObserver((entries) => {
