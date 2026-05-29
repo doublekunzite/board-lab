@@ -154,15 +154,13 @@
       border-radius: 2px;
     }
 
-    .spectrum-end-labels {
-      position: absolute;
-      bottom: 20px;
-      left: 0;
-      right: 0;
+        .spectrum-end-labels {
       display: flex;
       justify-content: space-between;
       font-size: 1.5rem;
       color: var(--chalk-white);
+      margin-top: 1rem; /* Spacing from the track above */
+      padding: 0 2rem;  /* Align with track padding */
     }
 
     .spectrum-item {
@@ -383,59 +381,30 @@
       <p class="chalk-subtitle font-chalk">A visual guide to geometry, friction, and gravity.</p>
     </header>
 
-    <!-- SECTION 1: SIZE SPECTRUM -->
+        <!-- SECTION 1: QUALITY EXPLORER -->
     <section class="diagram-section">
-      <h2 class="font-chalk">1. The Size Spectrum</h2>
+      <h2 class="font-chalk">1. Quality Explorer</h2>
       
       <div class="spectrum-container">
-        <div class="spectrum-track">
-          <div class="spectrum-line"></div>
-          
-          <!-- Micro -->
-          <div class="spectrum-item">
-            <div class="hold-display">
-               <!-- Placeholder SVG for Micro -->
-               <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                 <path d="M10 25C10 25 20 10 40 25C20 40 10 25 10 25Z" fill="#555"/>
-               </svg>
+        
+        <!-- Control Buttons -->
+        <div class="control-group" style="margin-bottom: 2rem;">
+            <div class="btn-group" id="spectrumTypeSelector">
+              <button class="chalk-btn active" data-type="pinch">Pinch</button>
+              <button class="chalk-btn" data-type="crimp">Crimp</button>
+              <button class="chalk-btn" data-type="sloper">Sloper</button>
+              <button class="chalk-btn" data-type="jug">Jug</button>
             </div>
-            <span class="spectrum-label font-chalk">Micro / Foot</span>
-          </div>
-
-          <!-- Crimp -->
-          <div class="spectrum-item">
-            <div class="hold-display">
-               <svg width="60" height="30" viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                 <rect x="0" y="10" width="60" height="10" rx="5" fill="#555"/>
-               </svg>
-            </div>
-            <span class="spectrum-label font-chalk">Crimp</span>
-          </div>
-
-          <!-- Edge -->
-          <div class="spectrum-item">
-            <div class="hold-display">
-               <svg width="80" height="40" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                 <rect x="0" y="5" width="80" height="30" rx="8" fill="#666"/>
-               </svg>
-            </div>
-            <span class="spectrum-label font-chalk">Edge</span>
-          </div>
-
-          <!-- Jug -->
-          <div class="spectrum-item">
-            <div class="hold-display">
-               <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                 <path d="M10 30C10 10 90 10 90 30C90 50 10 50 10 30Z" fill="#777"/>
-               </svg>
-            </div>
-            <span class="spectrum-label font-chalk">Jug</span>
-          </div>
-
         </div>
+
+        <div class="spectrum-track" id="spectrumTrack">
+          <!-- Dynamic Items will be inserted here by JS -->
+        </div>
+        
+        <!-- Fixed Labels -->
         <div class="spectrum-end-labels font-chalk">
-          <span>Small / Precise</span>
-          <span>Large / Secure</span>
+          <span>Worst Quality</span>
+          <span>Best Quality</span>
         </div>
       </div>
     </section>
@@ -547,6 +516,68 @@
   </main>
 
   <script>
+  
+  // ============================================
+    // QUALITY EXPLORER LOGIC
+    // ============================================
+    const spectrumTrack = document.getElementById('spectrumTrack');
+    const spectrumBtns = document.querySelectorAll('#spectrumTypeSelector .chalk-btn');
+
+    // Data for the holds
+    const holdData = {
+        pinch: [
+            { name: "Vertical Sloper Pinch", desc: "Hard to maintain contact.", svg: `<svg width="60" height="80" viewBox="0 0 60 80" fill="none"><path d="M20 0L40 0L45 80L15 80Z" fill="#555"/></svg>` },
+            { name: "Angled Flat Edge Pinch", desc: "Better angle for squeezing.", svg: `<svg width="80" height="60" viewBox="0 0 80 60" fill="none"><path d="M10 50 Q 40 10 70 50 Z" fill="#666"/></svg>` },
+            { name: "Incut Horizontal Jug Pinch", desc: "Positive and easy to hold.", svg: `<svg width="100" height="50" viewBox="0 0 100 50" fill="none"><path d="M0 40 Q 50 0 100 40 L 90 50 L 10 50 Z" fill="#777"/></svg>` }
+        ],
+        crimp: [
+            { name: "Flat Small Edge Crimp", desc: "Painful, tiny surface area.", svg: `<svg width="50" height="20" viewBox="0 0 50 20" fill="none"><rect x="0" y="5" width="50" height="10" fill="#555"/></svg>` },
+            { name: "Incut Medium Edge Crimp", desc: "Secure, positive bite.", svg: `<svg width="70" height="30" viewBox="0 0 70 30" fill="none"><path d="M0 15 L70 15 L65 30 L5 30 Z" fill="#666"/></svg>` },
+            { name: "Deep Incut Large Jug Crimp", desc: "Massive, very secure.", svg: `<svg width="90" height="50" viewBox="0 0 90 50" fill="none"><path d="M0 20 L90 20 L80 50 L10 50 Z" fill="#777"/></svg>` }
+        ],
+        sloper: [
+            { name: "45° Sloper", desc: "Open hand, friction dependent.", svg: `<svg width="80" height="40" viewBox="0 0 80 40" fill="none"><ellipse cx="40" cy="35" rx="40" ry="15" fill="#555"/></svg>` },
+            { name: "Angled Sloper (Incut Edge)", desc: "Hidden edge assists grip.", svg: `<svg width="80" height="50" viewBox="0 0 80 50" fill="none"><path d="M0 30 Q 40 10 80 30 L 70 50 L 10 50 Z" fill="#666"/></svg>` },
+            { name: "Vertical Flat Jug Sloper", desc: "Effectively a jug.", svg: `<svg width="100" height="60" viewBox="0 0 100 60" fill="none"><path d="M10 30C10 10 90 10 90 30C90 50 10 50 10 30Z" fill="#777"/></svg>` }
+        ],
+        jug: [
+            { name: "Jug w/ Sloping Edge", desc: "Hand can slide out.", svg: `<svg width="80" height="40" viewBox="0 0 80 40" fill="none"><path d="M10 20 Q 40 40 70 20 L 60 30 L 20 30 Z" fill="#555"/></svg>` },
+            { name: "Mini Jug", desc: "Solid for one or two fingers.", svg: `<svg width="70" height="40" viewBox="0 0 70 40" fill="none"><path d="M5 20 Q 35 5 65 20 L 55 40 L 15 40 Z" fill="#666"/></svg>` },
+            { name: "Bucket", desc: "Hand goes fully inside.", svg: `<svg width="100" height="60" viewBox="0 0 100 60" fill="none"><path d="M10 30C10 5 90 5 90 30C90 55 10 55 10 30Z" fill="#777"/></svg>` }
+        ]
+    };
+
+    function renderSpectrum(type) {
+        if (!spectrumTrack) return;
+        const items = holdData[type];
+        let html = '<div class="spectrum-line"></div>'; // The line underneath
+
+        items.forEach((item, i) => {
+            html += `
+            <div class="spectrum-item" style="transition-delay: ${i * 0.1}s">
+                <div class="hold-display">
+                   ${item.svg}
+                </div>
+                <span class="spectrum-label font-chalk">${item.name}</span>
+                <span style="font-size: 0.9rem; color: var(--chalk-dim); max-width: 150px; text-align: center;">${item.desc}</span>
+            </div>`;
+        });
+
+        spectrumTrack.innerHTML = html;
+    }
+
+    // Event Listeners for Buttons
+    spectrumBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            spectrumBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderSpectrum(btn.dataset.type);
+        });
+    });
+
+    // Initial Render
+    renderSpectrum('pinch');
+	
     // ============================================
     // ROTATION COMPASS LOGIC
     // ============================================
