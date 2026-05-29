@@ -93,28 +93,29 @@
     const movesGrid = document.getElementById('movesGrid');
     if (movesGrid) {
         const movesData = [
-            { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing an arm over or through the other.', category: 'hand-technique' },
+            { id: 'cross-rose', title: 'Cross / Rose', desc: 'Crossing an arm over or through the other.', category: 'grip-type' },
             { id: 'drop-knee', title: 'Drop Knee', desc: 'Twisting the leg to put more force through a foothold.', category: 'footwork' },
             { id: 'flag', title: 'Flag', desc: 'Extending a leg for counterbalance.', category: 'footwork' },
             { id: 'smear', title: 'Smear', desc: 'Using the foot on the wall surface.', category: 'footwork' },
             { id: 'kicking', title: 'Kicking the Wall', desc: 'Kicking the wall to stop rotation or swing.', category: 'dynamic' },
-            { id: 'gaston', title: 'Gaston', desc: 'Pressing outward on a hold.', category: 'hand-technique' },
+            { id: 'gaston', title: 'Gaston', desc: 'Pressing outward on a hold.', category: 'grip-type' },
             { id: 'deadpoint', title: 'Deadpoint', desc: 'Timing a grab at the apex of momentum.', category: 'dynamic' },
             { id: 'heel-hook', title: 'Heel Hook', desc: 'Using the heel to pull.', category: 'footwork' },
             { id: 'toe-hook', title: 'Toe Hook', desc: 'Using the toe to pull.', category: 'footwork' },
-            { id: 'layback', title: 'Layback', desc: 'Holding tension between a gaston/sidepull and a high foot.', category: 'hand-technique' },
+            { id: 'layback', title: 'Layback', desc: 'Holding tension between a gaston/sidepull and a high foot.', category: 'grip-type' },
             { id: 'feet-pinch', title: 'Bicycle / Feet Pinch', desc: 'Squeezing a hold between feet.', category: 'footwork' },
             { id: 'foot-swap', title: 'Foot Swap', desc: 'Switching feet efficiently.', category: 'footwork' },
             { id: 'campus', title: 'Campus', desc: 'Moving hands without feet.', category: 'dynamic' },
-            { id: 'grip-adjust', title: 'Grip Adjustment', desc: 'Adjusting the grip on a hold.', category: 'hand-technique' },
+            { id: 'grip-adjust', title: 'Grip Adjustment', desc: 'Adjusting the grip on a hold.', category: 'grip-type' },
             { id: 'pogo', title: 'Pogo', desc: 'Swinging a leg or arm to generate momentum.', category: 'dynamic' }
+			{ id: 'drag', title: '3-Finger Drag', desc: 'An open-hand grip using 3 extended fingers.', category: 'grip-type' }
         ];
 
         // Define the order and titles of categories
         const categories = [
             { key: 'dynamic', title: 'Dynamic' },
             { key: 'footwork', title: 'Footwork' },
-            { key: 'hand-technique', title: 'Hand Technique' }
+            { key: 'grip-type', title: 'Grips & Techniques' }
         ];
 
         function renderGroupedMoves() {
