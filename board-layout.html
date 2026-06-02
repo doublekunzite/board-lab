@@ -487,7 +487,7 @@
       // Add your other holds here...
     };
 
-    // ============================================
+        // ============================================
     // 2. GRID & LIST GENERATION
     // ============================================
     const gridOverlay = document.getElementById('gridOverlay');
@@ -504,7 +504,11 @@
         cell.className = 'hold-cell';
         cell.dataset.id = holdId;
 
+        // Logic: Flip tooltip down for top rows
         if (r >= 17) cell.classList.add('tooltip-below');
+        
+        // Logic: Shift tooltip left for right-most columns (P and Q)
+        if (colLetter === 'P' || colLetter === 'Q') cell.classList.add('col-right');
 
         if (holdsData[holdId]) {
           const data = holdsData[holdId];
@@ -530,27 +534,25 @@
 
     // 2. Generate the List View
     function renderHoldList(filter = 'all') {
-        holdListGrid.innerHTML = ''; // Clear existing
+        holdListGrid.innerHTML = ''; 
 
-        // Convert object to array for easy filtering
         const holdKeys = Object.keys(holdsData);
 
         holdKeys.forEach(id => {
             const data = holdsData[id];
             
-            // Filter Logic
-            if (filter !== 'all' && `tier-${data.tier}` !== filter) {
-                return; // Skip if doesn't match filter
-            }
+            if (filter !== 'all' && `tier-${data.tier}` !== filter) return;
 
             const card = document.createElement('div');
             card.className = 'hold-list-card';
-            card.onclick = () => openModal(id); // Make clickable
+            card.onclick = () => openModal(id);
 
+            // Improved HTML structure for text
             card.innerHTML = `
-                <img src="${data.profileImg}" class="list-card-img" alt="${id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/60x60/222/555?text=N/A'">
+                <img src="${data.profileImg}" class="list-card-img" alt="${id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80x80/222/555?text=N/A'">
                 <div class="list-card-info">
-                    <h4>${id} <span style="opacity:0.5; font-size:0.8rem; margin-left:5px;">${data.type}</span></h4>
+                    <h4>${id}</h4>
+                    <p class="type-text">${data.type}</p>
                     <span class="tier-badge t-${data.tier}">Tier ${data.tier}</span>
                 </div>
             `;
@@ -558,7 +560,6 @@
         });
     }
 
-    // Initial Render of List
     renderHoldList();
 
     // ============================================
