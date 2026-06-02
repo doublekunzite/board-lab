@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kilter Board Map | Board Lab</title>
   <link rel="stylesheet" href="style.css">
-  <!-- No external Google Fonts API -->
   
   <style>
     /* ============================================
@@ -30,7 +29,7 @@
       margin-bottom: 2rem;
     }
 
-       /* The Board Container */
+    /* The Board Container */
     .board-wrapper {
       position: relative;
       width: 100%;
@@ -38,10 +37,8 @@
       margin: 0 auto;
       background: #111;
       border-radius: 8px;
-      overflow: hidden;
+      /* REMOVED: overflow: hidden; -> This allows tooltips to escape the box */
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-      /* Enable 3D perspective for the child grid */
-      perspective: 1000px; 
     }
 
     /* The Board Image */
@@ -50,20 +47,19 @@
       height: auto;
       display: block;
       opacity: 0.8;
+      border-radius: 8px; /* ADDED: Keep corners rounded on the image itself */
     }
 
-        /* The Interactive Grid Overlay */
+    /* The Interactive Grid Overlay */
     .grid-overlay {
       position: absolute;
-      top: 0%; /* Adjust this to slide the grid down. Try 1%, 2%, 3% etc. */
+      top: 0;
       left: 0;
       width: 100%;
-      height: 100%; /* Keep this 100% or adjust to 98% if needed */
+      height: 100%;
       display: grid;
       grid-template-columns: repeat(17, 1fr);
       grid-template-rows: repeat(18, 1fr);
-      
-      
     }
 
     /* Individual Hold Cell */
@@ -103,7 +99,7 @@
     /* Tooltip (Hover Card) */
     .hold-tooltip {
       position: absolute;
-      bottom: 100%;
+      bottom: 100%; /* Default: Above */
       left: 50%;
       transform: translateX(-50%);
       width: 180px;
@@ -116,6 +112,12 @@
       transition: opacity 0.2s;
       z-index: 100;
       box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    /* NEW: Force tooltip BELOW the hold for top rows */
+    .hold-cell.tooltip-below .hold-tooltip {
+      bottom: auto;
+      top: 100%; /* Moves it below */
     }
 
     .hold-cell:hover .hold-tooltip {
@@ -165,8 +167,6 @@
       background: var(--card);
       border-radius: 12px;
       border: 1px solid var(--border);
-      flex-wrap: wrap;
-      gap: 1rem;
     }
 
     .toggle-group {
@@ -201,27 +201,6 @@
     .toggle-input:checked + .toggle-switch { background: var(--accent); }
     .toggle-input:checked + .toggle-switch::after { transform: translateX(20px); }
     .toggle-input { display: none; }
-
-    
-
-    input[type="range"] {
-      -webkit-appearance: none;
-      width: 100%;
-      max-width: 200px;
-      height: 4px;
-      background: #333;
-      border-radius: 2px;
-      outline: none;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 16px;
-      height: 16px;
-      background: var(--accent);
-      border-radius: 50%;
-      cursor: pointer;
-    }
 
     /* Modal (Detail View) */
     .modal-overlay {
@@ -305,23 +284,8 @@
 
     .close-btn:hover { color: var(--fg); }
 
-    /* Warning Banner */
-    .angle-warning {
-      background: rgba(248, 113, 113, 0.1);
-      border-left: 3px solid var(--tier-3);
-      padding: 0.75rem;
-      margin-top: 1rem;
-      font-size: 0.875rem;
-      display: none; /* Hidden by default */
-    }
-    
-    .angle-warning.visible {
-      display: block;
-    }
-
     /* Local Chalk Font Replacement */
     .font-chalk {
-      /* Uses system UI fonts that look handwritten/sketchy */
       font-family: 'Segoe Script', 'Bradley Hand ITC', 'Lucida Handwriting', 'Comic Sans MS', cursive;
     }
 
@@ -367,16 +331,12 @@
 
     <!-- Controls -->
     <div class="board-controls">
-      <!-- Tier Toggle -->
       <label class="toggle-group">
         <input type="checkbox" class="toggle-input" id="tierToggle">
         <div class="toggle-switch"></div>
         <span>Show Quality Tiers</span>
       </label>
-
-                 
-
-    </div> <!-- End board-controls -->
+    </div>
 
   </main>
 
@@ -403,10 +363,6 @@
           <span style="margin-left: 0.5rem; color: var(--fg-muted);" id="modalType">Jug</span>
         </div>
         <p style="margin-top: 1rem; color: var(--fg-muted);" id="modalDesc">Description goes here.</p>
-        
-        <div class="angle-warning" id="modalWarning">
-          ⚠️ <strong>Warning:</strong> Quality degrades significantly at this angle. Requires high tension.
-        </div>
       </div>
     </div>
   </div>
@@ -417,12 +373,12 @@
     // ============================================
     const holdsData = {
       // Example Data Entries (Update with your actual data)
-      "A18": { 
-        tier: 1, 
-        type: "Jug", 
-        profileImg: "holds/A18-profile.png", 
-        gripImg: "holds/A18-grip.png",
-        desc: "Finish hold - Large Bucket.",
+      "Q18": { 
+        tier: 2, 
+        type: "Crimp", 
+        profileImg: "holds/Q18-profile.png", 
+        gripImg: "holds/Q18-grip.png",
+        desc: "Wavy Sidepull crimp / Macro foothold",
         angleSensitive: false 
       },
       // Add your other holds here...
@@ -439,7 +395,7 @@
     // Generate 18 rows (top to bottom: 18 down to 1)
     // Generate 17 cols (left to right)
     
-    for (let r = 18; r >= 1; r--) {
+        for (let r = 18; r >= 1; r--) {
       for (let c = 0; c < 17; c++) { // Loop 17 times
         const colLetter = columns[c];
         const holdId = `${colLetter}${r}`;
@@ -447,6 +403,11 @@
         const cell = document.createElement('div');
         cell.className = 'hold-cell';
         cell.dataset.id = holdId;
+
+        // NEW: Add class to flip tooltip down for top rows (18 and 17)
+        if (r >= 17) {
+          cell.classList.add('tooltip-below');
+        }
 
         // If we have data for this hold, configure it
         if (holdsData[holdId]) {
@@ -456,7 +417,7 @@
           // Create Tooltip HTML
           const tooltipHTML = `
             <div class="hold-tooltip">
-              <img src="${data.profileImg}" class="tooltip-img" alt="${holdId}" onerror="this.src='https://via.placeholder.com/150x100/222/555?text=No+Image'">
+              <img src="${data.profileImg}" class="tooltip-img" alt="${holdId}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x100/222/555?text=No+Image'">
               <div class="tooltip-info">
                 <h4>${holdId}</h4>
                 <p>${data.type}</p>
@@ -525,8 +486,6 @@
         boardWrapper.classList.remove('show-tiers');
       }
     });
-
-    
 
   </script>
 </body>
