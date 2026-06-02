@@ -31,12 +31,8 @@
       margin: 0 auto;
     }
 
-    .board-header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+    .board-header { text-align: center; margin-bottom: 2rem; }
     
-    /* Consistent Font Styling */
     .page-title {
       font-family: Impact, 'Arial Narrow Bold', sans-serif;
       font-size: clamp(3rem, 8vw, 5rem);
@@ -54,7 +50,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* The Board Container */
     .board-wrapper {
       position: relative;
       width: 100%;
@@ -67,217 +62,129 @@
     }
 
     .board-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      opacity: 0.8;
-      border-radius: 8px;
+      width: 100%; height: auto; display: block; opacity: 0.8; border-radius: 8px;
     }
 
     .grid-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       display: grid;
       grid-template-columns: repeat(17, 1fr);
       grid-template-rows: repeat(18, 1fr);
       overflow: visible;
     }
 
-    /* Grid Labels (Numbers/Letters) */
+    /* Board Container needs extra space for labels */
+    .board-wrapper {
+      padding: 2rem 2.5rem; /* Add space for labels */
+      background: #111;
+    }
+    .board-image {
+      border-radius: 0; /* Remove rounded corners to match label area */
+    }
+
+    /* Large Labels - Outside Grid */
     .grid-label {
       position: absolute;
-      font-size: 0.65rem;
-      color: rgba(255,255,255,0.25);
-      font-weight: bold;
+      font-size: 0.85rem; /* Larger text */
+      font-weight: 700; /* Bolder */
+      color: rgba(255,255,255,0.4);
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       pointer-events: none;
       z-index: 5;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
-    
+
     .col-label {
-      top: 2px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 0; /* Align to top edge of wrapper */
+      transform: translateY(-100%); /* Move above the grid */
+      left: 0;
+      width: calc(100% / 17); /* Match column width */
+      text-align: center;
+      padding-bottom: 0.5rem; /* Space from grid */
     }
-    
+
     .row-label {
-      left: 4px;
-      top: 50%;
-      transform: translateY(-50%);
+      left: 0; /* Align to left edge */
+      transform: translateX(-100%); /* Move left of the grid */
+      top: 0;
+      height: calc(100% / 18); /* Match row height */
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; /* Align number to the right (towards grid) */
+      padding-right: 0.75rem; /* Space from grid */
     }
 
     .hold-cell {
-      position: relative;
-      border: 1px solid rgba(255,255,255,0.05);
-      cursor: pointer;
-      transition: background 0.2s;
-      z-index: 1;
+      position: relative; border: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer; transition: background 0.2s; z-index: 1;
     }
-
-    .hold-cell:hover {
-      background: rgba(255,255,255,0.1);
-      z-index: 100; 
-    }
+    .hold-cell:hover { background: rgba(255,255,255,0.1); z-index: 100; }
 
     .hold-cell::after {
-      content: '';
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      opacity: 0;
-      transition: opacity 0.3s;
-      box-shadow: 0 0 5px currentColor;
+      content: ''; position: absolute; top: 5px; left: 5px; width: 12px; height: 12px;
+      border-radius: 50%; opacity: 0; transition: opacity 0.3s; box-shadow: 0 0 5px currentColor;
     }
-
     .show-tiers .hold-cell::after { opacity: 0.9; }
     .hold-cell.tier-1::after { background: var(--tier-1); color: var(--tier-1); }
     .hold-cell.tier-2::after { background: var(--tier-2); color: var(--tier-2); }
     .hold-cell.tier-3::after { background: var(--tier-3); color: var(--tier-3); }
 
     .hold-tooltip {
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 180px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.75rem;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
-      z-index: 200;
+      position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 180px;
+      background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem;
+      pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 200;
       box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
-
     .hold-cell:hover .hold-tooltip { opacity: 1; }
     .hold-cell.tooltip-below .hold-tooltip { bottom: auto; top: 100%; }
     .hold-cell.col-right .hold-tooltip { left: auto; right: 0; transform: translateX(0); }
 
-    .tooltip-img {
-      width: 100%;
-      height: 100px;
-      object-fit: contain;
-      background: #222;
-      border-radius: 4px;
-      margin-bottom: 0.5rem;
-    }
-
+    .tooltip-img { width: 100%; height: 100px; object-fit: contain; background: #222; border-radius: 4px; margin-bottom: 0.5rem; }
     .tooltip-info h4 { font-size: 1rem; color: var(--fg); margin-bottom: 0.25rem; }
     .tooltip-info p { font-size: 0.75rem; color: var(--fg-muted); }
 
-    .tier-badge {
-      display: inline-block;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      margin-top: 0.25rem;
-    }
+    .tier-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; margin-top: 0.25rem; }
     .tier-badge.t-1 { background: rgba(74, 222, 128, 0.2); color: var(--tier-1); }
     .tier-badge.t-2 { background: rgba(250, 204, 21, 0.2); color: var(--tier-2); }
     .tier-badge.t-3 { background: rgba(248, 113, 113, 0.2); color: var(--tier-3); }
-    
-    /* Edge Size Badge Style */
     .edge-badge { background: rgba(96, 165, 250, 0.15); color: var(--edge-color); }
 
-    /* Type Badges (Colored) */
     .type-badge { font-size: 0.75rem; padding: 4px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase; }
     .type-badge.jug { background: rgba(74, 222, 128, 0.15); color: var(--type-jug); }
     .type-badge.crimp { background: rgba(250, 204, 21, 0.15); color: var(--type-crimp); }
     .type-badge.pinch { background: rgba(244, 114, 182, 0.15); color: var(--type-pinch); }
     .type-badge.sloper { background: rgba(96, 165, 250, 0.15); color: var(--type-sloper); }
 
-    .board-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background: var(--card);
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-
-    .toggle-group {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .toggle-switch {
-      width: 40px;
-      height: 20px;
-      background: #333;
-      border-radius: 20px;
-      position: relative;
-      transition: background 0.3s;
-    }
-    
-    .toggle-switch::after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 16px;
-      height: 16px;
-      background: white;
-      border-radius: 50%;
-      transition: transform 0.3s;
-    }
-
+    .board-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding: 1rem; background: var(--card); border-radius: 12px; border: 1px solid var(--border); }
+    .toggle-group { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; }
+    .toggle-switch { width: 40px; height: 20px; background: #333; border-radius: 20px; position: relative; transition: background 0.3s; }
+    .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: transform 0.3s; }
     .toggle-input:checked + .toggle-switch { background: var(--accent); }
     .toggle-input:checked + .toggle-switch::after { transform: translateX(20px); }
     .toggle-input { display: none; }
 
-    /* Modal (Vertical Layout) */
+        /* Modal (Detail View) */
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(5px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      padding: 1rem;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(5px); z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 1rem;
     }
 
     .modal-overlay.active { opacity: 1; pointer-events: all; }
 
     .modal-content {
-      background: var(--card);
-      width: 100%;
-      max-width: 550px; /* Narrower */
-      max-height: 90vh;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      overflow-y: auto; /* Scrollable if needed */
-      transform: scale(0.9);
-      transition: transform 0.3s;
-      display: flex;
-      flex-direction: column;
+      background: var(--card); width: 100%; max-width: 650px; /* Slightly wider for side-by-side */
+      border-radius: 16px; border: 1px solid var(--border);
+      overflow: hidden; transform: scale(0.9); transition: transform 0.3s;
+      display: flex; flex-direction: column;
     }
 
     .modal-overlay.active .modal-content { transform: scale(1); }
 
-    /* Stacked Images */
+    /* Side-by-Side Images */
     .modal-images {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 1px;
       background: var(--border);
     }
@@ -286,11 +193,10 @@
       background: #111;
       display: flex;
       flex-direction: column;
-      position: relative;
     }
 
     .modal-img-container {
-      height: 280px; /* Taller images */
+      height: 300px; /* TALLER photos */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -304,165 +210,70 @@
       cursor: zoom-in;
     }
 
+    /* Centered Label Below Image */
     .modal-img-label {
-      position: absolute;
-      bottom: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
+      text-align: center;
       font-size: 0.75rem;
       color: rgba(255,255,255,0.4);
-      pointer-events: none;
+      padding: 0.5rem 0 1rem 0;
     }
 
     .modal-details { padding: 1.5rem; }
     
+    /* Header Layout */
     .modal-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start; /* Align top */
+      align-items: flex-start;
       margin-bottom: 1rem;
     }
-    
-    .modal-title-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-    }
 
+    /* Tags Row (Left aligned) */
     .modal-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* Type Tag (Right aligned) */
+    .modal-type-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
     }
 
     .close-btn {
-      background: transparent;
-      border: none;
-      color: var(--fg-muted);
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-      line-height: 1;
+      background: transparent; border: none; color: var(--fg-muted);
+      font-size: 1.5rem; cursor: pointer; padding: 0.5rem; line-height: 1;
     }
     .close-btn:hover { color: var(--fg); }
 
-    /* Lightbox */
-    #lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      z-index: 2000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: zoom-out;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
-    }
+    #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
     #lightbox.active { opacity: 1; pointer-events: all; }
-    #lightbox img {
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-      box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    }
+    #lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
 
     /* Hold List Section */
-    .hold-list-section {
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-    }
-    .list-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    
-    .filters-container {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-        width: 100%;
-    }
-    
-    .filter-group {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-    }
-    
-    .filter-group-label {
-        font-size: 0.75rem;
-        color: var(--fg-muted);
-        text-transform: uppercase;
-        margin-right: 0.25rem;
-    }
-
-    .filter-btn {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--fg-muted);
-      padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: inherit;
-      font-size: 0.85rem;
-    }
+    .hold-list-section { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .filters-container { display: flex; gap: 1rem; flex-wrap: wrap; width: 100%; }
+    .filter-group { display: flex; gap: 0.5rem; align-items: center; }
+    .filter-group-label { font-size: 0.75rem; color: var(--fg-muted); text-transform: uppercase; margin-right: 0.25rem; }
+    .filter-btn { background: transparent; border: 1px solid var(--border); color: var(--fg-muted); padding: 0.4rem 0.8rem; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; }
     .filter-btn:hover { border-color: var(--fg-muted); color: var(--fg); }
     .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
-    
-    .hold-list-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    .hold-list-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-      cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s;
-    }
+    .hold-list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .hold-list-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; display: flex; gap: 1rem; align-items: flex-start; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
     .hold-list-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .list-card-img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      background: #222;
-      border-radius: 8px;
-      flex-shrink: 0;
-    }
+    .list-card-img { width: 80px; height: 80px; object-fit: contain; background: #222; border-radius: 8px; flex-shrink: 0; }
     .list-card-info { display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
     .list-card-info h4 { color: var(--fg); font-size: 1.1rem; margin: 0; }
     .list-card-info .type-text { color: var(--fg-muted); font-size: 0.85rem; margin: 0; }
 
-    /* Warning Banner */
-    .angle-warning {
-      background: rgba(248, 113, 113, 0.1);
-      border-left: 3px solid var(--tier-3);
-      padding: 0.75rem;
-      margin-top: 1rem;
-      font-size: 0.875rem;
-      display: none;
-    }
-    
+    .angle-warning { background: rgba(248, 113, 113, 0.1); border-left: 3px solid var(--tier-3); padding: 0.75rem; margin-top: 1rem; font-size: 0.875rem; display: none; }
     .angle-warning.visible { display: block; }
-    
   </style>
-  
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
-  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
 </head>
 <body>
 
@@ -482,7 +293,6 @@
   </header>
 
   <main class="board-page">
-    
     <header class="board-header">
       <h1 class="page-title">Kilter Board Map</h1>
       <p class="page-subtitle">The original 12x12 layout.</p>
@@ -504,9 +314,7 @@
     <section class="hold-list-section">
       <div class="list-header">
         <h2 class="font-display" style="font-size: 1.5rem; color: var(--fg); letter-spacing: 0.02em;">Hold Details</h2>
-        
         <div class="filters-container">
-            <!-- Tier Filters -->
             <div class="filter-group">
                 <span class="filter-group-label">Tier:</span>
                 <button class="filter-btn active" data-filter-type="tier" data-filter-value="all">All</button>
@@ -514,8 +322,6 @@
                 <button class="filter-btn" data-filter-type="tier" data-filter-value="tier-2">Tier 2</button>
                 <button class="filter-btn" data-filter-type="tier" data-filter-value="tier-3">Tier 3</button>
             </div>
-
-            <!-- Type Filters -->
             <div class="filter-group">
                 <span class="filter-group-label">Type:</span>
                 <button class="filter-btn active" data-filter-type="type" data-filter-value="all">All</button>
@@ -528,21 +334,21 @@
       </div>
       <div class="hold-list-grid" id="holdListGrid"></div>
     </section>
-
   </main>
 
-  <!-- Modal -->
+    <!-- Modal -->
   <div class="modal-overlay" id="holdModal">
     <div class="modal-content">
+      <!-- Images Section (Side by Side) -->
       <div class="modal-images">
-        <!-- Profile -->
+        <!-- Profile Column -->
         <div class="modal-img-column">
           <div class="modal-img-container">
             <img src="" alt="Hold Profile" id="modalProfileImg">
           </div>
           <div class="modal-img-label">Profile View</div>
         </div>
-        <!-- Grip -->
+        <!-- Grip Column -->
         <div class="modal-img-column">
           <div class="modal-img-container">
             <img src="" alt="Hold Grip" id="modalGripImg">
@@ -551,6 +357,7 @@
         </div>
       </div>
 
+      <!-- Details Section -->
       <div class="modal-details">
         <div class="modal-header">
           <div class="modal-title-group">
@@ -563,8 +370,8 @@
           <button class="close-btn" id="closeModal">&times;</button>
         </div>
         
-        <!-- Type Tag -->
-        <div style="margin-top: 0.5rem; margin-bottom: 1rem;">
+        <!-- Type Tag (Aligned Right) -->
+        <div class="modal-type-row">
             <span class="type-badge" id="modalTypeBadge">Jug</span>
         </div>
 
@@ -577,351 +384,193 @@
     </div>
   </div>
 
-  <!-- Lightbox -->
-  <div id="lightbox">
-    <img src="" id="lightboxImg" alt="Expanded View">
-  </div>
+  <div id="lightbox"><img src="" id="lightboxImg" alt="Expanded View"></div>
 
   <script>
-    // ============================================
-    // 1. DATA STORE
-    // ============================================
-    const holdsData = {
-      "A1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~20 mm",
-        profileImg: "holds/A1-profile.png", 
-        gripImg: "holds/A1-grip.png",
-        desc: "Slanted crimp / Macro foothold (incut)",
-      },
-      
-      "B1": { 
-        tier: 2, 
-        type: "Pinch", 
-        edgeSize: "~25 mm",
-        profileImg: "holds/B1-profile.png", 
-        gripImg: "holds/B1-grip.png",
-        desc: "Slanted crimp or pinch / Macro foothold (incut)",
-      },
-      
-      "C1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~25 mm",
-        profileImg: "holds/C1-profile.png", 
-        gripImg: "holds/C1-grip.png",
-        desc: "Long crimp / Macro foothold (incut)",
-      },
-      
-      "D1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~25 mm",
-        profileImg: "holds/D1-profile.png", 
-        gripImg: "holds/D1-grip.png",
-        desc: "Sidepull crimp / Macro foothold (incut)",
-      },
-      
-      "E1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~20 mm",
-        profileImg: "holds/E1-profile.png", 
-        gripImg: "holds/E1-grip.png",
-        desc: "Flat sidepull crimp / Macro foothold (flat)",
-      },
-      
-      "F1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~25 mm",
-        profileImg: "holds/F1-profile.png", 
-        gripImg: "holds/F1-grip.png",
-        desc: "Slightly incut, almost flat sidepull crimp / Macro foothold (incut)",
-      },
-      
-      "G1": { 
-        tier: 1, 
-        type: "Jug", 
-        edgeSize: "~30 mm",
-        profileImg: "holds/G1-profile.png", 
-        gripImg: "holds/G1-grip.png",
-        desc: "Jug that's deeper in the middle and shallower at the edges / Macro foothold (incut)",
-      },
-      
-      "H1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~20 mm",
-        profileImg: "holds/H1-profile.png", 
-        gripImg: "holds/H1-grip.png",
-        desc: "Incut crimp, heart shape / Macro foothold (incut)",
-      },
-      
-      "I1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~25 mm",
-        profileImg: "holds/I1-profile.png", 
-        gripImg: "holds/I1-grip.png",
-        desc: "Slightly incut, almost flat sidepull crimp / Macro foothold (incut)",
-      },
-      
-      "J1": { 
-        tier: 1, 
-        type: "Pinch", 
-        edgeSize: "~30 mm",
-        profileImg: "holds/J1-profile.png", 
-        gripImg: "holds/J1-grip.png",
-        desc: "Deeply incut pinch jug / Macro foothold (incut)",
-      },
-      
-      "K1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~20 mm",
-        profileImg: "holds/K1-profile.png", 
-        gripImg: "holds/K1-grip.png",
-        desc: "Flat sidepull crimp / Macro foothold (flat)",
-      },
-      
-      "L1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~25 mm",
-        profileImg: "holds/L1-profile.png", 
-        gripImg: "holds/L1-grip.png",
-        desc: "Incut sidepull crimp / Macro foothold (incut)",
-      },
-      
-      "M1": { 
-        tier: 3, 
-        type: "Pinch", 
-        edgeSize: "~30 mm",
-        angleSensitive: true,
-        profileImg: "holds/M1-profile.png", 
-        gripImg: "holds/M1-grip.png",
-        desc: "Fat, sloping pinch / Macro foothold (sloping)",
-      },
-      
-      "N1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~20 mm",
-        profileImg: "holds/N1-profile.png", 
-        gripImg: "holds/N1-grip.png",
-        desc: "Incut sidepull crimp / Macro foothold (incut)",
-      },
-      
-      "O1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~25 mm",
-        profileImg: "holds/O1-profile.png", 
-        gripImg: "holds/O1-grip.png",
-        desc: "Long incut crimp / Macro foothold (incut)",
-      },
-      
-      "P1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~20 mm",
-        profileImg: "holds/P1-profile.png", 
-        gripImg: "holds/P1-grip.png",
-        desc: "Incut sidepull crimp / Macro foothold (incut)",
-      },
-      
-      "Q1": { 
-        tier: 2, 
-        type: "Crimp", 
-        edgeSize: "~20 mm",
-        profileImg: "holds/Q1-profile.png", 
-        gripImg: "holds/Q1-grip.png",
-        desc: "Incut sidepull crimp that could technically be pinched / Macro foothold (incut)",
-      },
-    };
+    let holdsData = {}; // Will be populated from JSON
 
     // ============================================
-    // 2. GRID & LIST GENERATION
+    // 1. LOAD DATA
     // ============================================
+    async function loadData() {
+        try {
+            const response = await fetch('holds.json');
+            if (!response.ok) throw new Error('Network response was not ok');
+            holdsData = await response.json();
+            
+            // Initialize the page once data is loaded
+            initPage();
+        } catch (error) {
+            console.error('Error loading holds data:', error);
+            document.getElementById('holdListGrid').innerHTML = '<p style="color:var(--fg-muted)">Error loading data.</p>';
+        }
+    }
+
+    // ============================================
+    // 2. INITIALIZATION
+    // ============================================
+    function initPage() {
+        renderGrid();
+        renderGridLabels();
+        renderHoldList();
+        setupEventListeners();
+    }
+
+    // ============================================
+    // 3. RENDER FUNCTIONS
+    // ============================================
+    
     const gridOverlay = document.getElementById('gridOverlay');
     const holdListGrid = document.getElementById('holdListGrid');
     const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
 
-    for (let r = 18; r >= 1; r--) {
-      for (let c = 0; c < 17; c++) {
-        const colLetter = columns[c];
-        const holdId = `${colLetter}${r}`;
-        
-        const cell = document.createElement('div');
-        cell.className = 'hold-cell';
-        cell.dataset.id = holdId;
-        if (r >= 17) cell.classList.add('tooltip-below');
-        if (colLetter === 'P' || colLetter === 'Q') cell.classList.add('col-right');
+    function renderGrid() {
+        gridOverlay.innerHTML = ''; // Clear loading state
+        for (let r = 18; r >= 1; r--) {
+            for (let c = 0; c < 17; c++) {
+                const colLetter = columns[c];
+                const holdId = `${colLetter}${r}`;
+                const cell = document.createElement('div');
+                cell.className = 'hold-cell';
+                cell.dataset.id = holdId;
+                if (r >= 17) cell.classList.add('tooltip-below');
+                if (colLetter === 'P' || colLetter === 'Q') cell.classList.add('col-right');
 
-        if (holdsData[holdId]) {
-          const data = holdsData[holdId];
-          cell.classList.add(`tier-${data.tier}`);
-          
-          const tooltipHTML = `
-            <div class="hold-tooltip">
-              <img src="${data.profileImg}" class="tooltip-img" alt="${holdId}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x100/222/555?text=No+Image'">
-              <div class="tooltip-info">
-                <h4>${holdId}</h4>
-                <p>${data.type}</p>
-                <span class="tier-badge t-${data.tier}">Tier ${data.tier}</span>
-              </div>
-            </div>
-          `;
-          cell.innerHTML = tooltipHTML;
-          cell.addEventListener('click', () => openModal(holdId));
+                if (holdsData[holdId]) {
+                    const data = holdsData[holdId];
+                    cell.classList.add(`tier-${data.tier}`);
+                    cell.innerHTML = `
+                        <div class="hold-tooltip">
+                            <img src="${data.profileImg}" class="tooltip-img" alt="${holdId}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x100/222/555?text=No+Image'">
+                            <div class="tooltip-info">
+                                <h4>${holdId}</h4>
+                                <p>${data.type}</p>
+                                <span class="tier-badge t-${data.tier}">Tier ${data.tier}</span>
+                            </div>
+                        </div>`;
+                    cell.addEventListener('click', () => openModal(holdId));
+                }
+                gridOverlay.appendChild(cell);
+            }
         }
-        gridOverlay.appendChild(cell);
-      }
     }
 
-    // Generate Grid Labels
-    // Top Letters
-    columns.forEach((letter, i) => {
-        const label = document.createElement('div');
-        label.className = 'grid-label col-label';
-        label.textContent = letter;
-        label.style.left = `calc((((${i} + 0.5) / 17) * 100%)`;
-        label.style.top = '2px';
-        gridOverlay.appendChild(label);
-    });
-
-    // Side Numbers
-    for(let r = 18; r >= 1; r--) {
-        const label = document.createElement('div');
-        label.className = 'grid-label row-label';
-        label.textContent = r;
-        const rowIndex = 18 - r; // 0 to 17
-        label.style.top = `calc((((${rowIndex} + 0.5) / 18) * 100%)`;
-        label.style.left = '4px';
-        gridOverlay.appendChild(label);
+    function renderGridLabels() {
+        // Top Letters
+        columns.forEach((letter, i) => {
+            const label = document.createElement('div');
+            label.className = 'grid-label col-label';
+            label.textContent = letter;
+            label.style.left = `calc((((${i} + 0.5) / 17) * 100%)`;
+            label.style.top = '2px';
+            gridOverlay.appendChild(label);
+        });
+        // Side Numbers
+        for (let r = 18; r >= 1; r--) {
+            const label = document.createElement('div');
+            label.className = 'grid-label row-label';
+            label.textContent = r;
+            const rowIndex = 18 - r;
+            label.style.top = `calc((((${rowIndex} + 0.5) / 18) * 100%)`;
+            label.style.left = '4px';
+            gridOverlay.appendChild(label);
+        }
     }
 
-    // Generate List
     function renderHoldList() {
-        holdListGrid.innerHTML = ''; 
-        
+        holdListGrid.innerHTML = '';
         const activeTier = document.querySelector('.filter-btn[data-filter-type="tier"].active').dataset.filterValue;
         const activeType = document.querySelector('.filter-btn[data-filter-type="type"].active').dataset.filterValue;
 
         Object.keys(holdsData).forEach(id => {
             const data = holdsData[id];
-            
-            // Filter Logic
             if (activeTier !== 'all' && `tier-${data.tier}` !== activeTier) return;
             if (activeType !== 'all' && data.type !== activeType) return;
 
             const card = document.createElement('div');
             card.className = 'hold-list-card';
             card.onclick = () => openModal(id);
-
             card.innerHTML = `
                 <img src="${data.profileImg}" class="list-card-img" alt="${id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80x80/222/555?text=N/A'">
                 <div class="list-card-info">
                     <h4>${id}</h4>
                     <p class="type-text">${data.type}</p>
                     <span class="tier-badge t-${data.tier}">Tier ${data.tier}</span>
-                </div>
-            `;
+                </div>`;
             holdListGrid.appendChild(card);
         });
     }
-    
-    renderHoldList();
 
     // ============================================
-    // 3. INTERACTIONS
+    // 4. INTERACTIONS
     // ============================================
+    function setupEventListeners() {
+        // Modal & Lightbox
+        const modal = document.getElementById('holdModal');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const closeBtn = document.getElementById('closeModal');
+        const tierToggle = document.getElementById('tierToggle');
+        const boardWrapper = document.getElementById('boardWrapper');
+        const filterBtns = document.querySelectorAll('.filter-btn');
 
-    const modal = document.getElementById('holdModal');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const closeBtn = document.getElementById('closeModal');
-    const tierToggle = document.getElementById('tierToggle');
-    const boardWrapper = document.getElementById('boardWrapper');
-    const filterBtns = document.querySelectorAll('.filter-btn');
+        window.openModal = function(id) {
+            const data = holdsData[id];
+            if (!data) return;
+            document.getElementById('modalTitle').textContent = id;
+            document.getElementById('modalDesc').textContent = data.desc;
+            const profileImg = document.getElementById('modalProfileImg');
+            const gripImg = document.getElementById('modalGripImg');
+            profileImg.src = data.profileImg;
+            gripImg.src = data.gripImg;
+            profileImg.onclick = () => openLightbox(data.profileImg);
+            gripImg.onclick = () => openLightbox(data.gripImg);
 
-    function openModal(id) {
-      const data = holdsData[id];
-      if (!data) return;
+            const tierBadge = document.getElementById('modalBadge');
+            tierBadge.textContent = `Tier ${data.tier}`;
+            tierBadge.className = `tier-badge t-${data.tier}`;
+            document.getElementById('modalEdge').textContent = data.edgeSize || 'Unknown';
+            
+            const typeBadge = document.getElementById('modalTypeBadge');
+            typeBadge.textContent = data.type;
+            typeBadge.className = `type-badge ${data.type.toLowerCase()}`;
 
-      document.getElementById('modalTitle').textContent = id;
-      document.getElementById('modalDesc').textContent = data.desc;
-      
-      const profileImg = document.getElementById('modalProfileImg');
-      const gripImg = document.getElementById('modalGripImg');
+            const warningEl = document.getElementById('modalWarning');
+            if (data.angleSensitive) warningEl.classList.add('visible');
+            else warningEl.classList.remove('visible');
 
-      profileImg.src = data.profileImg;
-      gripImg.src = data.gripImg;
+            modal.classList.add('active');
+        };
 
-      profileImg.onclick = () => openLightbox(data.profileImg);
-      gripImg.onclick = () => openLightbox(data.gripImg);
+        function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
+        function closeLightbox() { lightbox.classList.remove('active'); }
+        function closeModal() { modal.classList.remove('active'); }
 
-      // Tier Badge
-      const tierBadge = document.getElementById('modalBadge');
-      tierBadge.textContent = `Tier ${data.tier}`;
-      tierBadge.className = `tier-badge t-${data.tier}`;
-
-      // Edge Badge
-      const edgeBadge = document.getElementById('modalEdge');
-      edgeBadge.textContent = data.edgeSize || 'Unknown';
-
-      // Type Badge (Colored)
-      const typeBadge = document.getElementById('modalTypeBadge');
-      typeBadge.textContent = data.type;
-      typeBadge.className = `type-badge ${data.type.toLowerCase()}`; 
-
-      // Warning
-      const warningEl = document.getElementById('modalWarning');
-      if (data.angleSensitive) {
-        warningEl.classList.add('visible');
-      } else {
-        warningEl.classList.remove('visible');
-      }
-
-      modal.classList.add('active');
-    }
-
-    function closeModal() { modal.classList.remove('active'); }
-    
-    function openLightbox(src) {
-      lightboxImg.src = src;
-      lightbox.classList.add('active');
-    }
-    
-    function closeLightbox() { lightbox.classList.remove('active'); }
-
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-    lightbox.addEventListener('click', closeLightbox);
-
-    document.addEventListener('keydown', (e) => { 
-      if (e.key === 'Escape') {
-        if(lightbox.classList.contains('active')) closeLightbox();
-        else closeModal();
-      }
-    });
-
-    tierToggle.addEventListener('change', () => {
-        tierToggle.checked ? boardWrapper.classList.add('show-tiers') : boardWrapper.classList.remove('show-tiers');
-    });
-
-    // Filter Logic
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const group = btn.dataset.filterType;
-            document.querySelectorAll(`.filter-btn[data-filter-type="${group}"]`).forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderHoldList();
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        lightbox.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { lightbox.classList.contains('active') ? closeLightbox() : closeModal(); }
         });
-    });
 
+        tierToggle.addEventListener('change', () => {
+            tierToggle.checked ? boardWrapper.classList.add('show-tiers') : boardWrapper.classList.remove('show-tiers');
+        });
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const group = btn.dataset.filterType;
+                document.querySelectorAll(`.filter-btn[data-filter-type="${group}"]`).forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderHoldList();
+            });
+        });
+    }
+
+    // ============================================
+    // 5. KICKSTART
+    // ============================================
+    loadData();
   </script>
 </body>
 </html>
