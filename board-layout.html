@@ -50,6 +50,7 @@
       letter-spacing: 0.08em;
     }
 
+        /* Board Container - No padding needed, grid fills the space */
     .board-wrapper {
       position: relative;
       width: 100%;
@@ -57,12 +58,16 @@
       margin: 0 auto;
       background: #111;
       border-radius: 8px;
-      overflow: visible;
+      overflow: visible; /* Allows labels to extend outside */
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
     .board-image {
-      width: 100%; height: auto; display: block; opacity: 0.8; border-radius: 8px;
+      width: 100%; 
+      height: auto; 
+      display: block; 
+      opacity: 0.8; 
+      border-radius: 8px;
     }
 
     .grid-overlay {
@@ -70,19 +75,16 @@
       display: grid;
       grid-template-columns: repeat(17, 1fr);
       grid-template-rows: repeat(18, 1fr);
-      overflow: visible;
+      overflow: visible; /* Critical for labels to be visible */
     }
 
-    /* Board Container needs extra space for labels */
-    .board-wrapper {
-      padding: 2rem 2.5rem; /* Add space for labels */
-      background: #111;
-    }
-    .board-image {
-      border-radius: 0; /* Remove rounded corners to match label area */
+    /* Increase gap between subtitle and the top labels */
+    .board-header { 
+      text-align: center; 
+      margin-bottom: 3.5rem; /* Increased from 2rem for breathing room */
     }
 
-        /* Large Labels - Outside Grid (No wrapper padding needed) */
+    /* Large Labels - Outside Grid */
     .grid-label {
       position: absolute;
       font-size: 1rem; /* Big, clear text */
@@ -99,7 +101,7 @@
       text-align: center;
       /* Move label entirely above the grid */
       transform: translateY(-100%); 
-      padding-bottom: 0.5rem; /* Space between label and grid */
+      padding-bottom: 0.5rem; /* Space between label and grid line */
     }
 
     .row-label {
@@ -110,7 +112,7 @@
       justify-content: flex-end; /* Align number to the right (towards grid) */
       /* Move label entirely left of the grid */
       transform: translateX(-100%);
-      padding-right: 0.75rem; /* Space between label and grid */
+      padding-right: 0.75rem; /* Space between label and grid line */
     }
 
     .hold-cell {
