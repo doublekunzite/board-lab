@@ -366,6 +366,21 @@
     .list-card-info h4 { color: var(--fg); font-size: 1.1rem; margin: 0; }
     .list-card-info .type-text { color: var(--fg-muted); font-size: 0.85rem; margin: 0; }
 
+
+    /* Warning Banner */
+    .angle-warning {
+      background: rgba(248, 113, 113, 0.1);
+      border-left: 3px solid var(--tier-3);
+      padding: 0.75rem;
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      display: none; /* Hidden by default */
+    }
+    
+    .angle-warning.visible {
+      display: block;
+    }
+	
   </style>
 </head>
 <body>
@@ -456,6 +471,11 @@
         </div>
 
         <p style="margin-top: 1rem; color: var(--fg-muted);" id="modalDesc">Description goes here.</p>
+		
+		        <!-- Warning Banner -->
+        <div class="angle-warning" id="modalWarning">
+          ⚠️ <strong>Warning:</strong> Quality degrades significantly at steep angles. Requires high tension.
+        </div>
       </div>
     </div>
   </div>
@@ -582,6 +602,7 @@
         tier: 3, 
         type: "Sloping Pinch", 
         edgeSize: "~30 mm",
+		angleSensitive: true,
         profileImg: "holds/M1-profile.png", 
         gripImg: "holds/M1-grip.png",
         desc: "Fat, sloping pinch / Macro foothold (sloping)",
@@ -726,6 +747,14 @@
       edgeBadge.textContent = data.edgeSize || 'Unknown'; // Handle missing data
 
       modal.classList.add('active');
+	  
+	        // Show/Hide Degradation Warning
+      const warningEl = document.getElementById('modalWarning');
+      if (data.angleSensitive) {
+        warningEl.classList.add('visible');
+      } else {
+        warningEl.classList.remove('visible');
+      }
     }
 
     function closeModal() { modal.classList.remove('active'); }
