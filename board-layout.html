@@ -455,24 +455,34 @@
         }
     }
 
-    function renderGridLabels() {
-        // Top Letters
+        function renderGridLabels() {
+        const gridOverlay = document.getElementById('gridOverlay');
+
+        // Clear any existing labels to prevent duplicates
+        const existingLabels = gridOverlay.querySelectorAll('.grid-label');
+        existingLabels.forEach(label => label.remove());
+
+        // Top Letters (Columns)
         columns.forEach((letter, i) => {
             const label = document.createElement('div');
             label.className = 'grid-label col-label';
             label.textContent = letter;
-            label.style.left = `calc((((${i} + 0.5) / 17) * 100%)`;
-            label.style.top = '2px';
+            // Position based on column index (0-16). 
+            // This aligns the label with the left edge of the column.
+            label.style.left = `calc((${i} / 17) * 100%)`;
             gridOverlay.appendChild(label);
         });
-        // Side Numbers
-        for (let r = 18; r >= 1; r--) {
+
+        // Side Numbers (Rows)
+        // Row 18 is visually at the top (index 0), Row 1 at the bottom (index 17)
+        for (let i = 0; i < 18; i++) {
+            const rowNumber = 18 - i;
             const label = document.createElement('div');
             label.className = 'grid-label row-label';
-            label.textContent = r;
-            const rowIndex = 18 - r;
-            label.style.top = `calc((((${rowIndex} + 0.5) / 18) * 100%)`;
-            label.style.left = '4px';
+            label.textContent = rowNumber;
+            // Position based on visual row index.
+            // This aligns the label with the top edge of the row.
+            label.style.top = `calc((${i} / 18) * 100%)`;
             gridOverlay.appendChild(label);
         }
     }
