@@ -14,6 +14,7 @@
       --tier-1: #4ade80; /* Green - Good */
       --tier-2: #facc15; /* Yellow - Medium */
       --tier-3: #f87171; /* Red - Hard */
+      --edge-color: #60a5fa; /* Blue - for Edge Size */
     }
 
     .board-page {
@@ -37,12 +38,10 @@
       margin: 0 auto;
       background: #111;
       border-radius: 8px;
-      /* IMPORTANT: Allows tooltips to escape the box */
-      overflow: visible; 
+      overflow: visible;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
-    /* The Board Image */
     .board-image {
       width: 100%;
       height: auto;
@@ -51,7 +50,6 @@
       border-radius: 8px;
     }
 
-    /* The Interactive Grid Overlay */
     .grid-overlay {
       position: absolute;
       top: 0;
@@ -61,26 +59,22 @@
       display: grid;
       grid-template-columns: repeat(17, 1fr);
       grid-template-rows: repeat(18, 1fr);
-      overflow: visible; /* Ensure grid cells don't clip tooltips */
+      overflow: visible;
     }
 
-    /* Individual Hold Cell */
     .hold-cell {
       position: relative;
       border: 1px solid rgba(255,255,255,0.05);
       cursor: pointer;
       transition: background 0.2s;
-      /* Default z-index */
       z-index: 1;
     }
 
     .hold-cell:hover {
       background: rgba(255,255,255,0.1);
-      /* Pop cell above neighbors when hovered */
       z-index: 100; 
     }
 
-    /* Tier Colors (Hidden by default) */
     .hold-cell::after {
       content: '';
       position: absolute;
@@ -94,18 +88,14 @@
       box-shadow: 0 0 5px currentColor;
     }
 
-    /* Show Tiers when class is active */
-    .show-tiers .hold-cell::after {
-      opacity: 0.9;
-    }
+    .show-tiers .hold-cell::after { opacity: 0.9; }
     .hold-cell.tier-1::after { background: var(--tier-1); color: var(--tier-1); }
     .hold-cell.tier-2::after { background: var(--tier-2); color: var(--tier-2); }
     .hold-cell.tier-3::after { background: var(--tier-3); color: var(--tier-3); }
 
-    /* Tooltip (Hover Card) */
     .hold-tooltip {
       position: absolute;
-      bottom: 100%; /* Default: Above */
+      bottom: 100%;
       left: 50%;
       transform: translateX(-50%);
       width: 180px;
@@ -116,26 +106,13 @@
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.2s;
-      z-index: 200; /* Above everything */
+      z-index: 200;
       box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
 
-    .hold-cell:hover .hold-tooltip {
-      opacity: 1;
-    }
-
-    /* Force tooltip BELOW the hold for top rows */
-    .hold-cell.tooltip-below .hold-tooltip {
-      bottom: auto;
-      top: 100%; 
-    }
-
-    /* Fix tooltip position for right-most columns */
-    .hold-cell.col-right .hold-tooltip {
-      left: auto;
-      right: 0;
-      transform: translateX(0);
-    }
+    .hold-cell:hover .hold-tooltip { opacity: 1; }
+    .hold-cell.tooltip-below .hold-tooltip { bottom: auto; top: 100%; }
+    .hold-cell.col-right .hold-tooltip { left: auto; right: 0; transform: translateX(0); }
 
     .tooltip-img {
       width: 100%;
@@ -146,16 +123,8 @@
       margin-bottom: 0.5rem;
     }
 
-    .tooltip-info h4 {
-      font-size: 1rem;
-      color: var(--fg);
-      margin-bottom: 0.25rem;
-    }
-    
-    .tooltip-info p {
-      font-size: 0.75rem;
-      color: var(--fg-muted);
-    }
+    .tooltip-info h4 { font-size: 1rem; color: var(--fg); margin-bottom: 0.25rem; }
+    .tooltip-info p { font-size: 0.75rem; color: var(--fg-muted); }
 
     .tier-badge {
       display: inline-block;
@@ -169,8 +138,13 @@
     .tier-badge.t-1 { background: rgba(74, 222, 128, 0.2); color: var(--tier-1); }
     .tier-badge.t-2 { background: rgba(250, 204, 21, 0.2); color: var(--tier-2); }
     .tier-badge.t-3 { background: rgba(248, 113, 113, 0.2); color: var(--tier-3); }
+    
+    /* NEW: Edge Size Badge Style */
+    .edge-badge {
+      background: rgba(96, 165, 250, 0.15);
+      color: var(--edge-color);
+    }
 
-    /* Controls */
     .board-controls {
       display: flex;
       justify-content: space-between;
@@ -230,10 +204,7 @@
       transition: opacity 0.3s;
     }
 
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
 
     .modal-content {
       background: var(--card);
@@ -248,47 +219,59 @@
       flex-direction: column;
     }
 
-    .modal-overlay.active .modal-content {
-      transform: scale(1);
-    }
+    .modal-overlay.active .modal-content { transform: scale(1); }
 
-    /* FIX: Force Grid Layout for Images */
+    /* FIX: Image Grid Layout */
     .modal-images {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      width: 100%;
+      gap: 1px;
       background: var(--border);
-      gap: 1px; /* Small gap between images */
+    }
+
+    /* Wrapper for Image + Label */
+    .modal-img-column {
+      background: #111;
+      display: flex;
+      flex-direction: column;
     }
 
     .modal-img-container {
-      background: #111;
-      height: 220px;
+      height: 200px;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 1rem;
-      position: relative;
     }
 
     .modal-img-container img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      cursor: zoom-in; /* Indicate clickable */
+      cursor: zoom-in;
     }
 
-    .modal-details {
-      padding: 1.5rem;
-      width: 100%;
-      box-sizing: border-box;
+    /* Centered Label Below Image */
+    .modal-img-label {
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      padding: 0.5rem 0 1rem 0;
     }
 
+    .modal-details { padding: 1.5rem; }
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
+    }
+    
+    /* Tag container */
+    .modal-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
     }
 
     .close-btn {
@@ -300,15 +283,14 @@
       padding: 0.5rem;
       line-height: 1;
     }
-
     .close-btn:hover { color: var(--fg); }
 
-    /* Lightbox (Expanded Image View) */
+    /* Lightbox */
     #lightbox {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.95);
-      z-index: 2000; /* Above modal */
+      z-index: 2000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -317,12 +299,7 @@
       pointer-events: none;
       transition: opacity 0.2s;
     }
-    
-    #lightbox.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
+    #lightbox.active { opacity: 1; pointer-events: all; }
     #lightbox img {
       max-width: 90vw;
       max-height: 90vh;
@@ -330,20 +307,16 @@
       box-shadow: 0 0 30px rgba(0,0,0,0.5);
     }
 
-    /* Local Chalk Font Replacement */
     .font-chalk {
       font-family: 'Segoe Script', 'Bradley Hand ITC', 'Lucida Handwriting', 'Comic Sans MS', cursive;
     }
 
-    /* ============================================
-       HOLD LIST SECTION
-       ============================================ */
+    /* Hold List Section */
     .hold-list-section {
       margin-top: 4rem;
       padding-top: 2rem;
       border-top: 1px solid var(--border);
     }
-
     .list-header {
       display: flex;
       justify-content: space-between;
@@ -352,7 +325,6 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-
     .filter-btn {
       background: transparent;
       border: 1px solid var(--border);
@@ -363,24 +335,13 @@
       transition: all 0.2s;
       font-family: inherit;
     }
-
-    .filter-btn:hover {
-      border-color: var(--fg-muted);
-      color: var(--fg);
-    }
-
-    .filter-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: white;
-    }
-
+    .filter-btn:hover { border-color: var(--fg-muted); color: var(--fg); }
+    .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
     .hold-list-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
     }
-
     .hold-list-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -392,12 +353,7 @@
       cursor: pointer;
       transition: transform 0.2s, border-color 0.2s;
     }
-
-    .hold-list-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
+    .hold-list-card:hover { border-color: var(--accent); transform: translateY(-2px); }
     .list-card-img {
       width: 80px;
       height: 80px;
@@ -406,35 +362,17 @@
       border-radius: 8px;
       flex-shrink: 0;
     }
-
-    .list-card-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      flex-grow: 1;
-    }
-
-    .list-card-info h4 {
-      color: var(--fg);
-      font-size: 1.1rem;
-      margin: 0;
-    }
-
-    .list-card-info .type-text {
-      color: var(--fg-muted);
-      font-size: 0.85rem;
-      margin: 0;
-    }
+    .list-card-info { display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+    .list-card-info h4 { color: var(--fg); font-size: 1.1rem; margin: 0; }
+    .list-card-info .type-text { color: var(--fg-muted); font-size: 0.85rem; margin: 0; }
 
   </style>
 </head>
 <body>
 
-  <!-- Backgrounds -->
   <div class="bg-atmosphere" aria-hidden="true"></div>
   <div class="noise-overlay" aria-hidden="true"></div>
 
-  <!-- Header -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
       <a href="index.html" class="logo font-display">BOARD LAB</a>
@@ -447,7 +385,6 @@
     </div>
   </header>
 
-  <!-- Main Content -->
   <main class="board-page">
     
     <header class="board-header">
@@ -455,18 +392,11 @@
       <p class="chalk-subtitle font-chalk">Visualizing the terrain.</p>
     </header>
 
-    <!-- Interactive Board -->
     <div class="board-wrapper" id="boardWrapper">
-      <!-- Background Image -->
       <img src="board-layout.png" alt="Kilter Board Layout" class="board-image">
-      
-      <!-- Grid Overlay (Generated by JS) -->
-      <div class="grid-overlay" id="gridOverlay">
-        <!-- Hold cells will be injected here -->
-      </div>
+      <div class="grid-overlay" id="gridOverlay"></div>
     </div>
 
-    <!-- Controls -->
     <div class="board-controls">
       <label class="toggle-group">
         <input type="checkbox" class="toggle-input" id="tierToggle">
@@ -475,11 +405,9 @@
       </label>
     </div>
 
-    <!-- Filterable Hold List -->
     <section class="hold-list-section">
       <div class="list-header">
         <h2 class="font-chalk" style="font-size: 1.5rem; color: var(--fg);">Hold Details</h2>
-        
         <div id="filterControls">
           <button class="filter-btn active" data-filter="all">All</button>
           <button class="filter-btn" data-filter="tier-1">Tier 1</button>
@@ -487,40 +415,52 @@
           <button class="filter-btn" data-filter="tier-3">Tier 3</button>
         </div>
       </div>
-
       <div class="hold-list-grid" id="holdListGrid"></div>
     </section>
 
   </main>
 
-  <!-- Modal (Popup) -->
+  <!-- Modal -->
   <div class="modal-overlay" id="holdModal">
     <div class="modal-content">
+      <!-- Images Section -->
       <div class="modal-images">
-        <div class="modal-img-container">
-          <img src="" alt="Hold Profile" id="modalProfileImg">
-          <span style="position:absolute; bottom:5px; left:10px; font-size:0.7rem; opacity:0.5;">Profile View</span>
+        <!-- Profile Column -->
+        <div class="modal-img-column">
+          <div class="modal-img-container">
+            <img src="" alt="Hold Profile" id="modalProfileImg">
+          </div>
+          <div class="modal-img-label">Profile View</div>
         </div>
-        <div class="modal-img-container">
-          <img src="" alt="Hold Grip" id="modalGripImg">
-          <span style="position:absolute; bottom:5px; left:10px; font-size:0.7rem; opacity:0.5;">Grip View</span>
+        <!-- Grip Column -->
+        <div class="modal-img-column">
+          <div class="modal-img-container">
+            <img src="" alt="Hold Grip" id="modalGripImg">
+          </div>
+          <div class="modal-img-label">Grip View</div>
         </div>
       </div>
+
+      <!-- Details Section -->
       <div class="modal-details">
         <div class="modal-header">
           <h3 id="modalTitle" style="font-size: 1.5rem; color: var(--fg);">Hold ID</h3>
           <button class="close-btn" id="closeModal">&times;</button>
         </div>
-        <div id="modalMeta">
+        
+        <!-- Tags Area -->
+        <div class="modal-tags">
           <span class="tier-badge" id="modalBadge">Tier 1</span>
-          <span style="margin-left: 0.5rem; color: var(--fg-muted);" id="modalType">Jug</span>
+          <span class="tier-badge edge-badge" id="modalEdge">Large Edge</span>
+          <span style="color: var(--fg-muted); font-size: 0.9rem; margin-left: auto;" id="modalType">Jug</span>
         </div>
+
         <p style="margin-top: 1rem; color: var(--fg-muted);" id="modalDesc">Description goes here.</p>
       </div>
     </div>
   </div>
 
-  <!-- Lightbox (Full Screen Image) -->
+  <!-- Lightbox -->
   <div id="lightbox">
     <img src="" id="lightboxImg" alt="Expanded View">
   </div>
@@ -530,22 +470,159 @@
     // 1. DATA STORE
     // ============================================
     const holdsData = {
-      // Example Data Entries
-      "A18": { 
+      "A1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+        edgeSize: "~20 mm",
+        profileImg: "holds/A1-profile.png", 
+        gripImg: "holds/A1-grip.png",
+        desc: "Slanted crimp / Macro foothold (incut)",
+      },
+	  
+	  "B1": { 
+        tier: 2, 
+        type: "Incut Pinch", 
+        edgeSize: "~25 mm",
+        profileImg: "holds/B1-profile.png", 
+        gripImg: "holds/B1-grip.png",
+        desc: "Slanted crimp or pinch / Macro foothold (incut)",
+      },
+	  
+	  "C1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+        edgeSize: "~25 mm",
+        profileImg: "holds/C1-profile.png", 
+        gripImg: "holds/C1-grip.png",
+        desc: "Long crimp / Macro foothold (incut)",
+      },
+	  
+	  "D1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+        edgeSize: "~25 mm",
+        profileImg: "holds/D1-profile.png", 
+        gripImg: "holds/D1-grip.png",
+        desc: "Sidepull crimp / Macro foothold (incut)",
+      },
+	  
+	  "E1": { 
+        tier: 2, 
+        type: "Flat Crimp", 
+        edgeSize: "~20 mm",
+        profileImg: "holds/E1-profile.png", 
+        gripImg: "holds/E1-grip.png",
+        desc: "Flat sidepull crimp / Macro foothold (flat)",
+      },
+	  
+	  "F1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+        edgeSize: "~25 mm",
+        profileImg: "holds/F1-profile.png", 
+        gripImg: "holds/F1-grip.png",
+        desc: "Slightly incut, almost flat sidepull crimp / Macro foothold (incut)",
+      },
+	  
+	  "G1": { 
         tier: 1, 
         type: "Jug", 
-        profileImg: "holds/A18-profile.png", 
-        gripImg: "holds/A18-grip.png",
-        desc: "Finish hold - Large Bucket.",
+        edgeSize: "~30 mm",
+        profileImg: "holds/G1-profile.png", 
+        gripImg: "holds/G1-grip.png",
+        desc: "Jug that's deeper in the middle and shallower at the edges / Macro foothold (incut)",
       },
-      "Q18": { 
+	  
+	  "H1": { 
         tier: 2, 
-        type: "Crimp", 
-        profileImg: "holds/Q18-profile.png", 
-        gripImg: "holds/Q18-grip.png",
-        desc: "Wavy sidepull crimp. Macro foothold (incut).",
+        type: "Incut Crimp", 
+        edgeSize: "~20 mm",
+        profileImg: "holds/H1-profile.png", 
+        gripImg: "holds/H1-grip.png",
+        desc: "Incut crimp, heart shape / Macro foothold (incut)",
       },
-      // Add your other holds here...
+	  
+	  "I1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+        edgeSize: "~25 mm",
+        profileImg: "holds/I1-profile.png", 
+        gripImg: "holds/I1-grip.png",
+        desc: "Slightly incut, almost flat sidepull crimp / Macro foothold (incut)",
+      },
+	  
+	  "J1": { 
+        tier: 1, 
+        type: "Incut Pinch", 
+        edgeSize: "~30 mm",
+        profileImg: "holds/J1-profile.png", 
+        gripImg: "holds/J1-grip.png",
+        desc: "Deeply incut pinch jug / Macro foothold (incut)",
+      },
+	  
+	  "K1": { 
+        tier: 2, 
+        type: "Flat Crimp", 
+        edgeSize: "~20 mm",
+        profileImg: "holds/K1-profile.png", 
+        gripImg: "holds/K1-grip.png",
+        desc: "Flat sidepull crimp / Macro foothold (flat)",
+      },
+	  
+	  "L1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+        edgeSize: "~25 mm",
+        profileImg: "holds/L1-profile.png", 
+        gripImg: "holds/L1-grip.png",
+        desc: "Incut sidepull crimp / Macro foothold (incut)",
+      },
+	  
+	  "M1": { 
+        tier: 3, 
+        type: "Sloping Pinch", 
+        edgeSize: "~30 mm",
+        profileImg: "holds/M1-profile.png", 
+        gripImg: "holds/M1-grip.png",
+        desc: "Fat, sloping pinch / Macro foothold (sloping)",
+      },
+	  
+	  "N1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+        edgeSize: "~20 mm",
+        profileImg: "holds/N1-profile.png", 
+        gripImg: "holds/N1-grip.png",
+        desc: "Incut sidepull crimp / Macro foothold (incut)",
+      },
+	  
+	  "O1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+        edgeSize: "~25 mm",
+        profileImg: "holds/O1-profile.png", 
+        gripImg: "holds/O1-grip.png",
+        desc: "Long incut crimp / Macro foothold (incut)",
+      },
+	  
+	  "P1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+        edgeSize: "~20 mm",
+        profileImg: "holds/P1-profile.png", 
+        gripImg: "holds/P1-grip.png",
+        desc: "Incut sidepull crimp / Macro foothold (incut)",
+      },
+	  
+      "Q1": { 
+        tier: 2, 
+        type: "Incut Crimp", 
+		edgeSize: "~20 mm"
+        profileImg: "holds/Q1-profile.png", 
+        gripImg: "holds/Q1-grip.png",
+        desc: "Incut sidepull crimp that could technically be pinched / Macro foothold (incut)",
+      },
+      // Add more holds here...
     };
 
     // ============================================
@@ -555,7 +632,6 @@
     const holdListGrid = document.getElementById('holdListGrid');
     const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
 
-    // 1. Generate Grid
     for (let r = 18; r >= 1; r--) {
       for (let c = 0; c < 17; c++) {
         const colLetter = columns[c];
@@ -564,7 +640,6 @@
         const cell = document.createElement('div');
         cell.className = 'hold-cell';
         cell.dataset.id = holdId;
-
         if (r >= 17) cell.classList.add('tooltip-below');
         if (colLetter === 'P' || colLetter === 'Q') cell.classList.add('col-right');
 
@@ -585,12 +660,10 @@
           cell.innerHTML = tooltipHTML;
           cell.addEventListener('click', () => openModal(holdId));
         }
-
         gridOverlay.appendChild(cell);
       }
     }
 
-    // 2. Generate List
     function renderHoldList(filter = 'all') {
         holdListGrid.innerHTML = ''; 
         Object.keys(holdsData).forEach(id => {
@@ -626,7 +699,6 @@
     const boardWrapper = document.getElementById('boardWrapper');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
-    // Open Modal
     function openModal(id) {
       const data = holdsData[id];
       if (!data) return;
@@ -641,34 +713,33 @@
       profileImg.src = data.profileImg;
       gripImg.src = data.gripImg;
 
-      // Add click listeners for lightbox
+      // Image Click Listeners
       profileImg.onclick = () => openLightbox(data.profileImg);
       gripImg.onclick = () => openLightbox(data.gripImg);
 
-      const badge = document.getElementById('modalBadge');
-      badge.textContent = `Tier ${data.tier}`;
-      badge.className = `tier-badge t-${data.tier}`;
+      // Badges
+      const tierBadge = document.getElementById('modalBadge');
+      tierBadge.textContent = `Tier ${data.tier}`;
+      tierBadge.className = `tier-badge t-${data.tier}`;
+
+      const edgeBadge = document.getElementById('modalEdge');
+      edgeBadge.textContent = data.edgeSize || 'Unknown'; // Handle missing data
 
       modal.classList.add('active');
     }
 
-    // Close Modal
     function closeModal() { modal.classList.remove('active'); }
     
-    // Lightbox Logic
     function openLightbox(src) {
       lightboxImg.src = src;
       lightbox.classList.add('active');
     }
     
-    function closeLightbox() {
-      lightbox.classList.remove('active');
-    }
+    function closeLightbox() { lightbox.classList.remove('active'); }
 
-    // Event Listeners
     closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-    lightbox.addEventListener('click', closeLightbox); // Click background to close
+    lightbox.addEventListener('click', closeLightbox);
 
     document.addEventListener('keydown', (e) => { 
       if (e.key === 'Escape') {
