@@ -288,6 +288,89 @@
     .font-chalk {
       font-family: 'Segoe Script', 'Bradley Hand ITC', 'Lucida Handwriting', 'Comic Sans MS', cursive;
     }
+	
+	    /* ============================================
+       HOLD LIST SECTION
+       ============================================ */
+    .hold-list-section {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--fg-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--fg-muted);
+      color: var(--fg);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .hold-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .hold-list-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .hold-list-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .list-card-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      background: #222;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .list-card-info h4 {
+      color: var(--fg);
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .list-card-info p {
+      color: var(--fg-muted);
+      font-size: 0.8rem;
+    }
 
   </style>
 </head>
@@ -338,6 +421,26 @@
       </label>
     </div>
 
+    <!-- Filterable Hold List -->
+    <section class="hold-list-section">
+      <div class="list-header">
+        <h2 class="font-chalk" style="font-size: 1.5rem; color: var(--fg);">Hold Details</h2>
+        
+        <!-- Filter Buttons -->
+        <div id="filterControls">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="tier-1">Tier 1</button>
+          <button class="filter-btn" data-filter="tier-2">Tier 2</button>
+          <button class="filter-btn" data-filter="tier-3">Tier 3</button>
+        </div>
+      </div>
+
+      <!-- The List Container -->
+      <div class="hold-list-grid" id="holdListGrid">
+        <!-- Cards will be injected here by JS -->
+      </div>
+    </section>
+
   </main>
 
   <!-- Modal (Popup) -->
@@ -373,7 +476,7 @@
     // ============================================
     const holdsData = {
       // Example Data Entries (Update with your actual data)
-      "Q17": { 
+      "Q18": { 
         tier: 2, 
         type: "Crimp", 
         profileImg: "holds/Q18-profile.png", 
@@ -385,18 +488,15 @@
     };
 
     // ============================================
-    // 2. GRID GENERATION
+    // 2. GRID & LIST GENERATION
     // ============================================
     const gridOverlay = document.getElementById('gridOverlay');
-    
-    // Columns A through Q (17 columns)
+    const holdListGrid = document.getElementById('holdListGrid');
     const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
 
-    // Generate 18 rows (top to bottom: 18 down to 1)
-    // Generate 17 cols (left to right)
-    
-        for (let r = 18; r >= 1; r--) {
-      for (let c = 0; c < 17; c++) { // Loop 17 times
+    // 1. Generate the Grid Overlay
+    for (let r = 18; r >= 1; r--) {
+      for (let c = 0; c < 17; c++) {
         const colLetter = columns[c];
         const holdId = `${colLetter}${r}`;
         
@@ -404,17 +504,12 @@
         cell.className = 'hold-cell';
         cell.dataset.id = holdId;
 
-        // NEW: Add class to flip tooltip down for top rows (18 and 17)
-        if (r >= 17) {
-          cell.classList.add('tooltip-below');
-        }
+        if (r >= 17) cell.classList.add('tooltip-below');
 
-        // If we have data for this hold, configure it
         if (holdsData[holdId]) {
           const data = holdsData[holdId];
           cell.classList.add(`tier-${data.tier}`);
           
-          // Create Tooltip HTML
           const tooltipHTML = `
             <div class="hold-tooltip">
               <img src="${data.profileImg}" class="tooltip-img" alt="${holdId}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x100/222/555?text=No+Image'">
@@ -426,8 +521,6 @@
             </div>
           `;
           cell.innerHTML = tooltipHTML;
-
-          // Click Event Listener
           cell.addEventListener('click', () => openModal(holdId));
         }
 
@@ -435,14 +528,48 @@
       }
     }
 
+    // 2. Generate the List View
+    function renderHoldList(filter = 'all') {
+        holdListGrid.innerHTML = ''; // Clear existing
+
+        // Convert object to array for easy filtering
+        const holdKeys = Object.keys(holdsData);
+
+        holdKeys.forEach(id => {
+            const data = holdsData[id];
+            
+            // Filter Logic
+            if (filter !== 'all' && `tier-${data.tier}` !== filter) {
+                return; // Skip if doesn't match filter
+            }
+
+            const card = document.createElement('div');
+            card.className = 'hold-list-card';
+            card.onclick = () => openModal(id); // Make clickable
+
+            card.innerHTML = `
+                <img src="${data.profileImg}" class="list-card-img" alt="${id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/60x60/222/555?text=N/A'">
+                <div class="list-card-info">
+                    <h4>${id} <span style="opacity:0.5; font-size:0.8rem; margin-left:5px;">${data.type}</span></h4>
+                    <span class="tier-badge t-${data.tier}">Tier ${data.tier}</span>
+                </div>
+            `;
+            holdListGrid.appendChild(card);
+        });
+    }
+
+    // Initial Render of List
+    renderHoldList();
+
     // ============================================
-    // 3. INTERACTIONS (Modal & Controls)
+    // 3. INTERACTIONS (Modal, Controls, Filters)
     // ============================================
 
     const modal = document.getElementById('holdModal');
     const closeBtn = document.getElementById('closeModal');
     const tierToggle = document.getElementById('tierToggle');
     const boardWrapper = document.getElementById('boardWrapper');
+    const filterBtns = document.querySelectorAll('.filter-btn');
 
     // Open Modal
     function openModal(id) {
@@ -452,12 +579,9 @@
       document.getElementById('modalTitle').textContent = id;
       document.getElementById('modalType').textContent = data.type;
       document.getElementById('modalDesc').textContent = data.desc;
-      
-      // Images
       document.getElementById('modalProfileImg').src = data.profileImg;
       document.getElementById('modalGripImg').src = data.gripImg;
 
-      // Tier Badge
       const badge = document.getElementById('modalBadge');
       badge.textContent = `Tier ${data.tier}`;
       badge.className = `tier-badge t-${data.tier}`;
@@ -466,25 +590,23 @@
     }
 
     // Close Modal
-    function closeModal() {
-      modal.classList.remove('active');
-    }
-
+    function closeModal() { modal.classList.remove('active'); }
     closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Tier Toggle (Grid)
+    tierToggle.addEventListener('change', () => {
+        tierToggle.checked ? boardWrapper.classList.add('show-tiers') : boardWrapper.classList.remove('show-tiers');
     });
 
-    // Tier Toggle
-    tierToggle.addEventListener('change', () => {
-      if (tierToggle.checked) {
-        boardWrapper.classList.add('show-tiers');
-      } else {
-        boardWrapper.classList.remove('show-tiers');
-      }
+    // Filter Buttons (List)
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderHoldList(btn.dataset.filter);
+        });
     });
 
   </script>
