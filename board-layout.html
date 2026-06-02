@@ -15,6 +15,12 @@
       --tier-2: #facc15; /* Yellow - Medium */
       --tier-3: #f87171; /* Red - Hard */
       --edge-color: #60a5fa; /* Blue - for Edge Size */
+      
+      /* Type Colors */
+      --type-jug: #4ade80;
+      --type-crimp: #facc15;
+      --type-pinch: #f472b6;
+      --type-sloper: #60a5fa;
     }
 
     .board-page {
@@ -28,6 +34,24 @@
     .board-header {
       text-align: center;
       margin-bottom: 2rem;
+    }
+    
+    /* Consistent Font Styling */
+    .page-title {
+      font-family: Impact, 'Arial Narrow Bold', sans-serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      color: var(--fg);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    
+    .page-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     /* The Board Container */
@@ -60,6 +84,29 @@
       grid-template-columns: repeat(17, 1fr);
       grid-template-rows: repeat(18, 1fr);
       overflow: visible;
+    }
+
+    /* Grid Labels (Numbers/Letters) */
+    .grid-label {
+      position: absolute;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.25);
+      font-weight: bold;
+      pointer-events: none;
+      z-index: 5;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    .col-label {
+      top: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .row-label {
+      left: 4px;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .hold-cell {
@@ -139,11 +186,15 @@
     .tier-badge.t-2 { background: rgba(250, 204, 21, 0.2); color: var(--tier-2); }
     .tier-badge.t-3 { background: rgba(248, 113, 113, 0.2); color: var(--tier-3); }
     
-    /* NEW: Edge Size Badge Style */
-    .edge-badge {
-      background: rgba(96, 165, 250, 0.15);
-      color: var(--edge-color);
-    }
+    /* Edge Size Badge Style */
+    .edge-badge { background: rgba(96, 165, 250, 0.15); color: var(--edge-color); }
+
+    /* Type Badges (Colored) */
+    .type-badge { font-size: 0.75rem; padding: 4px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase; }
+    .type-badge.jug { background: rgba(74, 222, 128, 0.15); color: var(--type-jug); }
+    .type-badge.crimp { background: rgba(250, 204, 21, 0.15); color: var(--type-crimp); }
+    .type-badge.pinch { background: rgba(244, 114, 182, 0.15); color: var(--type-pinch); }
+    .type-badge.sloper { background: rgba(96, 165, 250, 0.15); color: var(--type-sloper); }
 
     .board-controls {
       display: flex;
@@ -189,7 +240,7 @@
     .toggle-input:checked + .toggle-switch::after { transform: translateX(20px); }
     .toggle-input { display: none; }
 
-    /* Modal (Detail View) */
+    /* Modal (Vertical Layout) */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -202,17 +253,19 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s;
+      padding: 1rem;
     }
 
     .modal-overlay.active { opacity: 1; pointer-events: all; }
 
     .modal-content {
       background: var(--card);
-      width: 90%;
-      max-width: 600px;
+      width: 100%;
+      max-width: 550px; /* Narrower */
+      max-height: 90vh;
       border-radius: 16px;
       border: 1px solid var(--border);
-      overflow: hidden;
+      overflow-y: auto; /* Scrollable if needed */
       transform: scale(0.9);
       transition: transform 0.3s;
       display: flex;
@@ -221,27 +274,27 @@
 
     .modal-overlay.active .modal-content { transform: scale(1); }
 
-    /* FIX: Image Grid Layout */
+    /* Stacked Images */
     .modal-images {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 1px;
       background: var(--border);
     }
 
-    /* Wrapper for Image + Label */
     .modal-img-column {
       background: #111;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     .modal-img-container {
-      height: 200px;
+      height: 280px; /* Taller images */
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 1.5rem;
     }
 
     .modal-img-container img {
@@ -251,27 +304,36 @@
       cursor: zoom-in;
     }
 
-    /* Centered Label Below Image */
     .modal-img-label {
-      text-align: center;
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 0.75rem;
-      color: rgba(255,255,255,0.5);
-      padding: 0.5rem 0 1rem 0;
+      color: rgba(255,255,255,0.4);
+      pointer-events: none;
     }
 
     .modal-details { padding: 1.5rem; }
+    
     .modal-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start; /* Align top */
       margin-bottom: 1rem;
     }
     
-    /* Tag container */
+    .modal-title-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
     .modal-tags {
       display: flex;
+      flex-wrap: wrap;
       gap: 0.5rem;
-      margin-bottom: 0.5rem;
+      margin-top: 1rem;
     }
 
     .close-btn {
@@ -307,10 +369,6 @@
       box-shadow: 0 0 30px rgba(0,0,0,0.5);
     }
 
-    .font-chalk {
-      font-family: 'Segoe Script', 'Bradley Hand ITC', 'Lucida Handwriting', 'Comic Sans MS', cursive;
-    }
-
     /* Hold List Section */
     .hold-list-section {
       margin-top: 4rem;
@@ -321,22 +379,45 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       flex-wrap: wrap;
       gap: 1rem;
     }
+    
+    .filters-container {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    
+    .filter-group {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .filter-group-label {
+        font-size: 0.75rem;
+        color: var(--fg-muted);
+        text-transform: uppercase;
+        margin-right: 0.25rem;
+    }
+
     .filter-btn {
       background: transparent;
       border: 1px solid var(--border);
       color: var(--fg-muted);
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.8rem;
       border-radius: 20px;
       cursor: pointer;
       transition: all 0.2s;
       font-family: inherit;
+      font-size: 0.85rem;
     }
     .filter-btn:hover { border-color: var(--fg-muted); color: var(--fg); }
     .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+    
     .hold-list-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -366,7 +447,6 @@
     .list-card-info h4 { color: var(--fg); font-size: 1.1rem; margin: 0; }
     .list-card-info .type-text { color: var(--fg-muted); font-size: 0.85rem; margin: 0; }
 
-
     /* Warning Banner */
     .angle-warning {
       background: rgba(248, 113, 113, 0.1);
@@ -374,14 +454,15 @@
       padding: 0.75rem;
       margin-top: 1rem;
       font-size: 0.875rem;
-      display: none; /* Hidden by default */
+      display: none;
     }
     
-    .angle-warning.visible {
-      display: block;
-    }
-	
+    .angle-warning.visible { display: block; }
+    
   </style>
+  
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
+  
 </head>
 <body>
 
@@ -403,8 +484,8 @@
   <main class="board-page">
     
     <header class="board-header">
-      <h1 class="chalk-title font-chalk">Kilter Board Map</h1>
-      <p class="chalk-subtitle font-chalk">Visualizing the terrain.</p>
+      <h1 class="page-title">Kilter Board Map</h1>
+      <p class="page-subtitle">The original 12x12 layout.</p>
     </header>
 
     <div class="board-wrapper" id="boardWrapper">
@@ -422,12 +503,27 @@
 
     <section class="hold-list-section">
       <div class="list-header">
-        <h2 class="font-chalk" style="font-size: 1.5rem; color: var(--fg);">Hold Details</h2>
-        <div id="filterControls">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="tier-1">Tier 1</button>
-          <button class="filter-btn" data-filter="tier-2">Tier 2</button>
-          <button class="filter-btn" data-filter="tier-3">Tier 3</button>
+        <h2 class="font-display" style="font-size: 1.5rem; color: var(--fg); letter-spacing: 0.02em;">Hold Details</h2>
+        
+        <div class="filters-container">
+            <!-- Tier Filters -->
+            <div class="filter-group">
+                <span class="filter-group-label">Tier:</span>
+                <button class="filter-btn active" data-filter-type="tier" data-filter-value="all">All</button>
+                <button class="filter-btn" data-filter-type="tier" data-filter-value="tier-1">Tier 1</button>
+                <button class="filter-btn" data-filter-type="tier" data-filter-value="tier-2">Tier 2</button>
+                <button class="filter-btn" data-filter-type="tier" data-filter-value="tier-3">Tier 3</button>
+            </div>
+
+            <!-- Type Filters -->
+            <div class="filter-group">
+                <span class="filter-group-label">Type:</span>
+                <button class="filter-btn active" data-filter-type="type" data-filter-value="all">All</button>
+                <button class="filter-btn" data-filter-type="type" data-filter-value="Jug">Jug</button>
+                <button class="filter-btn" data-filter-type="type" data-filter-value="Crimp">Crimp</button>
+                <button class="filter-btn" data-filter-type="type" data-filter-value="Pinch">Pinch</button>
+                <button class="filter-btn" data-filter-type="type" data-filter-value="Sloper">Sloper</button>
+            </div>
         </div>
       </div>
       <div class="hold-list-grid" id="holdListGrid"></div>
@@ -438,16 +534,15 @@
   <!-- Modal -->
   <div class="modal-overlay" id="holdModal">
     <div class="modal-content">
-      <!-- Images Section -->
       <div class="modal-images">
-        <!-- Profile Column -->
+        <!-- Profile -->
         <div class="modal-img-column">
           <div class="modal-img-container">
             <img src="" alt="Hold Profile" id="modalProfileImg">
           </div>
           <div class="modal-img-label">Profile View</div>
         </div>
-        <!-- Grip Column -->
+        <!-- Grip -->
         <div class="modal-img-column">
           <div class="modal-img-container">
             <img src="" alt="Hold Grip" id="modalGripImg">
@@ -456,25 +551,27 @@
         </div>
       </div>
 
-      <!-- Details Section -->
       <div class="modal-details">
         <div class="modal-header">
-          <h3 id="modalTitle" style="font-size: 1.5rem; color: var(--fg);">Hold ID</h3>
+          <div class="modal-title-group">
+            <h3 id="modalTitle" style="font-size: 1.5rem; color: var(--fg); margin:0;">Hold ID</h3>
+            <div class="modal-tags">
+              <span class="tier-badge" id="modalBadge">Tier 1</span>
+              <span class="tier-badge edge-badge" id="modalEdge">Large Edge</span>
+            </div>
+          </div>
           <button class="close-btn" id="closeModal">&times;</button>
         </div>
         
-        <!-- Tags Area -->
-        <div class="modal-tags">
-          <span class="tier-badge" id="modalBadge">Tier 1</span>
-          <span class="tier-badge edge-badge" id="modalEdge">Large Edge</span>
-          <span style="color: var(--fg-muted); font-size: 0.9rem; margin-left: auto;" id="modalType">Jug</span>
+        <!-- Type Tag -->
+        <div style="margin-top: 0.5rem; margin-bottom: 1rem;">
+            <span class="type-badge" id="modalTypeBadge">Jug</span>
         </div>
 
-        <p style="margin-top: 1rem; color: var(--fg-muted);" id="modalDesc">Description goes here.</p>
-		
-		        <!-- Warning Banner -->
+        <p style="color: var(--fg-muted); line-height: 1.6;" id="modalDesc">Description goes here.</p>
+        
         <div class="angle-warning" id="modalWarning">
-          ⚠️ <strong>Warning:</strong> Quality degrades significantly at steep angles. Requires high tension.
+            ⚠️ <strong>Warning:</strong> Quality degrades significantly at steep angles. Requires high tension.
         </div>
       </div>
     </div>
@@ -492,59 +589,59 @@
     const holdsData = {
       "A1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~20 mm",
         profileImg: "holds/A1-profile.png", 
         gripImg: "holds/A1-grip.png",
         desc: "Slanted crimp / Macro foothold (incut)",
       },
-	  
-	  "B1": { 
+      
+      "B1": { 
         tier: 2, 
-        type: "Incut Pinch", 
+        type: "Pinch", 
         edgeSize: "~25 mm",
         profileImg: "holds/B1-profile.png", 
         gripImg: "holds/B1-grip.png",
         desc: "Slanted crimp or pinch / Macro foothold (incut)",
       },
-	  
-	  "C1": { 
+      
+      "C1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~25 mm",
         profileImg: "holds/C1-profile.png", 
         gripImg: "holds/C1-grip.png",
         desc: "Long crimp / Macro foothold (incut)",
       },
-	  
-	  "D1": { 
+      
+      "D1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~25 mm",
         profileImg: "holds/D1-profile.png", 
         gripImg: "holds/D1-grip.png",
         desc: "Sidepull crimp / Macro foothold (incut)",
       },
-	  
-	  "E1": { 
+      
+      "E1": { 
         tier: 2, 
-        type: "Flat Crimp", 
+        type: "Crimp", 
         edgeSize: "~20 mm",
         profileImg: "holds/E1-profile.png", 
         gripImg: "holds/E1-grip.png",
         desc: "Flat sidepull crimp / Macro foothold (flat)",
       },
-	  
-	  "F1": { 
+      
+      "F1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~25 mm",
         profileImg: "holds/F1-profile.png", 
         gripImg: "holds/F1-grip.png",
         desc: "Slightly incut, almost flat sidepull crimp / Macro foothold (incut)",
       },
-	  
-	  "G1": { 
+      
+      "G1": { 
         tier: 1, 
         type: "Jug", 
         edgeSize: "~30 mm",
@@ -552,98 +649,97 @@
         gripImg: "holds/G1-grip.png",
         desc: "Jug that's deeper in the middle and shallower at the edges / Macro foothold (incut)",
       },
-	  
-	  "H1": { 
+      
+      "H1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~20 mm",
         profileImg: "holds/H1-profile.png", 
         gripImg: "holds/H1-grip.png",
         desc: "Incut crimp, heart shape / Macro foothold (incut)",
       },
-	  
-	  "I1": { 
+      
+      "I1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~25 mm",
         profileImg: "holds/I1-profile.png", 
         gripImg: "holds/I1-grip.png",
         desc: "Slightly incut, almost flat sidepull crimp / Macro foothold (incut)",
       },
-	  
-	  "J1": { 
+      
+      "J1": { 
         tier: 1, 
-        type: "Incut Pinch", 
+        type: "Pinch", 
         edgeSize: "~30 mm",
         profileImg: "holds/J1-profile.png", 
         gripImg: "holds/J1-grip.png",
         desc: "Deeply incut pinch jug / Macro foothold (incut)",
       },
-	  
-	  "K1": { 
+      
+      "K1": { 
         tier: 2, 
-        type: "Flat Crimp", 
+        type: "Crimp", 
         edgeSize: "~20 mm",
         profileImg: "holds/K1-profile.png", 
         gripImg: "holds/K1-grip.png",
         desc: "Flat sidepull crimp / Macro foothold (flat)",
       },
-	  
-	  "L1": { 
+      
+      "L1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~25 mm",
         profileImg: "holds/L1-profile.png", 
         gripImg: "holds/L1-grip.png",
         desc: "Incut sidepull crimp / Macro foothold (incut)",
       },
-	  
-	  "M1": { 
+      
+      "M1": { 
         tier: 3, 
-        type: "Sloping Pinch", 
+        type: "Pinch", 
         edgeSize: "~30 mm",
-		angleSensitive: true,
+        angleSensitive: true,
         profileImg: "holds/M1-profile.png", 
         gripImg: "holds/M1-grip.png",
         desc: "Fat, sloping pinch / Macro foothold (sloping)",
       },
-	  
-	  "N1": { 
+      
+      "N1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~20 mm",
         profileImg: "holds/N1-profile.png", 
         gripImg: "holds/N1-grip.png",
         desc: "Incut sidepull crimp / Macro foothold (incut)",
       },
-	  
-	  "O1": { 
+      
+      "O1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~25 mm",
         profileImg: "holds/O1-profile.png", 
         gripImg: "holds/O1-grip.png",
         desc: "Long incut crimp / Macro foothold (incut)",
       },
-	  
-	  "P1": { 
+      
+      "P1": { 
         tier: 2, 
-        type: "Incut Crimp", 
+        type: "Crimp", 
         edgeSize: "~20 mm",
         profileImg: "holds/P1-profile.png", 
         gripImg: "holds/P1-grip.png",
         desc: "Incut sidepull crimp / Macro foothold (incut)",
       },
-	  
+      
       "Q1": { 
         tier: 2, 
-        type: "Incut Crimp", 
-		edgeSize: "~20 mm",
+        type: "Crimp", 
+        edgeSize: "~20 mm",
         profileImg: "holds/Q1-profile.png", 
         gripImg: "holds/Q1-grip.png",
         desc: "Incut sidepull crimp that could technically be pinched / Macro foothold (incut)",
       },
-      // Add more holds here...
     };
 
     // ============================================
@@ -685,11 +781,41 @@
       }
     }
 
-    function renderHoldList(filter = 'all') {
+    // Generate Grid Labels
+    // Top Letters
+    columns.forEach((letter, i) => {
+        const label = document.createElement('div');
+        label.className = 'grid-label col-label';
+        label.textContent = letter;
+        label.style.left = `calc((((${i} + 0.5) / 17) * 100%)`;
+        label.style.top = '2px';
+        gridOverlay.appendChild(label);
+    });
+
+    // Side Numbers
+    for(let r = 18; r >= 1; r--) {
+        const label = document.createElement('div');
+        label.className = 'grid-label row-label';
+        label.textContent = r;
+        const rowIndex = 18 - r; // 0 to 17
+        label.style.top = `calc((((${rowIndex} + 0.5) / 18) * 100%)`;
+        label.style.left = '4px';
+        gridOverlay.appendChild(label);
+    }
+
+    // Generate List
+    function renderHoldList() {
         holdListGrid.innerHTML = ''; 
+        
+        const activeTier = document.querySelector('.filter-btn[data-filter-type="tier"].active').dataset.filterValue;
+        const activeType = document.querySelector('.filter-btn[data-filter-type="type"].active').dataset.filterValue;
+
         Object.keys(holdsData).forEach(id => {
             const data = holdsData[id];
-            if (filter !== 'all' && `tier-${data.tier}` !== filter) return;
+            
+            // Filter Logic
+            if (activeTier !== 'all' && `tier-${data.tier}` !== activeTier) return;
+            if (activeType !== 'all' && data.type !== activeType) return;
 
             const card = document.createElement('div');
             card.className = 'hold-list-card';
@@ -706,6 +832,7 @@
             holdListGrid.appendChild(card);
         });
     }
+    
     renderHoldList();
 
     // ============================================
@@ -725,7 +852,6 @@
       if (!data) return;
 
       document.getElementById('modalTitle').textContent = id;
-      document.getElementById('modalType').textContent = data.type;
       document.getElementById('modalDesc').textContent = data.desc;
       
       const profileImg = document.getElementById('modalProfileImg');
@@ -734,27 +860,32 @@
       profileImg.src = data.profileImg;
       gripImg.src = data.gripImg;
 
-      // Image Click Listeners
       profileImg.onclick = () => openLightbox(data.profileImg);
       gripImg.onclick = () => openLightbox(data.gripImg);
 
-      // Badges
+      // Tier Badge
       const tierBadge = document.getElementById('modalBadge');
       tierBadge.textContent = `Tier ${data.tier}`;
       tierBadge.className = `tier-badge t-${data.tier}`;
 
+      // Edge Badge
       const edgeBadge = document.getElementById('modalEdge');
-      edgeBadge.textContent = data.edgeSize || 'Unknown'; // Handle missing data
+      edgeBadge.textContent = data.edgeSize || 'Unknown';
 
-      modal.classList.add('active');
-	  
-	        // Show/Hide Degradation Warning
+      // Type Badge (Colored)
+      const typeBadge = document.getElementById('modalTypeBadge');
+      typeBadge.textContent = data.type;
+      typeBadge.className = `type-badge ${data.type.toLowerCase()}`; 
+
+      // Warning
       const warningEl = document.getElementById('modalWarning');
       if (data.angleSensitive) {
         warningEl.classList.add('visible');
       } else {
         warningEl.classList.remove('visible');
       }
+
+      modal.classList.add('active');
     }
 
     function closeModal() { modal.classList.remove('active'); }
@@ -781,11 +912,13 @@
         tierToggle.checked ? boardWrapper.classList.add('show-tiers') : boardWrapper.classList.remove('show-tiers');
     });
 
+    // Filter Logic
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
+            const group = btn.dataset.filterType;
+            document.querySelectorAll(`.filter-btn[data-filter-type="${group}"]`).forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            renderHoldList(btn.dataset.filter);
+            renderHoldList();
         });
     });
 
