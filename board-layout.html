@@ -30,16 +30,18 @@
       margin-bottom: 2rem;
     }
 
-    /* The Board Container */
+       /* The Board Container */
     .board-wrapper {
       position: relative;
       width: 100%;
-      max-width: 800px; /* Matches your image width */
+      max-width: 800px;
       margin: 0 auto;
       background: #111;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      /* Enable 3D perspective for the child grid */
+      perspective: 1000px; 
     }
 
     /* The Board Image */
@@ -60,6 +62,14 @@
       display: grid;
       grid-template-columns: repeat(17, 1fr);
       grid-template-rows: repeat(18, 1fr);
+      
+      /* 3D Transform Properties */
+      transform-style: preserve-3d;
+      transform-origin: center center;
+      
+      /* Default slight tilt (Adjust these values to match your photo) */
+      /* rotateX tilts top/bottom. rotateY tilts left/right. */
+      transform: perspective(1000px) rotateX(5deg) rotateY(0deg); 
     }
 
     /* Individual Hold Cell */
@@ -367,6 +377,20 @@
         <input type="checkbox" class="toggle-input" id="tierToggle">
         <div class="toggle-switch"></div>
         <span>Show Quality Tiers</span>
+		
+		<!-- CALIBRATION TOOLS (Delete after finding correct angles) -->
+      <div style="display: flex; gap: 2rem; align-items: center; width: 100%; justify-content: center; margin-top: 1rem;">
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <label style="font-size: 0.8rem; opacity: 0.7;">Tilt (Top/Bottom)</label>
+          <input type="range" min="-20" max="20" value="5" step="0.5" id="calibrateX" style="width: 150px;">
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <label style="font-size: 0.8rem; opacity: 0.7;">Skew (Left/Right)</label>
+          <input type="range" min="-20" max="20" value="0" step="0.5" id="calibrateY" style="width: 150px;">
+        </div>
+      </div>
+      <!-- END CALIBRATION TOOLS -->
+		
       </label>
 
       
@@ -518,6 +542,26 @@
         boardWrapper.classList.remove('show-tiers');
       }
     });
+
+    // ============================================
+    // 4. CALIBRATION HELPER (Remove later)
+    // ============================================
+    const gridOverlay = document.getElementById('gridOverlay'); // Ensure this is targeted
+    const calibrateX = document.getElementById('calibrateX');
+    const calibrateY = document.getElementById('calibrateY');
+
+    function updateTransform() {
+      const xVal = calibrateX.value;
+      const yVal = calibrateY.value;
+      // Apply the transform with the slider values
+      gridOverlay.style.transform = `perspective(1000px) rotateX(${xVal}deg) rotateY(${yVal}deg)`;
+    }
+
+    calibrateX.addEventListener('input', updateTransform);
+    calibrateY.addEventListener('input', updateTransform);
+    
+    // Initialize
+    updateTransform();
 
   </script>
 </body>
