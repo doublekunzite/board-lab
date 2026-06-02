@@ -58,8 +58,8 @@
       width: 100%;
       height: 100%;
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: repeat(12, 1fr);
+      grid-template-columns: repeat(17, 1fr);
+      grid-template-rows: repeat(18, 1fr);
     }
 
     /* Individual Hold Cell */
@@ -198,14 +198,7 @@
     .toggle-input:checked + .toggle-switch::after { transform: translateX(20px); }
     .toggle-input { display: none; }
 
-    /* Angle Slider */
-    .angle-control {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex: 1;
-      justify-content: center;
-    }
+    
 
     input[type="range"] {
       -webkit-appearance: none;
@@ -376,12 +369,7 @@
         <span>Show Quality Tiers</span>
       </label>
 
-      <div class="angle-control">
-        <span>Wall Angle:</span>
-        <input type="range" min="0" max="60" value="40" step="10" id="angleSlider">
-        <span id="angleValue">40°</span>
-      </div>
-    </div>
+      
 
   </main>
 
@@ -416,39 +404,21 @@
     </div>
   </div>
 
-  <script>
+    <script>
     // ============================================
     // 1. DATA STORE
     // ============================================
-    // This is your "Database". Add hold data here.
-    // image paths assume a folder named 'holds'
     const holdsData = {
-      // Example Data Entry:
-      "A12": { 
+      // Example Data Entries (Update with your actual data)
+      "A18": { 
         tier: 1, 
         type: "Jug", 
-        profileImg: "holds/A12-profile.png", 
-        gripImg: "holds/A12-grip.png",
-        desc: "A massive bucket. One of the best holds on the board.",
+        profileImg: "holds/A18-profile.png", 
+        gripImg: "holds/A18-grip.png",
+        desc: "Finish hold - Large Bucket.",
         angleSensitive: false 
       },
-      "B12": { 
-        tier: 2, 
-        type: "Edge", 
-        profileImg: "holds/B12-profile.png", 
-        gripImg: "holds/B12-grip.png",
-        desc: "A decent edge, positive but small.",
-        angleSensitive: false 
-      },
-      "C12": { 
-        tier: 3, 
-        type: "Sloper", 
-        profileImg: "holds/C12-profile.png", 
-        gripImg: "holds/C12-grip.png",
-        desc: "Very slopey. Hard to hold on steep terrain.",
-        angleSensitive: true 
-      },
-      // ... Add more holds here. If a hold is missing from this object, the grid will create a placeholder.
+      // Add your other holds here...
     };
 
     // ============================================
@@ -456,13 +426,14 @@
     // ============================================
     const gridOverlay = document.getElementById('gridOverlay');
     
-    // Generate 12 rows (top to bottom: 12 down to 1)
-    // Generate 12 cols (left to right: A to L)
-    
-    const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+    // Columns A through Q (17 columns)
+    const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
 
-    for (let r = 12; r >= 1; r--) {
-      for (let c = 0; c < 12; c++) {
+    // Generate 18 rows (top to bottom: 18 down to 1)
+    // Generate 17 cols (left to right)
+    
+    for (let r = 18; r >= 1; r--) {
+      for (let c = 0; c < 17; c++) { // Loop 17 times
         const colLetter = columns[c];
         const holdId = `${colLetter}${r}`;
         
@@ -473,7 +444,7 @@
         // If we have data for this hold, configure it
         if (holdsData[holdId]) {
           const data = holdsData[holdId];
-          cell.classList.add(`tier-${data.tier}`); // Add tier class for coloring
+          cell.classList.add(`tier-${data.tier}`);
           
           // Create Tooltip HTML
           const tooltipHTML = `
@@ -490,10 +461,6 @@
 
           // Click Event Listener
           cell.addEventListener('click', () => openModal(holdId));
-
-        } else {
-          // No data - create a placeholder visual or leave empty
-          // cell.style.background = 'rgba(255,255,255,0.02)'; 
         }
 
         gridOverlay.appendChild(cell);
@@ -506,15 +473,13 @@
 
     const modal = document.getElementById('holdModal');
     const closeBtn = document.getElementById('closeModal');
-    const angleSlider = document.getElementById('angleSlider');
-    const angleValue = document.getElementById('angleValue');
     const tierToggle = document.getElementById('tierToggle');
     const boardWrapper = document.getElementById('boardWrapper');
 
     // Open Modal
     function openModal(id) {
       const data = holdsData[id];
-      if (!data) return; // Do nothing if no data exists
+      if (!data) return;
 
       document.getElementById('modalTitle').textContent = id;
       document.getElementById('modalType').textContent = data.type;
@@ -529,8 +494,7 @@
       badge.textContent = `Tier ${data.tier}`;
       badge.className = `tier-badge t-${data.tier}`;
 
-      // Angle Logic
-      updateAngleWarning(data);
+      
 
       modal.classList.add('active');
     }
@@ -557,27 +521,9 @@
       }
     });
 
-    // Angle Slider
-    angleSlider.addEventListener('input', (e) => {
-      angleValue.textContent = `${e.target.value}°`;
-      // We need to update the warning for the currently open hold if modal is open
-      // For simplicity, we check if modal is open, and re-run logic
-      if (modal.classList.contains('active')) {
-         const id = document.getElementById('modalTitle').textContent;
-         if(holdsData[id]) updateAngleWarning(holdsData[id]);
-      }
-    });
+    
 
-    function updateAngleWarning(data) {
-      const warningEl = document.getElementById('modalWarning');
-      const currentAngle = parseInt(angleSlider.value);
-
-      // Logic: If hold is angle sensitive AND angle is > 40
-      if (data.angleSensitive && currentAngle >= 40) {
-        warningEl.classList.add('visible');
-      } else {
-        warningEl.classList.remove('visible');
-      }
+  
     }
 
   </script>

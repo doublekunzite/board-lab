@@ -5,13 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hold Quality | Board Lab</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   
   <style>
     /* ============================================
-       CHALKBOARD THEME OVERRIDES
+       HOL QUALITY PAGE STYLES
        ============================================ */
     :root {
       --chalk-white: rgba(245, 242, 237, 0.95);
@@ -28,9 +25,10 @@
       overflow-x: hidden;
     }
 
-    /* Import Handwritten Font */
+    /* Updated to match site consistency */
     .font-chalk {
-      font-family: 'Caveat', cursive;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      letter-spacing: 0.02em;
     }
 
     /* Main Container for this page */
@@ -42,13 +40,14 @@
       margin: 0 auto;
     }
 
-    /* "Chalk" Text Styles */
+    /* Title Styles */
     .chalk-title {
       font-size: clamp(3rem, 8vw, 6rem);
       color: var(--chalk-white);
       text-shadow: 0 0 15px rgba(255,255,255,0.2);
       margin-bottom: 0.5rem;
       line-height: 1;
+      font-weight: 700; /* Adding weight since we lost the thick font */
     }
 
     .chalk-subtitle {
@@ -263,8 +262,9 @@
       border: 1px solid var(--chalk-dim);
       color: var(--chalk-white);
       padding: 0.5rem 1.5rem;
-      font-family: 'Caveat', cursive;
-      font-size: 1.25rem;
+      /* Updated font to match site */
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 1rem;
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.2s;
@@ -362,12 +362,12 @@
   <!-- Header -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <!-- CHANGE: Removed ../ because we are already in the root folder -->
       <a href="index.html" class="logo font-display">BOARD LAB</a>
       <nav>
         <ul class="nav-links">
-          <!-- CHANGE: Removed ../ -->
           <li><a href="index.html#moves" class="nav-link">Moves</a></li>
+          <!-- Added Board Map Link -->
+          <li><a href="board-layout.html" class="nav-link">Board Map</a></li>
         </ul>
       </nav>
     </div>
@@ -461,7 +461,7 @@
     <!-- SECTION 3: WALL ANGLE -->
     <section class="diagram-section" style="border-bottom: none;">
       <h2 class="font-chalk">3. Wall Steepness vs. Hold Type</h2>
-      <p style="color: var(--chalk-dim); margin-bottom: 2rem; font-family: 'Caveat'; font-size: 1.2rem;">
+      <p style="color: var(--chalk-dim); margin-bottom: 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 1.2rem;">
         Notice how "Good" holds degrade slower on steep terrain than "Bad" holds.
       </p>
 
@@ -577,7 +577,7 @@
 
     // Initial Render
     renderSpectrum('pinch');
-	
+    
     // ============================================
     // ROTATION COMPASS LOGIC
     // ============================================
