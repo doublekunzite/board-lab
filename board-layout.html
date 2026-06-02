@@ -82,35 +82,35 @@
       border-radius: 0; /* Remove rounded corners to match label area */
     }
 
-    /* Large Labels - Outside Grid */
+        /* Large Labels - Outside Grid (No wrapper padding needed) */
     .grid-label {
       position: absolute;
-      font-size: 0.85rem; /* Larger text */
-      font-weight: 700; /* Bolder */
-      color: rgba(255,255,255,0.4);
+      font-size: 1rem; /* Big, clear text */
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       pointer-events: none;
-      z-index: 5;
+      z-index: 10;
     }
 
     .col-label {
-      top: 0; /* Align to top edge of wrapper */
-      transform: translateY(-100%); /* Move above the grid */
-      left: 0;
+      top: 0;
       width: calc(100% / 17); /* Match column width */
       text-align: center;
-      padding-bottom: 0.5rem; /* Space from grid */
+      /* Move label entirely above the grid */
+      transform: translateY(-100%); 
+      padding-bottom: 0.5rem; /* Space between label and grid */
     }
 
     .row-label {
-      left: 0; /* Align to left edge */
-      transform: translateX(-100%); /* Move left of the grid */
-      top: 0;
+      left: 0;
       height: calc(100% / 18); /* Match row height */
       display: flex;
       align-items: center;
       justify-content: flex-end; /* Align number to the right (towards grid) */
-      padding-right: 0.75rem; /* Space from grid */
+      /* Move label entirely left of the grid */
+      transform: translateX(-100%);
+      padding-right: 0.75rem; /* Space between label and grid */
     }
 
     .hold-cell {
@@ -455,10 +455,8 @@
         }
     }
 
-        function renderGridLabels() {
-        const gridOverlay = document.getElementById('gridOverlay');
-
-        // Clear any existing labels to prevent duplicates
+            function renderGridLabels() {
+        // Clear existing labels first
         const existingLabels = gridOverlay.querySelectorAll('.grid-label');
         existingLabels.forEach(label => label.remove());
 
@@ -467,22 +465,19 @@
             const label = document.createElement('div');
             label.className = 'grid-label col-label';
             label.textContent = letter;
-            // Position based on column index (0-16). 
-            // This aligns the label with the left edge of the column.
+            // Position left edge at the start of the column
             label.style.left = `calc((${i} / 17) * 100%)`;
             gridOverlay.appendChild(label);
         });
 
         // Side Numbers (Rows)
-        // Row 18 is visually at the top (index 0), Row 1 at the bottom (index 17)
-        for (let i = 0; i < 18; i++) {
-            const rowNumber = 18 - i;
+        for (let r = 18; r >= 1; r--) {
             const label = document.createElement('div');
             label.className = 'grid-label row-label';
-            label.textContent = rowNumber;
-            // Position based on visual row index.
-            // This aligns the label with the top edge of the row.
-            label.style.top = `calc((${i} / 18) * 100%)`;
+            label.textContent = r;
+            const rowIndex = 18 - r;
+            // Position top edge at the start of the row
+            label.style.top = `calc((${rowIndex} / 18) * 100%)`;
             gridOverlay.appendChild(label);
         }
     }
