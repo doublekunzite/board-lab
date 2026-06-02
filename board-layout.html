@@ -55,7 +55,7 @@
         /* The Interactive Grid Overlay */
     .grid-overlay {
       position: absolute;
-      top: 2%; /* Adjust this to slide the grid down. Try 1%, 2%, 3% etc. */
+      top: 0%; /* Adjust this to slide the grid down. Try 1%, 2%, 3% etc. */
       left: 0;
       width: 100%;
       height: 100%; /* Keep this 100% or adjust to 98% if needed */
@@ -63,12 +63,7 @@
       grid-template-columns: repeat(17, 1fr);
       grid-template-rows: repeat(18, 1fr);
       
-      /* 3D Transform Properties */
-      transform-style: preserve-3d;
-      transform-origin: center center;
       
-      /* Use your calibrated negative value here */
-      transform: perspective(1000px) rotateX(-8deg) rotateY(0deg); 
     }
 
     /* Individual Hold Cell */
@@ -379,29 +374,7 @@
         <span>Show Quality Tiers</span>
       </label>
 
-            <!-- CALIBRATION TOOLS -->
-      <div style="display: flex; gap: 2rem; align-items: center; width: 100%; justify-content: center; margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 1rem;">
-        
-        <!-- Tilt (Negative values tilt the top back) -->
-        <div style="display:flex; flex-direction:column; align-items:center;">
-          <label style="font-size: 0.8rem; opacity: 0.7;">Tilt (Top/Bottom)</label>
-          <input type="range" min="-20" max="20" value="-10" step="0.5" id="calibrateX" style="width: 150px;">
-        </div>
-        
-        <!-- Skew -->
-        <div style="display:flex; flex-direction:column; align-items:center;">
-          <label style="font-size: 0.8rem; opacity: 0.7;">Skew (Left/Right)</label>
-          <input type="range" min="-20" max="20" value="0" step="0.5" id="calibrateY" style="width: 150px;">
-        </div>
-
-        <!-- NEW: Vertical Position (Slide grid down) -->
-        <div style="display:flex; flex-direction:column; align-items:center;">
-          <label style="font-size: 0.8rem; opacity: 0.7;">Position (Up/Down)</label>
-          <input type="range" min="-10" max="10" value="2" step="0.5" id="calibratePos" style="width: 150px;">
-        </div>
-
-      </div>
-      <!-- END CALIBRATION TOOLS -->
+                 
 
     </div> <!-- End board-controls -->
 
@@ -553,30 +526,7 @@
       }
     });
 
-        // ============================================
-    // 4. CALIBRATION HELPER
-    // ============================================
-    const calibrateX = document.getElementById('calibrateX');
-    const calibrateY = document.getElementById('calibrateY');
-    const calibratePos = document.getElementById('calibratePos');
-
-    if (calibrateX && calibrateY && calibratePos) {
-        function updateTransform() {
-          const xVal = calibrateX.value;
-          const yVal = calibrateY.value;
-          const posVal = calibratePos.value; // Get vertical offset
-          
-          // Apply transform AND top position
-          gridOverlay.style.transform = `perspective(1000px) rotateX(${xVal}deg) rotateY(${yVal}deg)`;
-          gridOverlay.style.top = `${posVal}%`; 
-        }
-
-        calibrateX.addEventListener('input', updateTransform);
-        calibrateY.addEventListener('input', updateTransform);
-        calibratePos.addEventListener('input', updateTransform);
-        
-        updateTransform(); // Initialize on load
-    }
+    
 
   </script>
 </body>
