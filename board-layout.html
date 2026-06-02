@@ -282,6 +282,15 @@
 
     .angle-warning { background: rgba(248, 113, 113, 0.1); border-left: 3px solid var(--tier-3); padding: 0.75rem; margin-top: 1rem; font-size: 0.875rem; display: none; }
     .angle-warning.visible { display: block; }
+	
+	    /* Fix alignment of Title and Type Badge */
+    #modalTitleRow {
+      align-items: center; /* Centers them vertically */
+    }
+
+    #modalTitleRow .type-badge {
+      margin-top: -5px; /* Nudges the badge up slightly as requested */
+    }
   </style>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
 </head>
@@ -371,8 +380,8 @@
       <div class="modal-details">
         <div class="modal-header">
           <div class="modal-title-group">
-            <!-- Updated Header: ID + Type together -->
-            <div style="display: flex; align-items: baseline; gap: 0.75rem;">
+            <!-- Added ID "modalTitleRow" to fix alignment -->
+            <div id="modalTitleRow" style="display: flex; align-items: center; gap: 0.75rem;">
                 <h3 id="modalTitle" style="font-size: 1.5rem; color: var(--fg); margin:0;">Hold ID</h3>
                 <span class="type-badge" id="modalTypeBadge">Jug</span>
             </div>
