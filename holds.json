@@ -32,12 +32,13 @@
     "desc": "Sidepull crimp / Macro foothold (incut)"
   },
   "E1": {
-    "tier": 2,
+    "tier": 3,
     "type": "Crimp",
     "edgeSize": "~20 mm",
+	"angleSensitive": true,
     "profileImg": "holds/E1-profile.png",
     "gripImg": "holds/E1-grip.png",
-    "desc": "Flat sidepull crimp / Macro foothold (flat)"
+    "desc": "Flat half-moon slanted crimp / Macro foothold (flat)"
   },
   "F1": {
     "tier": 2,
@@ -86,7 +87,7 @@
 	"angleSensitive": true,
     "profileImg": "holds/K1-profile.png",
     "gripImg": "holds/K1-grip.png",
-    "desc": "Flat slanted crimp / Macro foothold (flat)"
+    "desc": "Flat half-moon slanted crimp / Macro foothold (flat)"
   },
   "L1": {
     "tier": 2,
