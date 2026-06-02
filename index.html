@@ -57,12 +57,15 @@
   <div class="noise-overlay" aria-hidden="true"></div>
   <div class="holds-container" aria-hidden="true" id="holdsContainer"></div>
 
+    <!-- Header -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
       <a href="index.html" class="logo font-display">BOARD LAB</a>
       <nav>
         <ul class="nav-links">
-          <li><a href="#moves" class="nav-link">Moves</a></li>
+          <li><a href="index.html#moves" class="nav-link">Moves</a></li>
+          <!-- Add the link here. Note: No ../ needed because it's in the root -->
+          <li><a href="board-layout.html" class="nav-link">Board Map</a></li>
         </ul>
       </nav>
     </div>
@@ -102,12 +105,17 @@
     // 1. DATA SETUP
     // ============================================
     
-    // NEW: Concepts Data
+        // NEW: Concepts Data
     const conceptsData = [
         { 
             id: 'hold-quality', 
             title: 'Hold Quality', 
             desc: 'An interactive diagram of geometry, friction, and grip.' 
+        },
+        { 
+            id: 'board-layout', // Add this object
+            title: 'Board Map', 
+            desc: 'Interactive layout of the 12x12 Kilter Board holds.' 
         }
     ];
 
