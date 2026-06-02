@@ -428,7 +428,7 @@
     </div>
   </div>
 
-      <script>
+        <script>
     // ============================================
     // 1. DATA STORE
     // ============================================
@@ -546,22 +546,24 @@
     // ============================================
     // 4. CALIBRATION HELPER (Remove later)
     // ============================================
-    const gridOverlay = document.getElementById('gridOverlay'); // Ensure this is targeted
     const calibrateX = document.getElementById('calibrateX');
     const calibrateY = document.getElementById('calibrateY');
 
-    function updateTransform() {
-      const xVal = calibrateX.value;
-      const yVal = calibrateY.value;
-      // Apply the transform with the slider values
-      gridOverlay.style.transform = `perspective(1000px) rotateX(${xVal}deg) rotateY(${yVal}deg)`;
-    }
+    // Only run if calibration sliders exist on the page
+    if (calibrateX && calibrateY) {
+        function updateTransform() {
+          const xVal = calibrateX.value;
+          const yVal = calibrateY.value;
+          // Apply the transform with the slider values
+          gridOverlay.style.transform = `perspective(1000px) rotateX(${xVal}deg) rotateY(${yVal}deg)`;
+        }
 
-    calibrateX.addEventListener('input', updateTransform);
-    calibrateY.addEventListener('input', updateTransform);
-    
-    // Initialize
-    updateTransform();
+        calibrateX.addEventListener('input', updateTransform);
+        calibrateY.addEventListener('input', updateTransform);
+        
+        // Initialize
+        updateTransform();
+    }
 
   </script>
 </body>
