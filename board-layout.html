@@ -291,6 +291,98 @@
     #modalTitleRow .type-badge {
       margin-top: -2px; /* Nudges the badge up slightly as requested */
     }
+	
+	    /* Toggle Group with Tooltip */
+    .toggle-group {
+      position: relative; /* Allows absolute positioning of tooltip */
+    }
+
+    .toggle-label-text {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+      font-size: 11px;
+      font-weight: bold;
+      cursor: help;
+      transition: background 0.2s;
+    }
+
+    .info-icon:hover {
+      background: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .tier-tooltip {
+      position: absolute;
+      bottom: 130%; /* Positions it above the toggle */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--fg);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+      z-index: 50;
+      text-align: left;
+      pointer-events: none;
+    }
+
+    /* Arrow pointing down */
+    .tier-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--border);
+    }
+
+    .toggle-group:hover .tier-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .tier-tooltip h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.9rem;
+      color: var(--fg);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .tier-tooltip p {
+      margin: 0 0 0.75rem 0;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .tier-tooltip p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Highlight colors for tooltip text */
+    .t1-desc { color: var(--tier-1); font-weight: 600; }
+    .t2-desc { color: var(--tier-2); font-weight: 600; }
+    .t3-desc { color: var(--tier-3); font-weight: 600; }
+	
   </style>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
 </head>
@@ -322,11 +414,22 @@
       <div class="grid-overlay" id="gridOverlay"></div>
     </div>
 
-    <div class="board-controls">
+        <div class="board-controls">
       <label class="toggle-group">
         <input type="checkbox" class="toggle-input" id="tierToggle">
         <div class="toggle-switch"></div>
-        <span>Show Quality Tiers</span>
+        <div class="toggle-label-text">
+            <span>Show Quality Tiers</span>
+            <span class="info-icon">?</span>
+        </div>
+        
+        <!-- Tooltip Content -->
+        <div class="tier-tooltip">
+          <h4>Hold Quality Tiers</h4>
+          <p><span class="t1-desc">Tier 1</span> is the "best" holds (jugs). These are deeply incut holds (~30+ mm) with enough space for 1.5+ finger pads to fit on the hold.</p>
+          <p><span class="t2-desc">Tier 2</span> is "intermediate" holds. These include "good" or "decent" crimps and pinches with positive orientation (~20-30mm) and slightly incut slopers with large edges (~30-40mm).</p>
+          <p><span class="t3-desc">Tier 3</span> is "bad" holds. These include shallow crimps, slanted flat-edge crimps, and foot chips (<~20mm), along with fat or sloping vertical pinches.</p>
+        </div>
       </label>
     </div>
 
