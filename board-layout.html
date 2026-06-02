@@ -6,7 +6,7 @@
   <title>Kilter Board Map | Board Lab</title>
   <link rel="stylesheet" href="style.css">
   
-  <style>
+    <style>
     /* ============================================
        BOARD MAP SPECIFIC STYLES
        ============================================ */
@@ -37,7 +37,7 @@
       margin: 0 auto;
       background: #111;
       border-radius: 8px;
-      /* REMOVED: overflow: hidden; -> This allows tooltips to escape the box */
+      overflow: visible; /* Changed: Allows tooltips to overflow */
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
@@ -47,7 +47,7 @@
       height: auto;
       display: block;
       opacity: 0.8;
-      border-radius: 8px; /* ADDED: Keep corners rounded on the image itself */
+      border-radius: 8px; /* Rounded corners on image instead of container */
     }
 
     /* The Interactive Grid Overlay */
@@ -60,6 +60,7 @@
       display: grid;
       grid-template-columns: repeat(17, 1fr);
       grid-template-rows: repeat(18, 1fr);
+      overflow: visible; /* Ensure grid doesn't clip tooltips */
     }
 
     /* Individual Hold Cell */
@@ -67,11 +68,12 @@
       position: relative;
       border: 1px solid rgba(255,255,255,0.05);
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.2s, z-index 0s;
     }
 
     .hold-cell:hover {
       background: rgba(255,255,255,0.1);
+      z-index: 50; /* Brings hovered cell above neighbors */
     }
 
     /* Tier Colors (Hidden by default) */
@@ -114,14 +116,21 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
 
-    /* NEW: Force tooltip BELOW the hold for top rows */
-    .hold-cell.tooltip-below .hold-tooltip {
-      bottom: auto;
-      top: 100%; /* Moves it below */
-    }
-
     .hold-cell:hover .hold-tooltip {
       opacity: 1;
+    }
+
+    /* Force tooltip BELOW the hold for top rows */
+    .hold-cell.tooltip-below .hold-tooltip {
+      bottom: auto;
+      top: 100%; 
+    }
+
+    /* Fix tooltip position for right-most columns */
+    .hold-cell.col-right .hold-tooltip {
+      left: auto;
+      right: 0;
+      transform: translateX(0);
     }
 
     .tooltip-img {
@@ -288,8 +297,8 @@
     .font-chalk {
       font-family: 'Segoe Script', 'Bradley Hand ITC', 'Lucida Handwriting', 'Comic Sans MS', cursive;
     }
-	
-	    /* ============================================
+
+    /* ============================================
        HOLD LIST SECTION
        ============================================ */
     .hold-list-section {
@@ -331,7 +340,7 @@
 
     .hold-list-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
     }
 
@@ -342,7 +351,7 @@
       padding: 1rem;
       display: flex;
       gap: 1rem;
-      align-items: center;
+      align-items: flex-start; /* Align top to handle varying text length */
       cursor: pointer;
       transition: transform 0.2s, border-color 0.2s;
     }
@@ -353,23 +362,31 @@
     }
 
     .list-card-img {
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
       object-fit: contain;
       background: #222;
       border-radius: 8px;
       flex-shrink: 0;
     }
 
-    .list-card-info h4 {
-      color: var(--fg);
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
+    .list-card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex-grow: 1;
     }
 
-    .list-card-info p {
+    .list-card-info h4 {
+      color: var(--fg);
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .list-card-info .type-text {
       color: var(--fg-muted);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
+      margin: 0;
     }
 
   </style>
