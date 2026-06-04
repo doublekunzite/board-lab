@@ -250,7 +250,7 @@
     "edgeSize": "~20 mm",
     "profileImg": "holds/N2-profile.png",
     "gripImg": "holds/N2-grip.png",
-    "desc": "Slightly incut, sloping sidepull crimp / Macro foothold (incut)"
+    "desc": "Slightly incut, sloping sidepull crimp with square edge / Macro foothold (incut)"
   },
   "O2": {
     "tier": 1,
@@ -467,7 +467,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/G4-profile.png",
     "gripImg": "holds/G4-grip.png",
-    "desc": "Deeply incut sidepull jug / Macro foothold (incut)"
+    "desc": "Deeply incut sidepull mini-jug / Macro foothold (incut)"
   },
   "H4": {
     "tier": 2,
@@ -516,7 +516,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/M4-profile.png",
     "gripImg": "holds/M4-grip.png",
-    "desc": "Deeply incut sidepull jug / Macro foothold (incut)"
+    "desc": "Deeply incut sidepull mini-jug / Macro foothold (incut)"
   },
   "N4": {
     "tier": 1,
