@@ -394,6 +394,27 @@
     .t2-desc { color: var(--tier-2); font-weight: 600; }
     .t3-desc { color: var(--tier-3); font-weight: 600; }
 	
+	    /* Toggle Switch Colors - specific override for OFF state */
+    .toggle-switch { background: #333; }
+    
+    /* When checked, use the specific tier color defined in the inline style */
+    .toggle-input:checked + .toggle-switch { 
+        /* The background color is set inline in HTML, this ensures it applies */
+        opacity: 1; 
+    }
+    
+    /* Ensure the toggle knob is visible on colored backgrounds */
+    .toggle-input:checked + .toggle-switch::after { 
+        background: #111; /* Dark knob for contrast on bright colors */
+    }
+	
+	    .hold-cell::after {
+      content: ''; position: absolute; top: 5px; left: 5px; width: 12px; height: 12px;
+      border-radius: 50%; opacity: 0; transition: opacity 0.3s; box-shadow: 0 0 5px currentColor;
+    }
+    /* Changed from .show-tiers .hold-cell::after */
+    .hold-cell.show-tier-dot::after { opacity: 0.9; }
+	
   </style>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
 </head>
@@ -425,21 +446,43 @@
       <div class="grid-overlay" id="gridOverlay"></div>
     </div>
 
-        <div class="board-controls">
+          <div class="board-controls">
+      <!-- Tier 1 Toggle -->
       <label class="toggle-group">
-        <input type="checkbox" class="toggle-input" id="tierToggle">
-        <div class="toggle-switch"></div>
+        <input type="checkbox" class="toggle-input" id="tier1Toggle" checked>
+        <div class="toggle-switch" style="background: var(--tier-1);"></div>
         <div class="toggle-label-text">
-            <span>Show Quality Tiers</span>
+            <span>Tier 1 (Jugs)</span>
             <span class="info-icon">?</span>
+            <div class="tier-tooltip">
+              <p><span class="t1-desc">Tier 1</span> is the "best" holds (jugs). These are ~30+ mm deeply incut holds with enough space for 1+ finger pads to fit on the hold. Usually used with an open-hand grip (as opposed to a crimp grip). Steeper wall angles don't affect the quality of these much.</p>
+            </div>
         </div>
-        
-        <!-- Tooltip Content -->
-        <div class="tier-tooltip">
-          <h4>Hold Quality Tiers</h4>
-          <p><span class="t1-desc">Tier 1</span> is the "best" holds (jugs). These are ~30+ mm deeply incut holds with enough space for 1+ finger pads to fit on the hold. Steeper wall angles don't affect the quality of these much.</p>
-          <p><span class="t2-desc">Tier 2</span> is "intermediate" holds. These include ~20-30mm "good" or "decent" crimps and pinches and slightly incut slopers with large edges (~30-40mm). Steeper wall angles can make these significantly worse, especially slopers and pinches.</p>
-          <p><span class="t3-desc">Tier 3</span> is "bad" holds. These include slightly incut or flat crimps and foot chips (usually <~20mm), along with fat or sloping vertical pinches. Making good use of these is highly dependent on body position and tension, and the hold quality rapidly degrades as wall angle steepens.</p>
+      </label>
+
+      <!-- Tier 2 Toggle -->
+      <label class="toggle-group">
+        <input type="checkbox" class="toggle-input" id="tier2Toggle" checked>
+        <div class="toggle-switch" style="background: var(--tier-2);"></div>
+        <div class="toggle-label-text">
+            <span>Tier 2 (Intermediates)</span>
+            <span class="info-icon">?</span>
+            <div class="tier-tooltip">
+              <p><span class="t2-desc">Tier 2</span> is "intermediate" holds. These include ~20-30mm "good" or "decent" crimps and pinches and slightly incut slopers with large edges (~30-40mm). Steeper wall angles can make these significantly worse, especially slopers and pinches.</p>
+            </div>
+        </div>
+      </label>
+
+      <!-- Tier 3 Toggle -->
+      <label class="toggle-group">
+        <input type="checkbox" class="toggle-input" id="tier3Toggle" checked>
+        <div class="toggle-switch" style="background: var(--tier-3);"></div>
+        <div class="toggle-label-text">
+            <span>Tier 3 (Bad Holds)</span>
+            <span class="info-icon">?</span>
+            <div class="tier-tooltip">
+              <p><span class="t3-desc">Tier 3</span> is "bad" holds. These include slightly incut or flat crimps and foot chips (usually <~20mm), along with fat or sloping vertical pinches. Making good use of these is highly dependent on body position and tension, and the hold quality rapidly degrades as wall angle steepens.</p>
+            </div>
         </div>
       </label>
     </div>
@@ -558,8 +601,14 @@
     const holdListGrid = document.getElementById('holdListGrid');
     const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
 
-    function renderGrid() {
+        function renderGrid() {
         gridOverlay.innerHTML = ''; // Clear loading state
+        
+        // Check initial state of toggles (default to checked/on if they exist)
+        const t1Active = document.getElementById('tier1Toggle') ? document.getElementById('tier1Toggle').checked : true;
+        const t2Active = document.getElementById('tier2Toggle') ? document.getElementById('tier2Toggle').checked : true;
+        const t3Active = document.getElementById('tier3Toggle') ? document.getElementById('tier3Toggle').checked : true;
+
         for (let r = 18; r >= 1; r--) {
             for (let c = 0; c < 17; c++) {
                 const colLetter = columns[c];
@@ -567,6 +616,8 @@
                 const cell = document.createElement('div');
                 cell.className = 'hold-cell';
                 cell.dataset.id = holdId;
+                
+                // Positioning classes
                 if (r >= 17) cell.classList.add('tooltip-below');
                 if (colLetter === 'P' || colLetter === 'Q') cell.classList.add('col-right');
 
@@ -574,6 +625,13 @@
                     const data = holdsData[holdId];
                     cell.classList.add(`tier-${data.tier}`);
                     
+                    // Initial visibility state
+                    if ((data.tier === 1 && t1Active) || 
+                        (data.tier === 2 && t2Active) || 
+                        (data.tier === 3 && t3Active)) {
+                        cell.classList.add('show-tier-dot');
+                    }
+
                     // Prepare type text for tooltip
                     const typeText = Array.isArray(data.type) ? data.type.join(' / ') : data.type;
 
@@ -667,12 +725,17 @@
     // ============================================
     // 4. INTERACTIONS
     // ============================================
-    function setupEventListeners() {
+        function setupEventListeners() {
         const modal = document.getElementById('holdModal');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
         const closeBtn = document.getElementById('closeModal');
-        const tierToggle = document.getElementById('tierToggle');
+        
+        // New Toggle References
+        const tier1Toggle = document.getElementById('tier1Toggle');
+        const tier2Toggle = document.getElementById('tier2Toggle');
+        const tier3Toggle = document.getElementById('tier3Toggle');
+        
         const boardWrapper = document.getElementById('boardWrapper');
         const filterBtns = document.querySelectorAll('.filter-btn');
 
@@ -728,21 +791,54 @@
             if (e.key === 'Escape') { lightbox.classList.contains('active') ? closeLightbox() : closeModal(); }
         });
 
-        tierToggle.addEventListener('change', () => {
-            tierToggle.checked ? boardWrapper.classList.add('show-tiers') : boardWrapper.classList.remove('show-tiers');
-        });
+                // ============================================
+        // TIER TOGGLE LOGIC (Multi-Select Visibility)
+        // ============================================
+        const tierToggles = {
+            1: tier1Toggle,
+            2: tier2Toggle,
+            3: tier3Toggle
+        };
 
+        // Function to update grid visibility based on toggles
+        function updateGridVisibility() {
+            // Iterate over every cell in the grid
+            const cells = gridOverlay.querySelectorAll('.hold-cell');
+            cells.forEach(cell => {
+                const id = cell.dataset.id;
+                const data = holdsData[id];
+                
+                if (data) {
+                    const tier = data.tier;
+                    const toggle = tierToggles[tier];
+                    
+                    // If the toggle exists and is checked, show the dot
+                    if (toggle && toggle.checked) {
+                        cell.classList.add('show-tier-dot');
+                    } else {
+                        cell.classList.remove('show-tier-dot');
+                    }
+                }
+            });
+        }
+
+        // Attach listeners to the three toggles
+        [tier1Toggle, tier2Toggle, tier3Toggle].forEach(toggle => {
+            toggle.addEventListener('change', () => {
+                updateGridVisibility();
+            });
+        });
+        
+        // Filter Button Logic
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const group = btn.dataset.filterType;
                 
-                // --- TIER LOGIC (Single Select) ---
                 if (group === 'tier') {
                     document.querySelectorAll(`.filter-btn[data-filter-type="tier"]`).forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                 }
 
-                // --- TYPE LOGIC (Multi Select) ---
                 if (group === 'type') {
                     if (btn.dataset.filterValue === 'all') {
                         document.querySelectorAll(`.filter-btn[data-filter-type="type"]`).forEach(b => b.classList.remove('active'));
