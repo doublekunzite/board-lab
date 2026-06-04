@@ -177,7 +177,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/E2-profile.png",
     "gripImg": "holds/E2-grip.png",
-    "desc": "Slightly incut, sloping sidepull crimp/ Macro foothold (incut)"
+    "desc": "Slightly incut, sloping sidepull crimp / Macro foothold (incut)"
   },
   "F2": {
     "tier": 2,
@@ -588,7 +588,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/E5-profile.png",
     "gripImg": "holds/E5-grip.png",
-    "desc": "Slightly incut, sloping sidepull / Macro foothold (incut)"
+    "desc": "Slightly incut, sloping sidepull crimp / Macro foothold (incut)"
   },
   "F5": {
     "tier": 1,
@@ -602,8 +602,8 @@
     "tier": 1,
     "type": ["Undercling", "Jug"],
     "edgeSize": "~50 mm",
-    "profileImg": "holds/G4-profile.png",
-    "gripImg": "holds/G4-grip.png",
+    "profileImg": "holds/G5-profile.png",
+    "gripImg": "holds/G5-grip.png",
     "desc": "Deeply incut, sloping undercling mini-jug / Macro foothold (sloping)"
   },
   "H5": {
@@ -628,7 +628,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/J5-profile.png",
     "gripImg": "holds/J5-grip.png",
-    "desc": "Incut undercling with square edge (shallower at edges) / Macro foothold (sloping)"
+    "desc": "Incut, sloping undercling with square edge (shallower at edges) / Macro foothold (sloping)"
   },
   "K5": {
     "tier": 2,
