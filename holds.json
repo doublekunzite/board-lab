@@ -54,7 +54,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/G1-profile.png",
     "gripImg": "holds/G1-grip.png",
-    "desc": "Jug that's deeper in the middle and shallower at the edges / Macro foothold (incut)"
+    "desc": "Deeply incut jug (shallower at edges) / Macro foothold (incut)"
   },
   "H1": {
     "tier": 2,
@@ -549,5 +549,141 @@
     "profileImg": "holds/Q4-profile.png",
     "gripImg": "holds/Q4-grip.png",
     "desc": "Deeply incut jug / Macro foothold (incut)"
+  },
+  "A5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm",
+    "profileImg": "holds/A5-profile.png",
+    "gripImg": "holds/A5-grip.png",
+    "desc": "Slightly incut, sloping crimp / Macro foothold (incut)"
+  },
+  "B5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/B5-profile.png",
+    "gripImg": "holds/B5-grip.png",
+    "desc": "Slightly incut, sloping crimp / Macro foothold (incut)"
+  },
+  "C5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm",
+    "profileImg": "holds/C5-profile.png",
+    "gripImg": "holds/C5-grip.png",
+    "desc": "Incut crimp / Macro foothold (incut)"
+  },
+  "D5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/D5-profile.png",
+    "gripImg": "holds/D5-grip.png",
+    "desc": "Slightly incut, sloping crimp / Macro foothold (incut)"
+  },
+  "E5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/E5-profile.png",
+    "gripImg": "holds/E5-grip.png",
+    "desc": "Slightly incut, sloping sidepull / Macro foothold (incut)"
+  },
+  "F5": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~40 mm",
+    "profileImg": "holds/F5-profile.png",
+    "gripImg": "holds/F5-grip.png",
+    "desc": "Deeply incut sidepull mini-jug / Macro foothold (incut)"
+  },
+  "G5": {
+    "tier": 1,
+    "type": ["Undercling", "Jug"],
+    "edgeSize": "~50 mm",
+    "profileImg": "holds/G4-profile.png",
+    "gripImg": "holds/G4-grip.png",
+    "desc": "Deeply incut, sloping undercling mini-jug / Macro foothold (sloping)"
+  },
+  "H5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm",
+    "profileImg": "holds/H5-profile.png",
+    "gripImg": "holds/H5-grip.png",
+    "desc": "Slightly incut, sloping crimp / Macro foothold (incut)"
+  },
+  "I5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm",
+    "profileImg": "holds/I5-profile.png",
+    "gripImg": "holds/I5-grip.png",
+    "desc": "Long incut crimp with peak in centre / Macro foothold (incut)"
+  },
+  "J5": {
+    "tier": 2,
+    "type": "Undercling",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/J5-profile.png",
+    "gripImg": "holds/J5-grip.png",
+    "desc": "Incut undercling with square edge (shallower at edges) / Macro foothold (sloping)"
+  },
+  "K5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm",
+    "profileImg": "holds/K5-profile.png",
+    "gripImg": "holds/K5-grip.png",
+    "desc": "Incut crimp / Macro foothold (incut)"
+  },
+  "L5": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/L5-profile.png",
+    "gripImg": "holds/L5-grip.png",
+    "desc": "Deeply incut sidepull mini-jug / Macro foothold (incut)"
+  },
+  "M5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm",
+    "profileImg": "holds/M5-profile.png",
+    "gripImg": "holds/M5-grip.png",
+    "desc": "Long, slightly incut, sloping crimp with peak in centre / Macro foothold (incut)"
+  },
+  "N5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm",
+    "profileImg": "holds/N5-profile.png",
+    "gripImg": "holds/N5-grip.png",
+    "desc": "Slightly incut, sloping crimp, angled slightly left / Macro foothold (incut)"
+  },
+  "O5": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/O5-profile.png",
+    "gripImg": "holds/O5-grip.png",
+    "desc": "Slightly incut, sloping vertical pinch (shallower on the right side) / Macro foothold (incut)"
+  },
+  "P5": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm",
+    "profileImg": "holds/P5-profile.png",
+    "gripImg": "holds/P5-grip.png",
+    "desc": "Slightly incut, sloping crimp with square edge / Macro foothold (incut)"
+  },
+  "Q5": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/Q5-profile.png",
+    "gripImg": "holds/Q5-grip.png",
+    "desc": "Deeply incut sidepull mini-jug / Macro foothold (incut)"
   }
 }
