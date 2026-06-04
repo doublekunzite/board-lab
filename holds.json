@@ -150,7 +150,6 @@
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~20 mm",
-	"angleSensitive": true,
     "profileImg": "holds/B2-profile.png",
     "gripImg": "holds/B2-grip.png",
     "desc": "Slightly incut, sloping crimp, angled left / Macro foothold (incut)"
@@ -176,7 +175,6 @@
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~30 mm",
-	"angleSensitive": true,
     "profileImg": "holds/E2-profile.png",
     "gripImg": "holds/E2-grip.png",
     "desc": "Slightly incut, sloping sidepull crimp/ Macro foothold (incut)"
@@ -185,7 +183,6 @@
     "tier": 2,
     "type": "Undercling",
     "edgeSize": "~35 mm",
-	"angleSensitive": true,
     "profileImg": "holds/F2-profile.png",
     "gripImg": "holds/F2-grip.png",
     "desc": "Slightly incut, sloping undercling / Macro foothold (sloping)"
@@ -211,7 +208,6 @@
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~20 mm",
-	"angleSensitive": true,
     "profileImg": "holds/I2-profile.png",
     "gripImg": "holds/I2-grip.png",
     "desc": "Slightly incut, sloping sidepull crimp / Macro foothold (incut)"
@@ -220,7 +216,6 @@
     "tier": 2,
     "type": "Undercling",
     "edgeSize": "~35 mm",
-	"angleSensitive": true,
     "profileImg": "holds/J2-profile.png",
     "gripImg": "holds/J2-grip.png",
     "desc": "Slightly incut, sloping undercling / Macro foothold (incut)"
@@ -246,7 +241,6 @@
     "tier": 2,
     "type": "Undercling",
     "edgeSize": "~30 mm",
-    "angleSensitive": true,
     "profileImg": "holds/M2-profile.png",
     "gripImg": "holds/M2-grip.png",
     "desc": "Slightly incut, sloping undercling / Macro foothold (sloping)"
@@ -257,7 +251,7 @@
     "edgeSize": "~20 mm",
     "profileImg": "holds/N2-profile.png",
     "gripImg": "holds/N2-grip.png",
-    "desc": "Incut sidepull crimp / Macro foothold (incut)"
+    "desc": "Slightly incut, sloping sidepull crimp / Macro foothold (incut)"
   },
   "O2": {
     "tier": 1,
