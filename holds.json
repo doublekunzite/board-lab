@@ -294,7 +294,7 @@
   },
   "C3": {
     "tier": 2,
-    "type": "Crimp"
+    "type": "Crimp",
     "edgeSize": "~35 mm",
     "profileImg": "holds/C3-profile.png",
     "gripImg": "holds/C3-grip.png",
@@ -311,7 +311,7 @@
   },
   "E3": {
     "tier": 1,
-    "type": "Jug"
+    "type": "Jug",
     "edgeSize": "~30 mm",
     "profileImg": "holds/E3-profile.png",
     "gripImg": "holds/E3-grip.png",
@@ -375,7 +375,7 @@
   },
   "M3": {
     "tier": 1,
-    "type": "Jug"
+    "type": "Jug",
     "edgeSize": "~30 mm",
     "profileImg": "holds/M3-profile.png",
     "gripImg": "holds/M3-grip.png",
