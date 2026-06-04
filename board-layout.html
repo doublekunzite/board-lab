@@ -520,7 +520,7 @@
 
   <div id="lightbox"><img src="" id="lightboxImg" alt="Expanded View"></div>
 
-  <script>
+    <script>
     let holdsData = {}; // Will be populated from JSON
 
     // ============================================
@@ -573,12 +573,16 @@
                 if (holdsData[holdId]) {
                     const data = holdsData[holdId];
                     cell.classList.add(`tier-${data.tier}`);
+                    
+                    // Prepare type text for tooltip
+                    const typeText = Array.isArray(data.type) ? data.type.join(' / ') : data.type;
+
                     cell.innerHTML = `
                         <div class="hold-tooltip">
                             <img src="${data.profileImg}" class="tooltip-img" alt="${holdId}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x100/222/555?text=No+Image'">
                             <div class="tooltip-info">
                                 <h4>${holdId}</h4>
-                                <p>${data.type}</p>
+                                <p>${typeText}</p>
                                 <span class="tier-badge t-${data.tier}">Tier ${data.tier}</span>
                             </div>
                         </div>`;
@@ -589,7 +593,7 @@
         }
     }
 
-            function renderGridLabels() {
+    function renderGridLabels() {
         // Clear existing labels first
         const existingLabels = gridOverlay.querySelectorAll('.grid-label');
         existingLabels.forEach(label => label.remove());
@@ -599,7 +603,6 @@
             const label = document.createElement('div');
             label.className = 'grid-label col-label';
             label.textContent = letter;
-            // Position left edge at the start of the column
             label.style.left = `calc((${i} / 17) * 100%)`;
             gridOverlay.appendChild(label);
         });
@@ -610,13 +613,12 @@
             label.className = 'grid-label row-label';
             label.textContent = r;
             const rowIndex = 18 - r;
-            // Position top edge at the start of the row
             label.style.top = `calc((${rowIndex} / 18) * 100%)`;
             gridOverlay.appendChild(label);
         }
     }
 
-        function renderHoldList() {
+    function renderHoldList() {
         holdListGrid.innerHTML = '';
         
         // 1. Determine active Tier
@@ -630,15 +632,12 @@
         Object.keys(holdsData).forEach(id => {
             const data = holdsData[id];
             
-            // Tier Filter (Keep existing logic)
+            // Tier Filter
             if (activeTier !== 'all' && `tier-${data.tier}` !== activeTier) return;
 
-            // Type Filter (New Logic)
+            // Type Filter
             if (isFilteringByType) {
-                // Normalize data.type to an array
                 const holdTypes = Array.isArray(data.type) ? data.type : [data.type];
-                
-                // Check if the hold has ANY of the selected types
                 const hasMatch = holdTypes.some(t => activeTypes.includes(t));
                 if (!hasMatch) return;
             }
@@ -648,7 +647,6 @@
             card.className = 'hold-list-card';
             card.onclick = () => openModal(id);
 
-            // Handle multiple types in display text
             const typeText = Array.isArray(data.type) ? data.type.join(' / ') : data.type;
 
             card.innerHTML = `
@@ -666,7 +664,6 @@
     // 4. INTERACTIONS
     // ============================================
     function setupEventListeners() {
-        // Modal & Lightbox
         const modal = document.getElementById('holdModal');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
@@ -675,17 +672,15 @@
         const boardWrapper = document.getElementById('boardWrapper');
         const filterBtns = document.querySelectorAll('.filter-btn');
 
-                window.openModal = function(id) {
+        window.openModal = function(id) {
             const data = holdsData[id];
             if (!data) return;
 
-            // Set Title Text
             document.getElementById('modalTitle').textContent = id;
             
-            // Set Description with whiter text inline
             const descEl = document.getElementById('modalDesc');
             descEl.textContent = data.desc;
-            descEl.style.color = "rgba(255,255,255,0.85)"; // Whiter text
+            descEl.style.color = "rgba(255,255,255,0.85)";
 
             const profileImg = document.getElementById('modalProfileImg');
             const gripImg = document.getElementById('modalGripImg');
@@ -699,12 +694,23 @@
             tierBadge.className = `tier-badge t-${data.tier}`;
             document.getElementById('modalEdge').textContent = data.edgeSize || 'Unknown';
             
-                        // Update Type Badge next to title
+                       // Update Type Badge next to title
             const typeBadge = document.getElementById('modalTypeBadge');
-            const typeText = Array.isArray(data.type) ? data.type.join(' ') : data.type;
-            typeBadge.textContent = typeText;
-            // Apply all classes for gradient styling
-            typeBadge.className = `type-badge ${typeText.toLowerCase()}`;
+            const typeArray = Array.isArray(data.type) ? data.type : [data.type];
+
+            // 1. Set Text Content: "Undercling Jug" (Space separated)
+            typeBadge.textContent = typeArray.join(' ');
+
+            // 2. Set Classes: "type-badge undercling jug" (Space separated)
+            // This ensures your CSS gradient rules work properly
+            const classString = typeArray.map(t => t.toLowerCase()).join(' ');
+            typeBadge.className = `type-badge ${classString}`;
+            
+            // 3. Apply classes for CSS styling
+            // Base class + all individual types (e.g., "type-badge jug undercling")
+            // This allows your .type-badge.jug.undercling CSS rules to work!
+            const classString = typeArray.map(t => t.toLowerCase()).join(' ');
+            typeBadge.className = `type-badge ${classString}`;
 
             const warningEl = document.getElementById('modalWarning');
             if (data.angleSensitive) warningEl.classList.add('visible');
@@ -728,7 +734,7 @@
             tierToggle.checked ? boardWrapper.classList.add('show-tiers') : boardWrapper.classList.remove('show-tiers');
         });
 
-                filterBtns.forEach(btn => {
+        filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const group = btn.dataset.filterType;
                 
@@ -740,18 +746,13 @@
 
                 // --- TYPE LOGIC (Multi Select) ---
                 if (group === 'type') {
-                    // If clicking "All", reset to just "All"
                     if (btn.dataset.filterValue === 'all') {
                         document.querySelectorAll(`.filter-btn[data-filter-type="type"]`).forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
                     } else {
-                        // Remove "All" active state if selecting a specific type
                         document.getElementById('filterAll').classList.remove('active');
-                        
-                        // Toggle the clicked button
                         btn.classList.toggle('active');
 
-                        // Safety: If user unclicks everything, default back to "All"
                         const anyActive = document.querySelector('.filter-btn[data-filter-type="type"]:not([data-filter-value="all"]).active');
                         if (!anyActive) {
                             document.getElementById('filterAll').classList.add('active');
