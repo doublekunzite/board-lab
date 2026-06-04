@@ -342,7 +342,7 @@
     "desc": "Deeply incut mini-jug / Macro foothold (incut)"
   },
   "I3": {
-    "tier": 2,
+    "tier": 1,
     "type": ["Undercling", "Jug"],
     "edgeSize": "~30 mm",
     "profileImg": "holds/I3-profile.png",
@@ -628,7 +628,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/J5-profile.png",
     "gripImg": "holds/J5-grip.png",
-    "desc": "Incut, sloping undercling with square edge (shallower at edges) / Macro foothold (sloping)"
+    "desc": "Slightly incut, sloping undercling with square edge (shallower at edges) / Macro foothold (sloping)"
   },
   "K5": {
     "tier": 2,

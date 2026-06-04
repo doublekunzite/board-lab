@@ -618,7 +618,7 @@
         }
     }
 
-    function renderHoldList() {
+        function renderHoldList() {
         holdListGrid.innerHTML = '';
         
         // 1. Determine active Tier
@@ -635,11 +635,15 @@
             // Tier Filter
             if (activeTier !== 'all' && `tier-${data.tier}` !== activeTier) return;
 
-            // Type Filter
+            // Type Filter (AND Logic)
             if (isFilteringByType) {
+                // Normalize data.type to an array
                 const holdTypes = Array.isArray(data.type) ? data.type : [data.type];
-                const hasMatch = holdTypes.some(t => activeTypes.includes(t));
-                if (!hasMatch) return;
+                
+                // Check if the hold has ALL of the selected types
+                const hasAllSelected = activeTypes.every(t => holdTypes.includes(t));
+                
+                if (!hasAllSelected) return;
             }
 
             // Render Card
