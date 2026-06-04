@@ -191,7 +191,6 @@
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~20 mm",
-	"angleSensitive": true,
     "profileImg": "holds/G2-profile.png",
     "gripImg": "holds/G2-grip.png",
     "desc": "Slightly incut, sloping crimp / Macro foothold (incut)"
@@ -276,5 +275,142 @@
     "profileImg": "holds/Q2-profile.png",
     "gripImg": "holds/Q2-grip.png",
     "desc": "Nearly flat, very slightly incut pinch (left side slightly more incut) / Macro foothold (flat)"
+  },
+  "A3": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/A3-profile.png",
+    "gripImg": "holds/A3-grip.png",
+    "desc": "Flat vertical pinch / Macro foothold (flat)"
+  },
+  "B3": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm",
+    "profileImg": "holds/B3-profile.png",
+    "gripImg": "holds/B3-grip.png",
+    "desc": "Incut sidepull crimp / Macro foothold (incut)"
+  },
+  "C3": {
+    "tier": 2,
+    "type": "Crimp"
+    "edgeSize": "~35 mm",
+    "profileImg": "holds/C3-profile.png",
+    "gripImg": "holds/C3-grip.png",
+    "desc": "Slightly incut, sloping sidepull crimp / Macro foothold (incut)"
+  },
+  "D3": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~30 mm",
+	"angleSensitive": true,
+    "profileImg": "holds/D3-profile.png",
+    "gripImg": "holds/D3-grip.png",
+    "desc": "Slightly incut vertical pinch (deeper near the centre) / Macro foothold (flat)"
+  },
+  "E3": {
+    "tier": 1,
+    "type": "Jug"
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/E3-profile.png",
+    "gripImg": "holds/E3-grip.png",
+    "desc": "Deeply incut sidepull jug with two slots / Macro foothold (incut)"
+  },
+  "F3": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/F3-profile.png",
+    "gripImg": "holds/F3-grip.png",
+    "desc": "Slightly incut, sloping sidepull crimp / Macro foothold (incut)"
+  },
+  "G3": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm",
+    "profileImg": "holds/G3-profile.png",
+    "gripImg": "holds/G3-grip.png",
+    "desc": "Slightly incut, sloping crimp / Macro foothold (incut)"
+  },
+  "H3": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/H3-profile.png",
+    "gripImg": "holds/H3-grip.png",
+    "desc": "Deeply incut mini-jug / Macro foothold (incut)"
+  },
+  "I3": {
+    "tier": 2,
+    "type": ["Undercling", "Jug"],
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/I3-profile.png",
+    "gripImg": "holds/I3-grip.png",
+    "desc": "Deeply incut undercling jug / Macro foothold (sloping)"
+  },
+  "J3": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm",
+    "profileImg": "holds/J3-profile.png",
+    "gripImg": "holds/J3-grip.png",
+    "desc": "Incut crimp / Macro foothold (incut)"
+  },
+  "K3": {
+    "tier": 1,
+    "type": ["Undercling", "Jug"],
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/K3-profile.png",
+    "gripImg": "holds/K3-grip.png",
+    "desc": "Deeply incut sidepull jug with two slots. Can be used as an undercling but not juggy: edge is shallowest at the bottom / Macro foothold (incut)"
+  },
+  "L3": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/L3-profile.png",
+    "gripImg": "holds/L3-grip.png",
+    "desc": "Slightly incut, sloping sidepull crimp / Macro foothold (incut)"
+  },
+  "M3": {
+    "tier": 1,
+    "type": "Jug"
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/M3-profile.png",
+    "gripImg": "holds/M3-grip.png",
+    "desc": "Deeply incut sidepull jug with two slots / Macro foothold (incut)"
+  },
+  "N3": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm",
+    "profileImg": "holds/N3-profile.png",
+    "gripImg": "holds/N3-grip.png",
+    "desc": "Incut crimp / Macro foothold (incut)"
+  },
+  "O3": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/O3-profile.png",
+    "gripImg": "holds/O3-grip.png",
+    "desc": "Incut, slightly sloping sidepull crimp / Macro foothold (incut)"
+  },
+  "P3": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm",
+    "profileImg": "holds/P3-profile.png",
+    "gripImg": "holds/P3-grip.png",
+    "desc": "Incut sidepull crimp / Macro foothold (incut)"
+  },
+  "Q3": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~20 mm",
+    "profileImg": "holds/Q3-profile.png",
+    "gripImg": "holds/Q3-grip.png",
+    "desc": "Slightly incut, sloping crimp with a ~10mm nub to pinch on the left side / Macro foothold (incut)"
   }
 }
