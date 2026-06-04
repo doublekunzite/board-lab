@@ -156,7 +156,7 @@
   },
   "C2": {
     "tier": 1,
-    "type": ["Undercling", "Jug"]
+    "type": ["Undercling", "Jug"],
     "edgeSize": "~35 mm",
     "profileImg": "holds/C2-profile.png",
     "gripImg": "holds/C2-grip.png",
