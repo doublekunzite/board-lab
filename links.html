@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Links | Board Lab</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* Page Specific Styles */
+    .links-page {
+      position: relative;
+      z-index: 10;
+      padding: 8rem 2rem 4rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .links-section {
+      margin-bottom: 3rem;
+    }
+
+    .links-section h2 {
+      font-family: Impact, 'Arial Narrow Bold', sans-serif;
+      font-size: 2rem;
+      color: var(--fg);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--fg-muted);
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .link-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .link-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-decoration: none;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .link-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .link-card h3 {
+      color: var(--fg);
+      font-size: 1.25rem;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .link-card p {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .link-card .arrow {
+      margin-top: auto;
+      padding-top: 1rem;
+      color: var(--accent);
+      font-weight: bold;
+    }
+  </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧗🏽‍♂️</text></svg>" type="image/svg+xml">
+</head>
+<body>
+
+  <div class="bg-atmosphere" aria-hidden="true"></div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="logo font-display">BOARD LAB</a>
+      <nav>
+        <!-- Nav links are injected here by nav.js -->
+        <ul class="nav-links"></ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="links-page">
+    
+    <!-- About Section -->
+    <section class="links-section">
+      <h2>About</h2>
+      <div class="about-text">
+        <p>I'm Anthony 👋🏼 I've been climbing almost exclusively on the Kilter Board for a few years and I've logged over 2800 ascents. My hardest grade is V11 / 8a and I'm 5'10" tall (178cm) with a wingspan of 5'11" (180cm).</p> 
+		<p>I started climbing in Portland around 2015 but stopped when I moved to Winnipeg in 2016. I started climbing again in 2021 and have never stopped for long since then.</p></p>
+      </div>
+    </section>
+
+    <!-- Connect Section -->
+    <section class="links-section">
+      <h2>Connect</h2>
+      <div class="link-card-grid">
+        
+        <a href="https://doublekunzite.github.io/ALphotography" target="_blank" class="link-card">
+          <h3>Portfolio</h3>
+          <p>My personal portfolio site.</p>
+          <span class="arrow">Visit Site &rarr;</span>
+        </a>
+
+        <a href="https://www.linkedin.com/in/anthony-l-b54748141/" target="_blank" class="link-card">
+          <h3>LinkedIn</h3>
+          <p>Connect with me professionally.</p>
+          <span class="arrow">View Profile &rarr;</span>
+        </a>
+
+        <a href="https://www.instagram.com/doublekilter/" target="_blank" class="link-card">
+          <h3>Kilter Instagram</h3>
+          <p>My personal climbing log.</p>
+          <span class="arrow">Follow &rarr;</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="links-section">
+      <h2>Resources</h2>
+      <div class="link-card-grid">
+        
+        <a href="https://kilterlookup.com/" target="_blank" class="link-card">
+          <h3>Kilter Lookup</h3>
+          <p>A useful tool for looking up Kilter Board problems.</p>
+          <span class="arrow">Visit Site &rarr;</span>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Inject Navigation -->
+  <script src="nav.js"></script>
+</body>
+</html>

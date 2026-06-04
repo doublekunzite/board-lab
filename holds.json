@@ -32,7 +32,7 @@
     "desc": "Incut sidepull crimp / Macro foothold (incut)"
   },
   "E1": {
-    "tier": 3,
+    "tier": 2,
     "type": "Crimp",
     "edgeSize": "~20 mm",
 	"angleSensitive": true,
@@ -81,7 +81,7 @@
     "desc": "Deeply incut pinch jug / Macro foothold (incut)"
   },
   "K1": {
-    "tier": 3,
+    "tier": 2,
     "type": "Crimp",
     "edgeSize": "~20 mm",
 	"angleSensitive": true,
