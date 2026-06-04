@@ -74,7 +74,7 @@
   },
   "J1": {
     "tier": 1,
-    "type": "Pinch",
+    "type": ["Pinch", "Jug"],
     "edgeSize": "~30 mm",
     "profileImg": "holds/J1-profile.png",
     "gripImg": "holds/J1-grip.png",
@@ -198,7 +198,7 @@
   },
   "H2": {
     "tier": 1,
-    "type": "Undercling",
+    "type": ["Undercling", "Jug"],
     "edgeSize": "~40 mm",
     "profileImg": "holds/H2-profile.png",
     "gripImg": "holds/H2-grip.png",
@@ -255,7 +255,7 @@
   },
   "O2": {
     "tier": 1,
-    "type": "Undercling",
+    "type": ["Undercling", "Jug"],
     "edgeSize": "~30 mm",
     "profileImg": "holds/O2-profile.png",
     "gripImg": "holds/O2-grip.png",
