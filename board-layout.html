@@ -151,20 +151,29 @@
     .tier-badge.t-3 { background: rgba(248, 113, 113, 0.2); color: var(--tier-3); }
     .edge-badge { background: rgba(96, 165, 250, 0.15); color: var(--edge-color); }
 
-        .type-badge { 
+            .type-badge { 
       font-size: 0.85rem; 
       padding: 4px 10px; 
       border-radius: 4px; 
       font-weight: 600; 
       text-transform: uppercase; 
-      border: 1px solid rgba(255,255,255,0.1); /* Subtle border for definition */
+      border: 1px solid rgba(255,255,255,0.1);
     }
-	
-    .type-badge.jug { background: rgba(74, 222, 128, 0.2); color: #86efac; } /* Lighter Green */
-    .type-badge.crimp { background: rgba(250, 204, 21, 0.2); color: #fde047; } /* Lighter Yellow */
-    .type-badge.pinch { background: rgba(244, 114, 182, 0.2); color: #f9a8d4; } /* Lighter Pink */
-    .type-badge.sloper { background: rgba(96, 165, 250, 0.2); color: #93c5fd; } /* Lighter Blue */
-    .type-badge.undercling { background: rgba(167, 139, 250, 0.2); color: #c4b5fd; } /* Undercling Style */
+    
+    /* Base Colors */
+    .type-badge.jug { background: rgba(74, 222, 128, 0.2); color: #86efac; }
+    .type-badge.crimp { background: rgba(250, 204, 21, 0.2); color: #fde047; }
+    .type-badge.pinch { background: rgba(244, 114, 182, 0.2); color: #f9a8d4; }
+    .type-badge.sloper { background: rgba(96, 165, 250, 0.2); color: #93c5fd; }
+    .type-badge.undercling { background: rgba(167, 139, 250, 0.2); color: #c4b5fd; }
+
+    /* Combination Styles (Gradient Backgrounds) */
+    .type-badge.jug.crimp { background: linear-gradient(90deg, rgba(74, 222, 128, 0.3) 50%, rgba(250, 204, 21, 0.3) 50%); }
+    .type-badge.jug.pinch { background: linear-gradient(90deg, rgba(74, 222, 128, 0.3) 50%, rgba(244, 114, 182, 0.3) 50%); }
+    .type-badge.jug.undercling { background: linear-gradient(90deg, rgba(74, 222, 128, 0.3) 50%, rgba(167, 139, 250, 0.3) 50%); }
+    .type-badge.sloper.undercling { background: linear-gradient(90deg, rgba(96, 165, 250, 0.3) 50%, rgba(167, 139, 250, 0.3) 50%); }
+    .type-badge.sloper.pinch { background: linear-gradient(90deg, rgba(250, 204, 21, 0.3) 50%, rgba(244, 114, 182, 0.3) 50%); }
+    /* Add more combinations as needed */
 
     .board-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding: 1rem; background: var(--card); border-radius: 12px; border: 1px solid var(--border); }
     .toggle-group { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; }
@@ -438,7 +447,7 @@
     <section class="hold-list-section">
       <div class="list-header">
         <h2 class="font-display" style="font-size: 1.5rem; color: var(--fg); letter-spacing: 0.02em;">Hold Details</h2>
-        <div class="filters-container">
+                <div class="filters-container">
             <div class="filter-group">
                 <span class="filter-group-label">Tier:</span>
                 <button class="filter-btn active" data-filter-type="tier" data-filter-value="all">All</button>
@@ -448,12 +457,13 @@
             </div>
             <div class="filter-group">
                 <span class="filter-group-label">Type:</span>
-                <button class="filter-btn active" data-filter-type="type" data-filter-value="all">All</button>
+                <!-- "All" button acts as a reset -->
+                <button class="filter-btn active" data-filter-type="type" data-filter-value="all" id="filterAll">All</button>
                 <button class="filter-btn" data-filter-type="type" data-filter-value="Jug">Jug</button>
                 <button class="filter-btn" data-filter-type="type" data-filter-value="Crimp">Crimp</button>
                 <button class="filter-btn" data-filter-type="type" data-filter-value="Pinch">Pinch</button>
                 <button class="filter-btn" data-filter-type="type" data-filter-value="Sloper">Sloper</button>
-				<button class="filter-btn" data-filter-type="type" data-filter-value="Undercling">Undercling</button>
+                <button class="filter-btn" data-filter-type="type" data-filter-value="Undercling">Undercling</button>
             </div>
         </div>
       </div>
@@ -606,24 +616,46 @@
         }
     }
 
-    function renderHoldList() {
+        function renderHoldList() {
         holdListGrid.innerHTML = '';
+        
+        // 1. Determine active Tier
         const activeTier = document.querySelector('.filter-btn[data-filter-type="tier"].active').dataset.filterValue;
-        const activeType = document.querySelector('.filter-btn[data-filter-type="type"].active').dataset.filterValue;
+
+        // 2. Determine active Types (can be multiple)
+        const activeTypeButtons = document.querySelectorAll('.filter-btn[data-filter-type="type"].active');
+        const activeTypes = Array.from(activeTypeButtons).map(btn => btn.dataset.filterValue);
+        const isFilteringByType = !activeTypes.includes('all'); // True if specific types are selected
 
         Object.keys(holdsData).forEach(id => {
             const data = holdsData[id];
+            
+            // Tier Filter (Keep existing logic)
             if (activeTier !== 'all' && `tier-${data.tier}` !== activeTier) return;
-            if (activeType !== 'all' && data.type !== activeType) return;
 
+            // Type Filter (New Logic)
+            if (isFilteringByType) {
+                // Normalize data.type to an array
+                const holdTypes = Array.isArray(data.type) ? data.type : [data.type];
+                
+                // Check if the hold has ANY of the selected types
+                const hasMatch = holdTypes.some(t => activeTypes.includes(t));
+                if (!hasMatch) return;
+            }
+
+            // Render Card
             const card = document.createElement('div');
             card.className = 'hold-list-card';
             card.onclick = () => openModal(id);
+
+            // Handle multiple types in display text
+            const typeText = Array.isArray(data.type) ? data.type.join(' / ') : data.type;
+
             card.innerHTML = `
                 <img src="${data.profileImg}" class="list-card-img" alt="${id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80x80/222/555?text=N/A'">
                 <div class="list-card-info">
                     <h4>${id}</h4>
-                    <p class="type-text">${data.type}</p>
+                    <p class="type-text">${typeText}</p>
                     <span class="tier-badge t-${data.tier}">Tier ${data.tier}</span>
                 </div>`;
             holdListGrid.appendChild(card);
@@ -667,10 +699,12 @@
             tierBadge.className = `tier-badge t-${data.tier}`;
             document.getElementById('modalEdge').textContent = data.edgeSize || 'Unknown';
             
-            // Update Type Badge next to title
+                        // Update Type Badge next to title
             const typeBadge = document.getElementById('modalTypeBadge');
-            typeBadge.textContent = data.type;
-            typeBadge.className = `type-badge ${data.type.toLowerCase()}`;
+            const typeText = Array.isArray(data.type) ? data.type.join(' ') : data.type;
+            typeBadge.textContent = typeText;
+            // Apply all classes for gradient styling
+            typeBadge.className = `type-badge ${typeText.toLowerCase()}`;
 
             const warningEl = document.getElementById('modalWarning');
             if (data.angleSensitive) warningEl.classList.add('visible');
@@ -694,11 +728,37 @@
             tierToggle.checked ? boardWrapper.classList.add('show-tiers') : boardWrapper.classList.remove('show-tiers');
         });
 
-        filterBtns.forEach(btn => {
+                filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const group = btn.dataset.filterType;
-                document.querySelectorAll(`.filter-btn[data-filter-type="${group}"]`).forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                
+                // --- TIER LOGIC (Single Select) ---
+                if (group === 'tier') {
+                    document.querySelectorAll(`.filter-btn[data-filter-type="tier"]`).forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                }
+
+                // --- TYPE LOGIC (Multi Select) ---
+                if (group === 'type') {
+                    // If clicking "All", reset to just "All"
+                    if (btn.dataset.filterValue === 'all') {
+                        document.querySelectorAll(`.filter-btn[data-filter-type="type"]`).forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    } else {
+                        // Remove "All" active state if selecting a specific type
+                        document.getElementById('filterAll').classList.remove('active');
+                        
+                        // Toggle the clicked button
+                        btn.classList.toggle('active');
+
+                        // Safety: If user unclicks everything, default back to "All"
+                        const anyActive = document.querySelector('.filter-btn[data-filter-type="type"]:not([data-filter-value="all"]).active');
+                        if (!anyActive) {
+                            document.getElementById('filterAll').classList.add('active');
+                        }
+                    }
+                }
+
                 renderHoldList();
             });
         });
