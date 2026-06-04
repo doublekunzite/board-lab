@@ -273,7 +273,6 @@
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~30 mm",
-	"angleSensitive": true,
     "profileImg": "holds/Q2-profile.png",
     "gripImg": "holds/Q2-grip.png",
     "desc": "Nearly flat, very slightly incut pinch (left side slightly more incut) / Macro foothold (flat)"

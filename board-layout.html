@@ -672,7 +672,7 @@
         const boardWrapper = document.getElementById('boardWrapper');
         const filterBtns = document.querySelectorAll('.filter-btn');
 
-        window.openModal = function(id) {
+                window.openModal = function(id) {
             const data = holdsData[id];
             if (!data) return;
 
@@ -694,7 +694,7 @@
             tierBadge.className = `tier-badge t-${data.tier}`;
             document.getElementById('modalEdge').textContent = data.edgeSize || 'Unknown';
             
-                       // Update Type Badge next to title
+            // Update Type Badge next to title
             const typeBadge = document.getElementById('modalTypeBadge');
             const typeArray = Array.isArray(data.type) ? data.type : [data.type];
 
@@ -703,12 +703,6 @@
 
             // 2. Set Classes: "type-badge undercling jug" (Space separated)
             // This ensures your CSS gradient rules work properly
-            const classString = typeArray.map(t => t.toLowerCase()).join(' ');
-            typeBadge.className = `type-badge ${classString}`;
-            
-            // 3. Apply classes for CSS styling
-            // Base class + all individual types (e.g., "type-badge jug undercling")
-            // This allows your .type-badge.jug.undercling CSS rules to work!
             const classString = typeArray.map(t => t.toLowerCase()).join(' ');
             typeBadge.className = `type-badge ${classString}`;
 
