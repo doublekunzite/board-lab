@@ -363,7 +363,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/K3-profile.png",
     "gripImg": "holds/K3-grip.png",
-    "desc": "Deeply incut sidepull jug with two slots. Can be used as an undercling but not juggy: edge is shallowest at the bottom / Macro foothold (incut)"
+    "desc": "Deeply incut sidepull jug with two slots. Can be used as an undercling, but bottom part of the hold has the shallowest edge / Macro foothold (incut)"
   },
   "L3": {
     "tier": 2,
@@ -412,5 +412,142 @@
     "profileImg": "holds/Q3-profile.png",
     "gripImg": "holds/Q3-grip.png",
     "desc": "Slightly incut, sloping crimp with a ~10mm nub to pinch on the left side / Macro foothold (incut)"
+  },
+  "A4": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/A4-profile.png",
+    "gripImg": "holds/A4-grip.png",
+    "desc": "Long, deeply incut jug, angled slightly right / Macro foothold (incut)"
+  },
+  "B4": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/B4-profile.png",
+    "gripImg": "holds/B4-grip.png",
+    "desc": "Deeply incut jug (shallower at edges) / Macro foothold (incut)"
+  },
+  "C4": {
+    "tier": 1,
+    "type": ["Undercling", "Jug"],
+    "edgeSize": "~60 mm",
+    "profileImg": "holds/C4-profile.png",
+    "gripImg": "holds/C4-grip.png",
+    "desc": "Deeply incut undercling jug, angled slightly right / Macro foothold (sloping)"
+  },
+  "D4": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/D4-profile.png",
+    "gripImg": "holds/D4-grip.png",
+    "desc": "Deeply incut mini-jug / Macro foothold (incut)"
+  },
+  "E4": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/E4-profile.png",
+    "gripImg": "holds/E4-grip.png",
+    "desc": "Deeply incut long jug / Macro foothold (incut)"
+  },
+  "F4": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm",
+    "profileImg": "holds/F4-profile.png",
+    "gripImg": "holds/F4-grip.png",
+    "desc": "Slightly incut, sloping crimp with square edge (can be used as sidepull) / Macro foothold (incut)"
+  },
+  "G4": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/G4-profile.png",
+    "gripImg": "holds/G4-grip.png",
+    "desc": "Deeply incut sidepull jug / Macro foothold (incut)"
+  },
+  "H4": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~30 mm",
+	"angleSensitive": true,
+    "profileImg": "holds/H4-profile.png",
+    "gripImg": "holds/H4-grip.png",
+    "desc": "Flat vertical pinch / Macro foothold (incut)"
+  },
+  "I4": {
+    "tier": 1,
+    "type": ["Undercling", "Jug"],
+    "edgeSize": "~60 mm",
+    "profileImg": "holds/I4-profile.png",
+    "gripImg": "holds/I4-grip.png",
+    "desc": "Deeply incut undercling jug / Macro foothold (sloping)"
+  },
+  "J4": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/J4-profile.png",
+    "gripImg": "holds/J4-grip.png",
+    "desc": "Slightly incut, sloping crimp (shallower at edges) / Macro foothold (incut)"
+  },
+  "K4": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm",
+    "profileImg": "holds/K4-profile.png",
+    "gripImg": "holds/K4-grip.png",
+    "desc": "Slightly incut, sloping crimp / Macro foothold (incut)"
+  },
+  "L4": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/L4-profile.png",
+    "gripImg": "holds/L4-grip.png",
+    "desc": "Slightly incut, sloping crimp, angled left / Macro foothold (incut)"
+  },
+  "M4": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/M4-profile.png",
+    "gripImg": "holds/M4-grip.png",
+    "desc": "Deeply incut sidepull jug / Macro foothold (incut)"
+  },
+  "N4": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~35 mm",
+    "profileImg": "holds/N4-profile.png",
+    "gripImg": "holds/N4-grip.png",
+    "desc": "Deeply incut mini-jug (shallower on right) / Macro foothold (incut)"
+  },
+  "O4": {
+    "tier": 1,
+    "type": ["Underling", "Jug"],
+    "edgeSize": "~60 mm",
+    "profileImg": "holds/O4-profile.png",
+    "gripImg": "holds/O4-grip.png",
+    "desc": "Deeply incut undercling jug / Macro foothold (sloping)"
+  },
+  "P4": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm",
+    "profileImg": "holds/P4-profile.png",
+    "gripImg": "holds/P4-grip.png",
+    "desc": "Long, deeply incut jug (shallower at edges) / Macro foothold (incut)"
+  },
+  "Q4": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~40 mm",
+    "profileImg": "holds/Q4-profile.png",
+    "gripImg": "holds/Q4-grip.png",
+    "desc": "Deeply incut jug / Macro foothold (incut)"
   }
 }
