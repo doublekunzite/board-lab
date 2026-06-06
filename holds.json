@@ -272,14 +272,16 @@
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~30 mm",
+	"angleSensitive": true,
     "profileImg": "holds/Q2-profile.png",
     "gripImg": "holds/Q2-grip.png",
-    "desc": "Nearly flat, very slightly incut pinch (left side slightly more incut) / Macro foothold (flat)"
+    "desc": "Slightly incut, nearly flat vertical pinch (left side slightly more incut) / Macro foothold (flat)"
   },
   "A3": {
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~30 mm",
+	"angleSensitive": true,
     "profileImg": "holds/A3-profile.png",
     "gripImg": "holds/A3-grip.png",
     "desc": "Flat vertical pinch / Macro foothold (flat)"
@@ -307,7 +309,7 @@
 	"angleSensitive": true,
     "profileImg": "holds/D3-profile.png",
     "gripImg": "holds/D3-grip.png",
-    "desc": "Slightly incut vertical pinch (deeper near the centre) / Macro foothold (flat)"
+    "desc": "Slightly incut, nearly flat vertical pinch (deeper near the centre) / Macro foothold (flat)"
   },
   "E3": {
     "tier": 1,
@@ -698,6 +700,7 @@
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~30 mm",
+	"angleSensitive": true,
     "profileImg": "holds/B6-profile.png",
     "gripImg": "holds/B6-grip.png",
     "desc": "Slightly incut, nearly flat vertical pinch / Macro foothold (incut)"
@@ -797,7 +800,7 @@
     "edgeSize": "~20 mm",
     "profileImg": "holds/N6-profile.png",
     "gripImg": "holds/N6-grip.png",
-    "desc": "Slightly incut pinch or crimp / Macro foothold (incut)"
+    "desc": "Slightly incut, nearly flat pinch or crimp / Macro foothold (incut)"
   },
   "O6": {
     "tier": 1,
@@ -819,6 +822,7 @@
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~35 mm",
+	"angleSensitive": true,
     "profileImg": "holds/Q6-profile.png",
     "gripImg": "holds/Q6-grip.png",
     "desc": "Flat vertical pinch / Macro foothold (flat)"
