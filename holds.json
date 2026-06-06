@@ -703,7 +703,7 @@
 	"angleSensitive": true,
     "profileImg": "holds/B6-profile.png",
     "gripImg": "holds/B6-grip.png",
-    "desc": "Slightly incut, nearly flat vertical pinch / Macro foothold (incut)"
+    "desc": "Slightly incut, nearly flat vertical pinch (left side slightly more incut) / Macro foothold (incut)"
   },
   "C6": {
     "tier": 1,
@@ -825,6 +825,6 @@
 	"angleSensitive": true,
     "profileImg": "holds/Q6-profile.png",
     "gripImg": "holds/Q6-grip.png",
-    "desc": "Flat vertical pinch / Macro foothold (flat)"
+    "desc": "Flat vertical pinch, angled left / Macro foothold (flat)"
   }
 }
