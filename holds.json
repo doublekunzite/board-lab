@@ -365,7 +365,8 @@
     "edgeSize": "~25 mm",
     "profileImg": "holds/K3-profile.png",
     "gripImg": "holds/K3-grip.png",
-    "desc": "Incut sidepull with two slots (left is deeper). Can be used as an undercling, but bottom part of the hold has the shallowest (~10 mm) edge \nMacro foothold (incut)"
+    "desc": "Incut sidepull with two slots (left is deeper) \nMacro foothold (incut)",
+	"notes": "The left side is on the verge of being a jug. Can be used as an undercling, but the bottom part of the hold is narrow has the shallowest edge (~10 mm)."
   },
   "L3": {
     "tier": 2,
@@ -869,7 +870,7 @@
     "profileImg": "holds/E7-profile.png",
     "gripImg": "holds/E7-grip.png",
     "desc": "Fat, sloping vertical pinch \nMacro foothold (sloping)",
-	"notes": "One of the worst pinches on the Kilter Board: both fat and slopey. It feels decent at 40 or 45, but gets pretty heinous at steeper angles unless there are very good feet."
+	"notes": "One of the worst pinches on the Kilter Board: both fat and slopey. The large edge size means it feels decent at 40° or 45°, but gets pretty heinous at steeper angles or without good feet."
   },
   "F7": {
     "tier": 2,

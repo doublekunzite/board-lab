@@ -362,13 +362,14 @@
     .t2-desc { color: var(--tier-2); font-weight: 600; }
     .t3-desc { color: var(--tier-3); font-weight: 600; }
 
-       /* Description & Notes Layout - Strict 50/50 Split */
+         /* Description & Notes Layout - 40/60 Split */
     .modal-text-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr; /* Enforces exact 50% width for both */
+        /* 2fr for Description (40%), 3fr for Notes (60%) */
+        grid-template-columns: 2fr 3fr; 
         margin-bottom: 1.5rem;
-        gap: 2rem; /* Space between the two columns */
-        align-items: start; /* Aligns both columns to the top */
+        gap: 2rem;
+        align-items: start;
     }
 
     .notes-section {
