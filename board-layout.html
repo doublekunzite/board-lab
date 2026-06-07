@@ -707,8 +707,10 @@
 
             document.getElementById('modalTitle').textContent = id;
             
+            // Description: Replace '\n' with '<br>' to create line breaks
             const descEl = document.getElementById('modalDesc');
-            descEl.textContent = data.desc;
+            const rawDesc = data.desc || "";
+            descEl.innerHTML = rawDesc.replace(/\n/g, '<br>');
             
             // Notes - Just populate it (empty if missing)
             document.getElementById('modalNotes').textContent = data.notes || "";
