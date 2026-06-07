@@ -362,21 +362,32 @@
     .t2-desc { color: var(--tier-2); font-weight: 600; }
     .t3-desc { color: var(--tier-3); font-weight: 600; }
 
-         /* Description & Notes Layout - 40/60 Split */
+        /* Description & Notes Layout - 40/60 Split */
     .modal-text-grid {
         display: grid;
-        /* 2fr for Description (40%), 3fr for Notes (60%) */
         grid-template-columns: 2fr 3fr; 
         margin-bottom: 1.5rem;
         gap: 2rem;
         align-items: start;
     }
 
+    /* Force Description Text to fill width better */
+    .desc-section {
+        width: 100%; /* Ensure it uses the full 40% allocated space */
+    }
+
+    #modalDesc {
+        color: rgba(255,255,255,0.85);
+        line-height: 1.6;
+        margin: 0;
+        /* These two lines help distribute words more evenly */
+        text-align: left; 
+        hyphens: auto; /* Allows long words to hyphenate if needed */
+    }
+
     .notes-section {
         border-left: 1px solid var(--border);
         padding-left: 1.5rem;
-        /* Ensure the notes column doesn't overflow */
-        overflow-wrap: break-word; 
     }
 
     .notes-title {
