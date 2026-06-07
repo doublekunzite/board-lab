@@ -208,7 +208,7 @@
     "profileImg": "holds/H2-profile.png",
     "gripImg": "holds/H2-grip.png",
     "desc": "Deeply incut undercling jug \nMacro foothold (incut)",
-    "notes": "One of the mega jug underclings, along with I11."
+    "notes": "One of the mega jug underclings, along with I11. Mega jug set: these are ~50+ mm incut holds that are easily matchable."
   },
   "I2": {
     "tier": 2,
@@ -542,12 +542,12 @@
   },
   "O4": {
     "tier": 1,
-    "type": ["Underling", "Jug"],
+    "type": ["Undercling", "Jug"],
     "edgeSize": "~60 mm edge",
     "profileImg": "holds/O4-profile.png",
     "gripImg": "holds/O4-grip.png",
     "desc": "Deeply incut undercling jug \nMacro foothold (sloping)",
-    "notes": "Mega jug."
+    "notes": "Mega jug set: these are ~50+ mm incut holds that are easily matchable."
   },
   "P4": {
     "tier": 1,
@@ -859,7 +859,7 @@
     "profileImg": "holds/A7-profile.png",
     "gripImg": "holds/A7-grip.png",
     "desc": "Deeply incut jug \nMacro foothold (incut)",
-    "notes": "Mega jug."
+    "notes": "Mega jug set: these are ~50+ mm incut holds that are easily matchable."
   },
   "B7": {
     "tier": 1,
@@ -1036,7 +1036,7 @@
     "edgeSize": "~25 mm edge",
     "profileImg": "holds/E8-profile.png",
     "gripImg": "holds/E8-grip.png",
-    "desc": "Slightly incut sloping crimp \nMacro foothold (sloping)",
+    "desc": "Slightly incut sloping crimp \nMacro foothold (sloping)"
   },
   "F8": {
     "tier": 2,
@@ -1066,7 +1066,7 @@
   },
   "I8": {
     "tier": 2,
-    "type": ["Undercling," "Sloper"],
+    "type": ["Undercling", "Sloper"],
     "edgeSize": "~55 mm edge",
 	"angleSensitive": true,
     "profileImg": "holds/I8-profile.png",
