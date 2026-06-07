@@ -362,17 +362,20 @@
     .t2-desc { color: var(--tier-2); font-weight: 600; }
     .t3-desc { color: var(--tier-3); font-weight: 600; }
 
-    /* Description & Notes Layout - Always Split */
+       /* Description & Notes Layout - Strict 50/50 Split */
     .modal-text-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr; /* Always split view */
+        grid-template-columns: 1fr 1fr; /* Enforces exact 50% width for both */
         margin-bottom: 1.5rem;
-        gap: 2rem;
+        gap: 2rem; /* Space between the two columns */
+        align-items: start; /* Aligns both columns to the top */
     }
 
     .notes-section {
         border-left: 1px solid var(--border);
         padding-left: 1.5rem;
+        /* Ensure the notes column doesn't overflow */
+        overflow-wrap: break-word; 
     }
 
     .notes-title {
