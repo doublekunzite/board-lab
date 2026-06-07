@@ -874,7 +874,7 @@
     "edgeSize": "~25 mm",
     "profileImg": "holds/F7-profile.png",
     "gripImg": "holds/F7-grip.png",
-    "desc": "Slightly incut, sloping crimp, angled right / Macro foothold (incut)"
+    "desc": "Slightly incut, sloping sidepull crimp / Macro foothold (incut)"
   },
   "G7": {
     "tier": 1,

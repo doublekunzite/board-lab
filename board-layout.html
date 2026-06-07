@@ -21,7 +21,7 @@
       --type-crimp: #facc15;
       --type-pinch: #f472b6;
       --type-sloper: #60a5fa;
-	  --type-undercling: #a78bfa;
+      --type-undercling: #a78bfa;
     }
 
     .board-page {
@@ -51,7 +51,7 @@
       letter-spacing: 0.08em;
     }
 
-        /* Board Container - No padding needed, grid fills the space */
+    /* Board Container */
     .board-wrapper {
       position: relative;
       width: 100%;
@@ -59,7 +59,7 @@
       margin: 0 auto;
       background: #111;
       border-radius: 8px;
-      overflow: visible; /* Allows labels to extend outside */
+      overflow: visible;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
@@ -76,19 +76,18 @@
       display: grid;
       grid-template-columns: repeat(17, 1fr);
       grid-template-rows: repeat(18, 1fr);
-      overflow: visible; /* Critical for labels to be visible */
+      overflow: visible;
     }
 
-    /* Increase gap between subtitle and the top labels */
     .board-header { 
       text-align: center; 
-      margin-bottom: 3.5rem; /* Increased from 2rem for breathing room */
+      margin-bottom: 3.5rem;
     }
 
     /* Large Labels - Outside Grid */
     .grid-label {
       position: absolute;
-      font-size: 1rem; /* Big, clear text */
+      font-size: 1rem;
       font-weight: 700;
       color: rgba(255,255,255,0.6);
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -98,22 +97,20 @@
 
     .col-label {
       top: 0;
-      width: calc(100% / 17); /* Match column width */
+      width: calc(100% / 17);
       text-align: center;
-      /* Move label entirely above the grid */
       transform: translateY(-100%); 
-      padding-bottom: 0.5rem; /* Space between label and grid line */
+      padding-bottom: 0.5rem;
     }
 
     .row-label {
       left: 0;
-      height: calc(100% / 18); /* Match row height */
+      height: calc(100% / 18);
       display: flex;
       align-items: center;
-      justify-content: flex-end; /* Align number to the right (towards grid) */
-      /* Move label entirely left of the grid */
+      justify-content: flex-end;
       transform: translateX(-100%);
-      padding-right: 0.75rem; /* Space between label and grid line */
+      padding-right: 0.75rem;
     }
 
     .hold-cell {
@@ -126,7 +123,7 @@
       content: ''; position: absolute; top: 5px; left: 5px; width: 12px; height: 12px;
       border-radius: 50%; opacity: 0; transition: opacity 0.3s; box-shadow: 0 0 5px currentColor;
     }
-    .show-tiers .hold-cell::after { opacity: 0.9; }
+    .hold-cell.show-tier-dot::after { opacity: 0.9; }
     .hold-cell.tier-1::after { background: var(--tier-1); color: var(--tier-1); }
     .hold-cell.tier-2::after { background: var(--tier-2); color: var(--tier-2); }
     .hold-cell.tier-3::after { background: var(--tier-3); color: var(--tier-3); }
@@ -151,7 +148,7 @@
     .tier-badge.t-3 { background: rgba(248, 113, 113, 0.2); color: var(--tier-3); }
     .edge-badge { background: rgba(96, 165, 250, 0.15); color: var(--edge-color); }
 
-            .type-badge { 
+    .type-badge { 
       font-size: 0.85rem; 
       padding: 4px 10px; 
       border-radius: 4px; 
@@ -167,23 +164,22 @@
     .type-badge.sloper { background: rgba(96, 165, 250, 0.2); color: #93c5fd; }
     .type-badge.undercling { background: rgba(167, 139, 250, 0.2); color: #c4b5fd; }
 
-    /* Combination Styles (Gradient Backgrounds) */
+    /* Combination Styles */
     .type-badge.jug.crimp { background: linear-gradient(90deg, rgba(74, 222, 128, 0.3) 50%, rgba(250, 204, 21, 0.3) 50%); }
     .type-badge.jug.pinch { background: linear-gradient(90deg, rgba(74, 222, 128, 0.3) 50%, rgba(244, 114, 182, 0.3) 50%); }
     .type-badge.jug.undercling { background: linear-gradient(90deg, rgba(74, 222, 128, 0.3) 50%, rgba(167, 139, 250, 0.3) 50%); }
     .type-badge.sloper.undercling { background: linear-gradient(90deg, rgba(96, 165, 250, 0.3) 50%, rgba(167, 139, 250, 0.3) 50%); }
     .type-badge.sloper.pinch { background: linear-gradient(90deg, rgba(250, 204, 21, 0.3) 50%, rgba(244, 114, 182, 0.3) 50%); }
-    /* Add more combinations as needed */
 
-    .board-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding: 1rem; background: var(--card); border-radius: 12px; border: 1px solid var(--border); }
-    .toggle-group { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; }
+    .board-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding: 1rem; background: var(--card); border-radius: 12px; border: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; }
+    .toggle-group { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; position: relative; }
     .toggle-switch { width: 40px; height: 20px; background: #333; border-radius: 20px; position: relative; transition: background 0.3s; }
     .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: transform 0.3s; }
-    .toggle-input:checked + .toggle-switch { background: var(--accent); }
-    .toggle-input:checked + .toggle-switch::after { transform: translateX(20px); }
+    .toggle-input:checked + .toggle-switch { opacity: 1; }
+    .toggle-input:checked + .toggle-switch::after { transform: translateX(20px); background: #111; }
     .toggle-input { display: none; }
 
-        /* Modal (Detail View) */
+    /* Modal (Detail View) */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.85);
       backdrop-filter: blur(5px); z-index: 1000;
@@ -194,7 +190,7 @@
     .modal-overlay.active { opacity: 1; pointer-events: all; }
 
     .modal-content {
-      background: var(--card); width: 100%; max-width: 650px; /* Slightly wider for side-by-side */
+      background: var(--card); width: 100%; max-width: 650px;
       border-radius: 16px; border: 1px solid var(--border);
       overflow: hidden; transform: scale(0.9); transition: transform 0.3s;
       display: flex; flex-direction: column;
@@ -217,7 +213,7 @@
     }
 
     .modal-img-container {
-      height: 300px; /* TALLER photos */
+      height: 300px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -231,7 +227,6 @@
       cursor: zoom-in;
     }
 
-    /* Centered Label Below Image */
     .modal-img-label {
       text-align: center;
       font-size: 0.75rem;
@@ -249,7 +244,6 @@
       margin-bottom: 1rem;
     }
 
-    /* Tags Row (Left aligned) */
     .modal-tags {
       display: flex;
       flex-wrap: wrap;
@@ -257,13 +251,6 @@
       margin-bottom: 1rem;
     }
     
-    /* Type Tag (Right aligned) */
-    .modal-type-row {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1rem;
-    }
-
     .close-btn {
       background: transparent; border: none; color: var(--fg-muted);
       font-size: 1.5rem; cursor: pointer; padding: 0.5rem; line-height: 1;
@@ -293,21 +280,16 @@
 
     .angle-warning { background: rgba(248, 113, 113, 0.1); border-left: 3px solid var(--tier-3); padding: 0.75rem; margin-top: 1rem; font-size: 0.875rem; display: none; }
     .angle-warning.visible { display: block; }
-	
-	    /* Fix alignment of Title and Type Badge */
+
+    /* Modal Title Alignment */
     #modalTitleRow {
-      align-items: center; /* Centers them vertically */
+      align-items: center;
     }
-
     #modalTitleRow .type-badge {
-      margin-top: -2px; /* Nudges the badge up slightly as requested */
-    }
-	
-	    /* Toggle Group with Tooltip */
-    .toggle-group {
-      position: relative; /* Allows absolute positioning of tooltip */
+      margin-top: -2px;
     }
 
+    /* Toggle Tooltips */
     .toggle-label-text {
       display: flex;
       align-items: center;
@@ -336,7 +318,7 @@
 
     .tier-tooltip {
       position: absolute;
-      bottom: 130%; /* Positions it above the toggle */
+      bottom: 130%;
       left: 50%;
       transform: translateX(-50%);
       width: 320px;
@@ -356,7 +338,6 @@
       pointer-events: none;
     }
 
-    /* Arrow pointing down */
     .tier-tooltip::after {
       content: '';
       position: absolute;
@@ -372,51 +353,46 @@
       visibility: visible;
     }
 
-    .tier-tooltip h4 {
-      margin: 0 0 0.5rem 0;
-      font-size: 0.9rem;
-      color: var(--fg);
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.5rem;
-    }
-
     .tier-tooltip p {
-      margin: 0 0 0.75rem 0;
+      margin: 0;
       color: rgba(255,255,255,0.8);
     }
 
-    .tier-tooltip p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* Highlight colors for tooltip text */
     .t1-desc { color: var(--tier-1); font-weight: 600; }
     .t2-desc { color: var(--tier-2); font-weight: 600; }
     .t3-desc { color: var(--tier-3); font-weight: 600; }
-	
-	    /* Toggle Switch Colors - specific override for OFF state */
-    .toggle-switch { background: #333; }
-    
-    /* When checked, use the specific tier color defined in the inline style */
-    .toggle-input:checked + .toggle-switch { 
-        /* The background color is set inline in HTML, this ensures it applies */
-        opacity: 1; 
+
+    /* Description & Notes Layout - Always Split */
+    .modal-text-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Always split view */
+        margin-bottom: 1.5rem;
+        gap: 2rem;
+    }
+
+    .notes-section {
+        border-left: 1px solid var(--border);
+        padding-left: 1.5rem;
+    }
+
+    .notes-title {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: rgba(255,255,255,0.5);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    #modalNotes {
+        font-style: italic;
+        color: rgba(255,255,255,0.8);
+        line-height: 1.6;
+        margin: 0;
     }
     
-    /* Ensure the toggle knob is visible on colored backgrounds */
-    .toggle-input:checked + .toggle-switch::after { 
-        background: #111; /* Dark knob for contrast on bright colors */
-    }
-	
-	    .hold-cell::after {
-      content: ''; position: absolute; top: 5px; left: 5px; width: 12px; height: 12px;
-      border-radius: 50%; opacity: 0; transition: opacity 0.3s; box-shadow: 0 0 5px currentColor;
-    }
-    /* Changed from .show-tiers .hold-cell::after */
-    .hold-cell.show-tier-dot::after { opacity: 0.9; }
-	
   </style>
-<link rel="icon" type="image/png" href="favicon.png?v=2">
+  <link rel="icon" href="favicon.png?v=2" type="image/png">
 </head>
 <body>
 
@@ -427,10 +403,7 @@
     <div class="header-inner">
       <a href="index.html" class="logo font-display">BOARD LAB</a>
       <nav>
-        <ul class="nav-links">
-          <li><a href="index.html#moves" class="nav-link">Moves</a></li>
-          <li><a href="hold-quality.html" class="nav-link">Hold Quality</a></li>
-        </ul>
+        <ul class="nav-links"></ul>
       </nav>
     </div>
   </header>
@@ -446,7 +419,7 @@
       <div class="grid-overlay" id="gridOverlay"></div>
     </div>
 
-          <div class="board-controls">
+    <div class="board-controls">
       <!-- Tier 1 Toggle -->
       <label class="toggle-group">
         <input type="checkbox" class="toggle-input" id="tier1Toggle" checked>
@@ -490,7 +463,7 @@
     <section class="hold-list-section">
       <div class="list-header">
         <h2 class="font-display" style="font-size: 1.5rem; color: var(--fg); letter-spacing: 0.02em;">Hold Details</h2>
-                <div class="filters-container">
+        <div class="filters-container">
             <div class="filter-group">
                 <span class="filter-group-label">Tier:</span>
                 <button class="filter-btn active" data-filter-type="tier" data-filter-value="all">All</button>
@@ -500,7 +473,6 @@
             </div>
             <div class="filter-group">
                 <span class="filter-group-label">Type:</span>
-                <!-- "All" button acts as a reset -->
                 <button class="filter-btn active" data-filter-type="type" data-filter-value="all" id="filterAll">All</button>
                 <button class="filter-btn" data-filter-type="type" data-filter-value="Jug">Jug</button>
                 <button class="filter-btn" data-filter-type="type" data-filter-value="Crimp">Crimp</button>
@@ -514,19 +486,17 @@
     </section>
   </main>
 
-    <!-- Modal -->
+  <!-- Modal -->
   <div class="modal-overlay" id="holdModal">
     <div class="modal-content">
       <!-- Images Section (Side by Side) -->
       <div class="modal-images">
-        <!-- Profile Column -->
         <div class="modal-img-column">
           <div class="modal-img-container">
             <img src="" alt="Hold Profile" id="modalProfileImg">
           </div>
           <div class="modal-img-label">Profile View</div>
         </div>
-        <!-- Grip Column -->
         <div class="modal-img-column">
           <div class="modal-img-container">
             <img src="" alt="Hold Grip" id="modalGripImg">
@@ -535,11 +505,10 @@
         </div>
       </div>
 
-            <!-- Details Section -->
+      <!-- Details Section -->
       <div class="modal-details">
         <div class="modal-header">
           <div class="modal-title-group">
-            <!-- Added ID "modalTitleRow" to fix alignment -->
             <div id="modalTitleRow" style="display: flex; align-items: center; gap: 0.75rem;">
                 <h3 id="modalTitle" style="font-size: 1.5rem; color: var(--fg); margin:0;">Hold ID</h3>
                 <span class="type-badge" id="modalTypeBadge">Jug</span>
@@ -552,8 +521,18 @@
           <button class="close-btn" id="closeModal">&times;</button>
         </div>
 
-        <p style="color: var(--fg-muted); line-height: 1.6;" id="modalDesc">Description goes here.</p>
-        
+        <!-- Text Grid Container (Split View) -->
+        <div class="modal-text-grid" id="modalTextGrid">
+            <div class="desc-section">
+                <p style="color: rgba(255,255,255,0.85); line-height: 1.6; margin: 0;" id="modalDesc">Description goes here.</p>
+            </div>
+            
+            <div class="notes-section">
+                <div class="notes-title">Notes</div>
+                <p id="modalNotes">Notes go here.</p>
+            </div>
+        </div>
+
         <div class="angle-warning" id="modalWarning">
             ⚠️ <strong>Warning:</strong> Quality degrades significantly at steep angles. Requires high tension.
         </div>
@@ -563,7 +542,8 @@
 
   <div id="lightbox"><img src="" id="lightboxImg" alt="Expanded View"></div>
 
-    <script>
+  <script src="nav.js"></script>
+  <script>
     let holdsData = {}; // Will be populated from JSON
 
     // ============================================
@@ -575,7 +555,6 @@
             if (!response.ok) throw new Error('Network response was not ok');
             holdsData = await response.json();
             
-            // Initialize the page once data is loaded
             initPage();
         } catch (error) {
             console.error('Error loading holds data:', error);
@@ -601,10 +580,9 @@
     const holdListGrid = document.getElementById('holdListGrid');
     const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
 
-        function renderGrid() {
-        gridOverlay.innerHTML = ''; // Clear loading state
+    function renderGrid() {
+        gridOverlay.innerHTML = '';
         
-        // Check initial state of toggles (default to checked/on if they exist)
         const t1Active = document.getElementById('tier1Toggle') ? document.getElementById('tier1Toggle').checked : true;
         const t2Active = document.getElementById('tier2Toggle') ? document.getElementById('tier2Toggle').checked : true;
         const t3Active = document.getElementById('tier3Toggle') ? document.getElementById('tier3Toggle').checked : true;
@@ -617,7 +595,6 @@
                 cell.className = 'hold-cell';
                 cell.dataset.id = holdId;
                 
-                // Positioning classes
                 if (r >= 17) cell.classList.add('tooltip-below');
                 if (colLetter === 'P' || colLetter === 'Q') cell.classList.add('col-right');
 
@@ -625,14 +602,12 @@
                     const data = holdsData[holdId];
                     cell.classList.add(`tier-${data.tier}`);
                     
-                    // Initial visibility state
                     if ((data.tier === 1 && t1Active) || 
                         (data.tier === 2 && t2Active) || 
                         (data.tier === 3 && t3Active)) {
                         cell.classList.add('show-tier-dot');
                     }
 
-                    // Prepare type text for tooltip
                     const typeText = Array.isArray(data.type) ? data.type.join(' / ') : data.type;
 
                     cell.innerHTML = `
@@ -652,11 +627,9 @@
     }
 
     function renderGridLabels() {
-        // Clear existing labels first
         const existingLabels = gridOverlay.querySelectorAll('.grid-label');
         existingLabels.forEach(label => label.remove());
 
-        // Top Letters (Columns)
         columns.forEach((letter, i) => {
             const label = document.createElement('div');
             label.className = 'grid-label col-label';
@@ -665,7 +638,6 @@
             gridOverlay.appendChild(label);
         });
 
-        // Side Numbers (Rows)
         for (let r = 18; r >= 1; r--) {
             const label = document.createElement('div');
             label.className = 'grid-label row-label';
@@ -676,35 +648,26 @@
         }
     }
 
-        function renderHoldList() {
+    function renderHoldList() {
         holdListGrid.innerHTML = '';
         
-        // 1. Determine active Tier
         const activeTier = document.querySelector('.filter-btn[data-filter-type="tier"].active').dataset.filterValue;
 
-        // 2. Determine active Types (can be multiple)
         const activeTypeButtons = document.querySelectorAll('.filter-btn[data-filter-type="type"].active');
         const activeTypes = Array.from(activeTypeButtons).map(btn => btn.dataset.filterValue);
-        const isFilteringByType = !activeTypes.includes('all'); // True if specific types are selected
+        const isFilteringByType = !activeTypes.includes('all');
 
         Object.keys(holdsData).forEach(id => {
             const data = holdsData[id];
             
-            // Tier Filter
             if (activeTier !== 'all' && `tier-${data.tier}` !== activeTier) return;
 
-            // Type Filter (AND Logic)
             if (isFilteringByType) {
-                // Normalize data.type to an array
                 const holdTypes = Array.isArray(data.type) ? data.type : [data.type];
-                
-                // Check if the hold has ALL of the selected types
                 const hasAllSelected = activeTypes.every(t => holdTypes.includes(t));
-                
                 if (!hasAllSelected) return;
             }
 
-            // Render Card
             const card = document.createElement('div');
             card.className = 'hold-list-card';
             card.onclick = () => openModal(id);
@@ -725,13 +688,12 @@
     // ============================================
     // 4. INTERACTIONS
     // ============================================
-        function setupEventListeners() {
+    function setupEventListeners() {
         const modal = document.getElementById('holdModal');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
         const closeBtn = document.getElementById('closeModal');
         
-        // New Toggle References
         const tier1Toggle = document.getElementById('tier1Toggle');
         const tier2Toggle = document.getElementById('tier2Toggle');
         const tier3Toggle = document.getElementById('tier3Toggle');
@@ -739,7 +701,7 @@
         const boardWrapper = document.getElementById('boardWrapper');
         const filterBtns = document.querySelectorAll('.filter-btn');
 
-                window.openModal = function(id) {
+        window.openModal = function(id) {
             const data = holdsData[id];
             if (!data) return;
 
@@ -747,7 +709,9 @@
             
             const descEl = document.getElementById('modalDesc');
             descEl.textContent = data.desc;
-            descEl.style.color = "rgba(255,255,255,0.85)";
+            
+            // Notes - Just populate it (empty if missing)
+            document.getElementById('modalNotes').textContent = data.notes || "";
 
             const profileImg = document.getElementById('modalProfileImg');
             const gripImg = document.getElementById('modalGripImg');
@@ -761,15 +725,9 @@
             tierBadge.className = `tier-badge t-${data.tier}`;
             document.getElementById('modalEdge').textContent = data.edgeSize || 'Unknown';
             
-            // Update Type Badge next to title
             const typeBadge = document.getElementById('modalTypeBadge');
             const typeArray = Array.isArray(data.type) ? data.type : [data.type];
-
-            // 1. Set Text Content: "Undercling Jug" (Space separated)
             typeBadge.textContent = typeArray.join(' ');
-
-            // 2. Set Classes: "type-badge undercling jug" (Space separated)
-            // This ensures your CSS gradient rules work properly
             const classString = typeArray.map(t => t.toLowerCase()).join(' ');
             typeBadge.className = `type-badge ${classString}`;
 
@@ -791,7 +749,7 @@
             if (e.key === 'Escape') { lightbox.classList.contains('active') ? closeLightbox() : closeModal(); }
         });
 
-                // ============================================
+        // ============================================
         // TIER TOGGLE LOGIC (Multi-Select Visibility)
         // ============================================
         const tierToggles = {
@@ -800,9 +758,7 @@
             3: tier3Toggle
         };
 
-        // Function to update grid visibility based on toggles
         function updateGridVisibility() {
-            // Iterate over every cell in the grid
             const cells = gridOverlay.querySelectorAll('.hold-cell');
             cells.forEach(cell => {
                 const id = cell.dataset.id;
@@ -812,7 +768,6 @@
                     const tier = data.tier;
                     const toggle = tierToggles[tier];
                     
-                    // If the toggle exists and is checked, show the dot
                     if (toggle && toggle.checked) {
                         cell.classList.add('show-tier-dot');
                     } else {
@@ -822,14 +777,12 @@
             });
         }
 
-        // Attach listeners to the three toggles
         [tier1Toggle, tier2Toggle, tier3Toggle].forEach(toggle => {
             toggle.addEventListener('change', () => {
                 updateGridVisibility();
             });
         });
-        
-        // Filter Button Logic
+
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const group = btn.dataset.filterType;
@@ -864,7 +817,5 @@
     // ============================================
     loadData();
   </script>
-    <script src="nav.js"></script>
-
 </body>
 </html>
