@@ -521,7 +521,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/M4-profile.png",
     "gripImg": "holds/M4-grip.png",
-    "desc": "Deeply incut sidepull mini-jug \nMacro foothold (incut)"
+    "desc": "Deeply incut sidepull mini-jug \nMacro foothold (incut)",
 	"notes": "On the verge of not being a jug imo, but I like to crimp and I usually use this with an open hand grip which is a sign of jugginess."
   },
   "N4": {
@@ -793,7 +793,8 @@
 	"angleSensitive": true,
     "profileImg": "holds/L6-profile.png",
     "gripImg": "holds/L6-grip.png",
-    "desc": "Flat, sloping fat pinch \nMacro foothold (incut)"
+    "desc": "Flat, sloping fat pinch \nMacro foothold (incut)",
+	"notes": "One of the worst pinches on the Kilter Board, it's a little fatter and harder to grip than even the slopey F7 pinch. The large edge size means it feels decent at 40° or 45°, but gets pretty heinous at steeper angles or without good feet."
   },
   "M6": {
     "tier": 1,
@@ -909,7 +910,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/I7-profile.png",
     "gripImg": "holds/I7-grip.png",
-    "desc": "Slightly incut sloper \nMacro foothold (incut)"
+    "desc": "Slightly incut sloper \nMacro foothold (incut)",
 	"notes": "On the verge of being a jug at 40°, this is more incut than many of the other Kilter Board slopers."
   },
   "J7": {
