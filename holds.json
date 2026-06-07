@@ -201,7 +201,8 @@
     "edgeSize": "~40 mm",
     "profileImg": "holds/H2-profile.png",
     "gripImg": "holds/H2-grip.png",
-    "desc": "Deeply incut undercling jug \nMacro foothold (incut)"
+    "desc": "Deeply incut undercling jug \nMacro foothold (incut)",
+	"notes": "One of the mega jug underclings, along with I11."
   },
   "I2": {
     "tier": 2,
@@ -511,7 +512,8 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/L4-profile.png",
     "gripImg": "holds/L4-grip.png",
-    "desc": "Slightly incut sloper, angled left \nMacro foothold (incut)"
+    "desc": "Slightly incut sloper, angled left \nMacro foothold (incut)",
+	"notes": "It's a little more incut and lower profile than H9 or J9, easier to use."
   },
   "M4": {
     "tier": 1,
@@ -520,6 +522,7 @@
     "profileImg": "holds/M4-profile.png",
     "gripImg": "holds/M4-grip.png",
     "desc": "Deeply incut sidepull mini-jug \nMacro foothold (incut)"
+	"notes": "On the verge of not being a jug imo, but I like to crimp and I usually use this with an open hand grip which is a sign of jugginess."
   },
   "N4": {
     "tier": 1,
@@ -584,7 +587,8 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/D5-profile.png",
     "gripImg": "holds/D5-grip.png",
-    "desc": "Slightly incut sloper \nMacro foothold (incut)"
+    "desc": "Slightly incut sloper \nMacro foothold (incut)",
+	"notes": "One of the juggier, more incut slopers."
   },
   "E5": {
     "tier": 2,
@@ -600,7 +604,8 @@
     "edgeSize": "~40 mm",
     "profileImg": "holds/F5-profile.png",
     "gripImg": "holds/F5-grip.png",
-    "desc": "Deeply incut sidepull mini-jug \nMacro foothold (incut)"
+    "desc": "Deeply incut sidepull mini-jug \nMacro foothold (incut)",
+	"notes": "One of the most common starting holds, and one of the most used holds on the board in general."
   },
   "G5": {
     "tier": 1,
@@ -705,7 +710,8 @@
 	"angleSensitive": true,
     "profileImg": "holds/B6-profile.png",
     "gripImg": "holds/B6-grip.png",
-    "desc": "Slightly incut, nearly flat vertical pinch (left side slightly more incut) \nMacro foothold (incut)"
+    "desc": "Slightly incut nearly flat vertical pinch \nMacro foothold (incut)",
+	"notes": "The left side is slightly more incut. One of the better intermediate pinches on the Kilter Board."
   },
   "C6": {
     "tier": 1,
@@ -713,7 +719,7 @@
     "edgeSize": "~50 mm",
     "profileImg": "holds/C6-profile.png",
     "gripImg": "holds/C6-grip.png",
-    "desc": "Deeply incut, sloping undercling mini-jug \nMacro foothold (sloping)"
+    "desc": "Deeply incut sloping undercling mini-jug \nMacro foothold (sloping)"
   },
   "D6": {
     "tier": 2,
@@ -729,7 +735,8 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/E6-profile.png",
     "gripImg": "holds/E6-grip.png",
-    "desc": "Long, deeply incut undercling jug (shallower on right) \nMacro foothold (flat)"
+    "desc": "Long, deeply incut undercling jug (shallower on right) \nMacro foothold (flat)",
+	"notes": "This hold can be used many different ways: it can be matched, you can have either hand on either of the two edges, or you can hold it along the bottom point with two fingers on each edge. The sides of the hold, especially the left point, are very positive and make decent footholds."
   },
   "F6": {
     "tier": 2,
@@ -903,6 +910,7 @@
     "profileImg": "holds/I7-profile.png",
     "gripImg": "holds/I7-grip.png",
     "desc": "Slightly incut sloper \nMacro foothold (incut)"
+	"notes": "On the verge of being a jug at 40°, this is more incut than many of the other Kilter Board slopers."
   },
   "J7": {
     "tier": 2,
