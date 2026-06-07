@@ -55,7 +55,7 @@
     "profileImg": "holds/G1-profile.png",
     "gripImg": "holds/G1-grip.png",
     "desc": "Deeply incut jug \nMacro foothold (incut)",
-	"notes": "Usually set as a foothold due to being row 1. You can really dig a toe into this hold and bear down with the legs." 
+	"notes": "Usually set as a foothold due to being row 1. You can really dig a toe deep into this hold and use it to pull with the leg." 
   },
   "H1": {
     "tier": 2,
@@ -79,7 +79,7 @@
     "edgeSize": "~30 mm",
     "profileImg": "holds/J1-profile.png",
     "gripImg": "holds/J1-grip.png",
-    "desc": "Deeply incut pinch jug \nMacro foothold (incut)"
+    "desc": "Deeply incut pinch jug \nMacro foothold (incut)",
 	"notes": "Juggy, but rarely usd as a handhold due to being row 1. Good for drop knees and heel hooks."
   },
   "K1": {
