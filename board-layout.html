@@ -205,8 +205,25 @@
     .type-badge.sloper.undercling { background: linear-gradient(90deg, rgba(96, 165, 250, 0.3) 50%, rgba(167, 139, 250, 0.3) 50%); }
     .type-badge.sloper.pinch { background: linear-gradient(90deg, rgba(250, 204, 21, 0.3) 50%, rgba(244, 114, 182, 0.3) 50%); }
 
-    .board-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding: 1rem; background: var(--card); border-radius: 12px; border: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; }
-    
+        .board-controls { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-top: 1.5rem; 
+      padding: 1rem; 
+      background: var(--card); 
+      border-radius: 12px; 
+      border: 1px solid var(--border); 
+      flex-wrap: wrap; 
+      gap: 1rem; 
+      
+      /* NEW: Shrink width on desktop and center */
+      width: fit-content;
+      max-width: 100%; /* Safety catch */
+      margin-left: auto;
+      margin-right: auto;
+    }
+	
     /* New layout for toggle containers */
     .toggle-container {
       display: flex;
@@ -507,6 +524,10 @@
         margin-top: 0;
       }
       .modal-img-container { height: 200px; }
+	  /* Force controls to be full width on mobile */
+      .board-controls {
+        width: 100%;
+      }
     }
     
   </style>
