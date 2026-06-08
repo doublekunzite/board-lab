@@ -445,7 +445,8 @@
     "edgeSize": "~60 mm edge",
     "profileImg": "holds/C4-profile.png",
     "gripImg": "holds/C4-grip.png",
-    "desc": "Deeply incut undercling jug, angled slightly right \nMacro foothold (sloping)"
+    "desc": "Deeply incut undercling jug, angled slightly right \nMacro foothold (sloping)",
+	"notes": "One of the mega jug underclings, along with H2 and I11. Mega jug set: these are ~50+ mm deeply incut holds that are easily matchable."
   },
   "D4": {
     "tier": 1,

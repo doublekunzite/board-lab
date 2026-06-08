@@ -419,7 +419,7 @@
         margin: 0;
     }
 	
-	     /* ============================================
+	    /* ============================================
        MOBILE ADJUSTMENTS
        ============================================ */
     @media (max-width: 767px) {
@@ -449,26 +449,40 @@
       .tier-tooltip.show-tooltip {
         opacity: 1;
         visibility: visible;
+        pointer-events: auto; /* Allow tapping the tooltip content if needed */
       }
 
-      /* 5. Increase Info Icon touch target size to prevent misclicks */
+      /* 5. Increase Info Icon touch target size */
       .info-icon {
-        padding: 8px; /* Larger tap area */
-        margin: -8px; /* Compensate layout */
+        padding: 8px;
+        margin: -8px;
       }
 
-      /* 6. MODAL FIX: Constrain modal to viewport width (vw) instead of pixels.
-            This ensures the modal stays properly sized even if the user has zoomed in. */
+      /* 6. MODAL FIX: Robust handling for zoom */
+      .modal-overlay {
+        align-items: flex-start; /* Align top to allow scrolling */
+        overflow-y: auto; /* Allow scrolling the background if zoomed */
+        padding: 0;
+      }
+
       .modal-content {
-        width: 90vw; /* 90% of the visible screen width */
-        max-width: none; /* Override 650px limit */
-        max-height: 85vh; /* 85% of visible screen height */
-        overflow-y: auto; /* Allow scrolling inside modal if needed */
+        width: 90vw; /* Relative width */
+        min-width: 300px; /* Minimum readable width */
+        max-width: none; /* Override pixel limit */
+        max-height: none; /* Override height limit */
+        margin: 20px auto; /* Center with margin */
+        border-radius: 12px;
       }
       
       /* Adjust modal image height for smaller screens */
       .modal-img-container {
          height: 200px; 
+      }
+      
+      /* Ensure images don't overflow */
+      .modal-img-container img {
+        max-width: 100%;
+        max-height: 100%;
       }
     }
     
@@ -792,6 +806,9 @@
         // ============================================
         // MOBILE TOOLTIP TOGGLE (Info Icons)
         // ============================================
+                // ============================================
+        // MOBILE TOOLTIP TOGGLE (Info Icons)
+        // ============================================
         const infoIcons = document.querySelectorAll('.info-icon');
         
         infoIcons.forEach(icon => {
@@ -799,9 +816,11 @@
                 e.preventDefault(); 
                 e.stopPropagation(); // Prevent the Label from triggering a toggle
                 
-                // Find the tooltip relative to the icon
-                const tooltip = icon.nextElementSibling;
+                // CORRECTED SELECTOR: Find tooltip inside the parent wrapper
+                const tooltip = icon.parentElement.querySelector('.tier-tooltip');
                 
+                if (!tooltip) return;
+
                 // Check if it's already open
                 const isVisible = tooltip.classList.contains('show-tooltip');
                 
