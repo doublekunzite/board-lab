@@ -65,7 +65,7 @@
     "profileImg": "holds/H1-profile.png",
     "gripImg": "holds/H1-grip.png",
     "desc": "Incut crimp \nMacro foothold (incut)",
-	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges many Kilter Board crimps have. These are sharper and have a bite to them."
+	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges you find on many Kilter Board crimps. These are sharper and have a bite to them."
   },
   "I1": {
     "tier": 2,
@@ -291,7 +291,7 @@
     "angleSensitive": true,
     "profileImg": "holds/A3-profile.png",
     "gripImg": "holds/A3-grip.png",
-    "desc": "Flat vertical pinch \nMacro foothold (flat)"
+    "desc": "Flat vertical pinch with square edge \nMacro foothold (flat)"
   },
   "B3": {
     "tier": 2,
@@ -316,7 +316,8 @@
     "angleSensitive": true,
     "profileImg": "holds/D3-profile.png",
     "gripImg": "holds/D3-grip.png",
-    "desc": "Slightly incut, nearly flat vertical pinch (deeper near the centre) \nMacro foothold (flat)"
+    "desc": "Slightly incut nearly flat vertical pinch with rounded edge \nMacro foothold (flat)"
+	"notes": "Deeper near the centre. Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut makes a surprisingly big difference."
   },
   "E3": {
     "tier": 1,
@@ -488,7 +489,7 @@
     "angleSensitive": true,
     "profileImg": "holds/H4-profile.png",
     "gripImg": "holds/H4-grip.png",
-    "desc": "Flat vertical pinch \nMacro foothold (incut)"
+    "desc": "Flat vertical pinch with rounded edge \nMacro foothold (flat)"
   },
   "I4": {
     "tier": 1,
@@ -596,7 +597,7 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/D5-profile.png",
     "gripImg": "holds/D5-grip.png",
-    "desc": "Slightly incut sloper \nMacro foothold (incut)",
+    "desc": "Incut sloper \nMacro foothold (incut)",
     "notes": "One of the juggier, more incut slopers."
   },
   "E5": {
@@ -722,8 +723,8 @@
     "angleSensitive": true,
     "profileImg": "holds/B6-profile.png",
     "gripImg": "holds/B6-grip.png",
-    "desc": "Slightly incut nearly flat vertical pinch \nMacro foothold (incut)",
-    "notes": "Left side is slightly more incut. Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut makes a surprisingly big difference."
+    "desc": "Slightly incut nearly flat vertical pinch with square edge \nMacro foothold (incut)",
+    "notes": "Left side slightly incut, right side is flat. Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut makes a surprisingly big difference."
   },
   "C6": {
     "tier": 1,
@@ -850,8 +851,8 @@
     "angleSensitive": true,
     "profileImg": "holds/Q6-profile.png",
     "gripImg": "holds/Q6-grip.png",
-    "desc": "Flat vertical pinch, angled left \nMacro foothold (flat)",
-    "notes": "One of the better intermediate pinches on the Kilter Board: it's very flat (not as sloping as some others)."
+    "desc": "Flat vertical pinch with square edge, angled left \nMacro foothold (flat)",
+    "notes": "One of the better intermediate pinches on the Kilter Board: it has a square edge and a slightly larger edge size than many of the other pinches."
   },
   "A7": {
     "tier": 1,
@@ -928,7 +929,7 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/I7-profile.png",
     "gripImg": "holds/I7-grip.png",
-    "desc": "Slightly incut sloper \nMacro foothold (incut)",
+    "desc": "Incut sloper \nMacro foothold (incut)",
     "notes": "On the verge of being a jug at 40°, this is more incut than many of the other Kilter Board slopers."
   },
   "J7": {
@@ -954,7 +955,7 @@
     "profileImg": "holds/L7-profile.png",
     "gripImg": "holds/L7-grip.png",
     "desc": "Incut crimp \nMacro foothold (incut)",
-	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges many Kilter Board crimps have. These are sharper and have a bite to them."
+	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges you find on many Kilter Board crimps. These are sharper and have a bite to them."
   },
   "M7": {
     "tier": 1,
@@ -1012,7 +1013,7 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/B8-profile.png",
     "gripImg": "holds/B8-grip.png",
-    "desc": "Incut sidepull crimp, angled right \nMacro foothold (incut)"
+    "desc": "Incut crimp, angled right \nMacro foothold (incut)"
   },
   "C8": {
     "tier": 1,
@@ -1029,7 +1030,7 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/D8-profile.png",
     "gripImg": "holds/D8-grip.png",
-    "desc": "Slightly incut sloper \nMacro foothold (incut)"
+    "desc": "Incut sloper \nMacro foothold (incut)"
   },
   "E8": {
     "tier": 2,
@@ -1062,7 +1063,7 @@
 	"angleSensitive": true,
     "profileImg": "holds/H8-profile.png",
     "gripImg": "holds/H8-grip.png",
-    "desc": "Slightly incut nearly flat vertical pinch \nMacro foothold (incut)",
+    "desc": "Slightly incut nearly flat vertical pinch with rounded edge \nMacro foothold (incut)",
 	"notes": "Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut makes a surprisingly big difference."
   },
   "I8": {
@@ -1140,5 +1141,149 @@
     "profileImg": "holds/Q8-profile.png",
     "gripImg": "holds/Q8-grip.png",
     "desc": "Incut sidepull crimp \nMacro foothold (incut)"
+  },
+  "A9": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/A9-profile.png",
+    "gripImg": "holds/A9-grip.png",
+    "desc": "Slightly incut sloping crimp \nMacro foothold (incut)"
+  },
+  "B9": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/B9-profile.png",
+    "gripImg": "holds/B9-grip.png",
+    "desc": "Deeply incut sidepull mini jug \nMacro foothold (incut)"
+  },
+  "C9": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~50 mm edge",
+    "profileImg": "holds/C9-profile.png",
+    "gripImg": "holds/C9-grip.png",
+    "desc": "Fat flat pinch with square edge, angled left \nMacro foothold (incut)"
+  },
+  "D9": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~35 mm edge",
+    "profileImg": "holds/D9-profile.png",
+    "gripImg": "holds/D9-grip.png",
+    "desc": "Deeply incut sloping mini jug, angled left \nMacro foothold (incut)"
+  },
+  "E9": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/E9-profile.png",
+    "gripImg": "holds/E9-grip.png",
+    "desc": "Incut crimp, angled left \nMacro foothold (incut)",
+	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges you find on many Kilter Board crimps. These are sharper and have a bite to them."
+  },
+  "F9": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/F9-profile.png",
+    "gripImg": "holds/F9-grip.png",
+    "desc": "Incut crimp \nMacro foothold (incut)",
+	"notes": "Juggy crimp set: these crimps are the most properly incut and least slopey."
+  },
+  "G9": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~25 mm edge",
+	"angleSensitive": true,
+    "profileImg": "holds/G9-profile.png",
+    "gripImg": "holds/G9-grip.png",
+    "desc": "Flat diamond-shaped pinch \nMacro foothold (incut)",
+	"notes": "Right edge is shallower, maybe 20 mm."
+  },
+  "H9": {
+    "tier": 2,
+    "type": "Sloper",
+    "edgeSize": "~30 mm edge",
+	"angleSensitive": true,
+    "profileImg": "holds/H9-profile.png",
+    "gripImg": "holds/H9-grip.png",
+    "desc": "Incut sloper, angled right \nMacro foothold (incut)"
+  },
+  "I9": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/I9-profile.png",
+    "gripImg": "holds/I9-grip.png",
+    "desc": "Deeply incut mini jug \nMacro foothold (incut)"
+  },
+  "J9": {
+    "tier": 2,
+    "type": "Sloper",
+    "edgeSize": "~30 mm edge",
+	"angleSensitive": true,
+    "profileImg": "holds/J9-profile.png",
+    "gripImg": "holds/J9-grip.png",
+    "desc": "Incut sloper, angled left \nMacro foothold (incut)"
+  },
+  "K9": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~35 mm edge",
+    "profileImg": "holds/K9-profile.png",
+    "gripImg": "holds/K9-grip.png",
+    "desc": "Deeply incut sloping jug, angled right \nMacro foothold (incut)",
+	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+  },
+  "L9": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/L9-profile.png",
+    "gripImg": "holds/L9-grip.png",
+    "desc": "Long incut crimp \nMacro foothold (incut)"
+  },
+  "M9": {
+    "tier": 2,
+    "type": "Sloper",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/M9-profile.png",
+    "gripImg": "holds/M9-grip.png",
+    "desc": "Incut sloper \nMacro foothold (incut)"
+  },
+  "N9": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~35 mm edge",
+    "profileImg": "holds/N9-profile.png",
+    "gripImg": "holds/N9-grip.png",
+    "desc": "Deeply incut mini jug, angled left \nMacro foothold (flat)"
+  },
+  "O9": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/O9-profile.png",
+    "gripImg": "holds/O9-grip.png",
+    "desc": "Deeply incut mini jug, angled right \nMacro foothold (incut)"
+  },
+  "P9": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/P9-profile.png",
+    "gripImg": "holds/P9-grip.png",
+    "desc": "Slightly incut nearly flat pinch with square edge, angled right \nMacro foothold (sloping)",
+	"notes": "Top slightly incut, bottom is flat. Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut makes a surprisingly big difference."
+  },
+  "Q9": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/Q9-profile.png",
+    "gripImg": "holds/Q9-grip.png",
+    "desc": "Incut crimp \nMacro foothold (incut)"
   }
 }
