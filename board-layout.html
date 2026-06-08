@@ -419,7 +419,7 @@
         margin: 0;
     }
 	
-	    /* ============================================
+	     /* ============================================
        MOBILE ADJUSTMENTS
        ============================================ */
     @media (max-width: 767px) {
@@ -449,6 +449,26 @@
       .tier-tooltip.show-tooltip {
         opacity: 1;
         visibility: visible;
+      }
+
+      /* 5. Increase Info Icon touch target size to prevent misclicks */
+      .info-icon {
+        padding: 8px; /* Larger tap area */
+        margin: -8px; /* Compensate layout */
+      }
+
+      /* 6. MODAL FIX: Constrain modal to viewport width (vw) instead of pixels.
+            This ensures the modal stays properly sized even if the user has zoomed in. */
+      .modal-content {
+        width: 90vw; /* 90% of the visible screen width */
+        max-width: none; /* Override 650px limit */
+        max-height: 85vh; /* 85% of visible screen height */
+        overflow-y: auto; /* Allow scrolling inside modal if needed */
+      }
+      
+      /* Adjust modal image height for smaller screens */
+      .modal-img-container {
+         height: 200px; 
       }
     }
     
@@ -753,9 +773,6 @@
         });
     }
 
-    // ============================================
-    // 4. INTERACTIONS
-    // ============================================
         // ============================================
     // 4. INTERACTIONS
     // ============================================
@@ -779,10 +796,11 @@
         
         infoIcons.forEach(icon => {
             icon.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent toggle switch from flipping
-                e.stopPropagation(); // Prevent document click from closing immediately
+                e.preventDefault(); 
+                e.stopPropagation(); // Prevent the Label from triggering a toggle
                 
-                const tooltip = icon.nextElementSibling; // The tooltip div is the next sibling
+                // Find the tooltip relative to the icon
+                const tooltip = icon.nextElementSibling;
                 
                 // Check if it's already open
                 const isVisible = tooltip.classList.contains('show-tooltip');
@@ -800,10 +818,13 @@
         });
 
         // Close tooltips if tapping elsewhere on the document
-        document.addEventListener('click', () => {
-            document.querySelectorAll('.tier-tooltip.show-tooltip').forEach(t => {
-                t.classList.remove('show-tooltip');
-            });
+        document.addEventListener('click', (e) => {
+            // Only close if we didn't tap an icon (which handles its own closing)
+            if (!e.target.closest('.info-icon')) {
+                document.querySelectorAll('.tier-tooltip.show-tooltip').forEach(t => {
+                    t.classList.remove('show-tooltip');
+                });
+            }
         });
 
 
