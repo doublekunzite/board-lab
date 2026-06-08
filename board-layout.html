@@ -119,14 +119,27 @@
     }
     .hold-cell:hover { background: rgba(255,255,255,0.1); z-index: 100; }
 
+    /* RING STYLE DOTS */
     .hold-cell::after {
-      content: ''; position: absolute; top: 5px; left: 5px; width: 12px; height: 12px;
-      border-radius: 50%; opacity: 0; transition: opacity 0.3s; box-shadow: 0 0 5px currentColor;
+      content: ''; 
+      position: absolute; 
+      top: 4px; 
+      left: 4px; 
+      width: 14px; /* Slightly larger to accommodate border */
+      height: 14px;
+      border-radius: 50%; 
+      opacity: 0; 
+      transition: opacity 0.3s;
+      background: transparent; /* Transparent center */
+      border: 2px solid; /* Ring border */
+      box-shadow: 0 0 4px currentColor; /* Subtle glow */
     }
-    .hold-cell.show-tier-dot::after { opacity: 0.9; }
-    .hold-cell.tier-1::after { background: var(--tier-1); color: var(--tier-1); }
-    .hold-cell.tier-2::after { background: var(--tier-2); color: var(--tier-2); }
-    .hold-cell.tier-3::after { background: var(--tier-3); color: var(--tier-3); }
+    .hold-cell.show-tier-dot::after { opacity: 1; }
+    
+    /* Tier Colors - Border only */
+    .hold-cell.tier-1::after { border-color: var(--tier-1); color: var(--tier-1); }
+    .hold-cell.tier-2::after { border-color: var(--tier-2); color: var(--tier-2); }
+    .hold-cell.tier-3::after { border-color: var(--tier-3); color: var(--tier-3); }
 
     .hold-tooltip {
       position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 180px;
@@ -581,6 +594,13 @@
     // 2. INITIALIZATION
     // ============================================
     function initPage() {
+        // Mobile Default: Turn off tiers by default on small screens
+        if (window.innerWidth < 768) {
+            document.getElementById('tier1Toggle').checked = false;
+            document.getElementById('tier2Toggle').checked = false;
+            document.getElementById('tier3Toggle').checked = false;
+        }
+
         renderGrid();
         renderGridLabels();
         renderHoldList();

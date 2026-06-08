@@ -65,7 +65,7 @@
     "profileImg": "holds/H1-profile.png",
     "gripImg": "holds/H1-grip.png",
     "desc": "Incut crimp \nMacro foothold (incut)",
-	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey edges many Kilter Board holds have. These are sharper and have a bite to them."
+	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges many Kilter Board crimps have. These are sharper and have a bite to them."
   },
   "I1": {
     "tier": 2,
@@ -807,7 +807,7 @@
     "profileImg": "holds/L6-profile.png",
     "gripImg": "holds/L6-grip.png",
     "desc": "Flat, sloping fat pinch \nMacro foothold (incut)",
-    "notes": "Fat sloping pinch set: these are the worst pinches on the Kilter Board. The large edge size means they feel decent at 40° or 45°, but being fat and slopey means they get pretty heinous at steeper angles or without good feet."
+    "notes": "Fat sloping pinch set: these are the worst pinches on the Kilter Board. The large edge size means they feel decent at 40° or 45°, but being fat and slopey means they get pretty heinous at steeper angles or without good feet. Easier to grip with big hands."
   },
   "M6": {
     "tier": 1,
@@ -894,7 +894,7 @@
     "profileImg": "holds/E7-profile.png",
     "gripImg": "holds/E7-grip.png",
     "desc": "Fat sloping vertical pinch \nMacro foothold (sloping)",
-    "notes": "Fat sloping pinch set: these are the worst pinches on the Kilter Board. The large edge size means they feel decent at 40° or 45°, but being fat and slopey means they get pretty heinous at steeper angles or without good feet."
+    "notes": "Fat sloping pinch set: these are the worst pinches on the Kilter Board. The large edge size means they feel decent at 40° or 45°, but being fat and slopey means they get pretty heinous at steeper angles or without good feet. Easier to grip with big hands."
   },
   "F7": {
     "tier": 2,
@@ -953,7 +953,7 @@
     "profileImg": "holds/L7-profile.png",
     "gripImg": "holds/L7-grip.png",
     "desc": "Incut crimp \nMacro foothold (incut)",
-	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey edges many Kilter Board holds have. These are sharper and have a bite to them."
+	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges many Kilter Board crimps have. These are sharper and have a bite to them."
   },
   "M7": {
     "tier": 1,
