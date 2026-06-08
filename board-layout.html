@@ -529,6 +529,88 @@
         width: 100%;
       }
     }
+	
+	    /* ============================================
+       ACCORDION STYLES
+       ============================================ */
+    .accordion-container {
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .accordion-trigger:hover {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .accordion-icon {
+      font-size: 1.5rem;
+      font-weight: 300;
+      transition: transform 0.3s ease;
+    }
+
+    /* Rotate icon when open */
+    .accordion-container.active .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .accordion-inner {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      color: var(--fg-muted);
+      line-height: 1.6;
+    }
+
+    .accordion-inner p {
+      margin-bottom: 1rem;
+    }
+
+    .accordion-inner ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .accordion-inner li {
+      margin-bottom: 0.5rem;
+    }
+
+    .accordion-inner strong {
+      color: var(--fg);
+    }
+
+    .accordion-warning {
+      background: rgba(250, 204, 21, 0.1);
+      border-left: 3px solid var(--tier-2);
+      padding: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+      margin-top: 1rem;
+    }
     
   </style>
   <link rel="icon" href="favicon.png?v=2" type="image/png">
@@ -556,6 +638,30 @@
     <div class="board-wrapper" id="boardWrapper">
       <img src="board-layout.png" alt="Kilter Board Layout" class="board-image">
       <div class="grid-overlay" id="gridOverlay"></div>
+    </div>
+	
+	    <!-- Characteristics Accordion -->
+    <div class="accordion-container">
+      <button class="accordion-trigger" id="characteristicsTrigger">
+        <span>Board Characteristics</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-content" id="characteristicsContent">
+        <div class="accordion-inner">
+          <p>The original Kilter Board layout is known for its large hold size, numerous juggy holds, and soft grading. It's the antithesis of the old Moonboards, which are very space-efficient with their tiny pinches and crimps, almost no jugs, and brutally sandbagged grading.</p>
+          
+          <ul>
+            <li><strong>Pinch Variety:</strong> The set is heavy on pinches, but many are vertically oriented, making them feel "sloping" if you don't have good thumb strength. Look for the few horizontal pinches for a more positive grip.</li>
+            <li><strong>Jug Scarcity:</strong> True "buckets" are rare. Most jugs are actually just deep incut crimps or pinches. This makes the board excellent for training contact strength.</li>
+            <li><strong>Slopers:</strong> There are almost no dedicated slopers. You will often use the sloping side of a pinch or a sloping crimp. Friction is critical on this board.</li>
+            <li><strong>Foot Chips:</strong> The foot chips are generally small and positive. They are excellent for technical footwork drills but can be slippery on steep angles.</li>
+          </ul>
+
+          <div class="accordion-warning">
+            ⚠️ <strong>Note:</strong> This analysis is based on a fresh hold set. Wear and tear (polishing) can significantly change the "Tier 1" vs "Tier 3" feel of the plastic over time.
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="board-controls">
@@ -859,6 +965,27 @@
         
         const boardWrapper = document.getElementById('boardWrapper');
         const filterBtns = document.querySelectorAll('.filter-btn');
+		
+		        // ============================================
+        // ACCORDION LOGIC
+        // ============================================
+        const accContainer = document.querySelector('.accordion-container');
+        const accTrigger = document.getElementById('characteristicsTrigger');
+        const accContent = document.getElementById('characteristicsContent');
+
+        if (accTrigger) {
+            accTrigger.addEventListener('click', () => {
+                // Toggle active class
+                accContainer.classList.toggle('active');
+                
+                // Calculate height for smooth animation
+                if (accContainer.classList.contains('active')) {
+                    accContent.style.maxHeight = accContent.scrollHeight + "px";
+                } else {
+                    accContent.style.maxHeight = null;
+                }
+            });
+        }
 
         // ============================================
         // HASH ROUTING (URL Linking)

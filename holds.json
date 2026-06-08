@@ -1285,5 +1285,148 @@
     "profileImg": "holds/Q9-profile.png",
     "gripImg": "holds/Q9-grip.png",
     "desc": "Incut crimp \nMacro foothold (incut)"
+  },
+  "A10": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~40 mm edge",
+    "profileImg": "holds/A10-profile.png",
+    "gripImg": "holds/A10-grip.png",
+    "desc": "Deeply incut sloping jug \nMacro foothold (incut)"
+  },
+  "B10": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/B10-profile.png",
+    "gripImg": "holds/B10-grip.png",
+    "desc": "Slightly incut sloping crimp \nMacro foothold (incut)"
+  },
+  "C10": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~65 mm edge",
+    "profileImg": "holds/C10-profile.png",
+    "gripImg": "holds/C10-grip.png",
+    "desc": "Deeply incut sloping undercling jug \nMacro foothold (sloping)",
+	"notes": "Mega jug set: these are ~50+ mm incut holds that are easily matchable."
+  },
+  "D10": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~40 mm edge",
+    "profileImg": "holds/D10-profile.png",
+    "gripImg": "holds/D10-grip.png",
+    "desc": "Deeply incut sloping mini jug, angled right \nMacro foothold (incut)"
+  },
+  "E10": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~40 mm edge",
+    "profileImg": "holds/E10-profile.png",
+    "gripImg": "holds/E10-grip.png",
+    "desc": "Deeply incut sloping jug, angled left \nMacro foothold (incut)"
+  },
+  "F10": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/F10-profile.png",
+    "gripImg": "holds/F10-grip.png",
+    "desc": "Slightly incut sloping sidepull crimp \nMacro foothold (incut)"
+  },
+  "G10": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/G10-profile.png",
+    "gripImg": "holds/G10-grip.png",
+    "desc": "Slightly incut sloping crimp, angled right \nMacro foothold (incut)"
+  },
+  "H10": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/H10-profile.png",
+    "gripImg": "holds/H10-grip.png",
+    "desc": "Incut crimp \nMacro foothold (incut)",
+	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges many Kilter Board crimps have. These are sharper and have a bite to them."
+  },
+  "I10": {
+    "tier": 2,
+    "type": "Sloper",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/I10-profile.png",
+    "gripImg": "holds/I10-grip.png",
+    "desc": "Incut mini sloper \nMacro foothold (incut)",
+	"notes": "Nearly a jug. Very good at less steep angles."
+  },
+  "J10": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/J10-profile.png",
+    "gripImg": "holds/J10-grip.png",
+    "desc": "Incut crimp \nMacro foothold (incut)"
+  },
+  "K10": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/K10-profile.png",
+    "gripImg": "holds/K10-grip.png",
+    "desc": "Slightly incut nearly flat crimp, angled right \nMacro foothold (incut)"
+  },
+  "L10": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~50 mm edge",
+	"angleSensitive": true,
+    "profileImg": "holds/L10-profile.png",
+    "gripImg": "holds/L10-grip.png",
+    "desc": "Fat sloping pinch with large edge, angled left \nMacro foothold (flat)",
+	"notes": "The large edge size and more forgiving angle make up for it being fat and slopey. It's also less slopey and has a more square edge than the worst Kilter Board pinches."
+  },
+  "M10": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/M10-profile.png",
+    "gripImg": "holds/M10-grip.png",
+    "desc": "Incut crimp, angled left \nMacro foothold (incut)"
+  },
+  "N10": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/N10-profile.png",
+    "gripImg": "holds/N10-grip.png",
+    "desc": "Slightly incut sloping sidepull crimp \nMacro foothold (flat)"
+  },
+  "O10": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~65 mm edge",
+    "profileImg": "holds/O10-profile.png",
+    "gripImg": "holds/O10-grip.png",
+    "desc": "Deeply incut jug \nMacro foothold (incut)",
+	"notes": "Mega jug set: these are ~50+ mm incut holds that are easily matchable."
+  },
+  "P10": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/P10-profile.png",
+    "gripImg": "holds/P10-grip.png",
+    "desc": "Incut crimp, angled right \nMacro foothold (incut)",
+	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges many Kilter Board crimps have. These are sharper and have a bite to them."
+  },
+  "Q10": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/Q9-profile.png",
+    "gripImg": "holds/Q9-grip.png",
+    "desc": "Incut crimp \nMacro foothold (incut)"
   }
 }
