@@ -452,7 +452,7 @@
         margin: 0;
     }
     
-         /* ============================================
+        /* ============================================
        MOBILE ADJUSTMENTS & ACCESSIBILITY
        ============================================ */
     @media (max-width: 767px) {
@@ -472,33 +472,24 @@
         border-color: rgba(255, 255, 255, 0.3);
       }
 
-      /* Tier Tooltips - Force hide on mobile, we use a modal instead */
+      /* Tier Tooltips - Force hide on mobile */
       .toggle-group:hover .tier-tooltip {
         opacity: 0 !important;
         visibility: hidden !important;
       }
       
-      /* Increase spacing between toggle and info button */
+      /* FIX: Keep layout horizontal but add spacing */
       .toggle-container {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
         margin-bottom: 1rem;
-        width: auto;
-      }
-      
-      .toggle-group {
-        width: 100%;
+        align-items: center; /* Vertically center items */
       }
 
+      /* FIX: Push the ? button further away from the text */
       .info-icon {
-        margin-left: 0;
-        margin-top: 4px;
-        background: rgba(255,255,255,0.05);
-        padding: 4px 12px;
+        margin-left: 1rem; /* Add significant space between text and icon */
+        background: rgba(255,255,255,0.1);
+        padding: 2px 8px;
         border-radius: 4px;
-        width: auto;
-        height: auto;
       }
 
       /* Modal Robustness for Zoom */
@@ -506,13 +497,12 @@
         align-items: flex-start;
         overflow-y: auto;
         padding: 0;
+        /* Force hardware acceleration to ignore parent zoom */
+        transform: translateZ(0); 
       }
       .modal-content {
         width: 100%;
-        min-width: 100%;
         max-width: 100%;
-        height: auto;
-        max-height: 90vh;
         border-radius: 0 0 12px 12px;
         margin-top: 0;
       }
@@ -869,13 +859,18 @@
         // ============================================
         // MODAL FUNCTIONS
         // ============================================
-        window.openModal = function(id, isHashTrigger = false) {
+                window.openModal = function(id, isHashTrigger = false) {
             const data = holdsData[id];
             if (!data) return;
 
             // Update URL if not triggered by hash change itself
             if (!isHashTrigger) {
                 history.pushState(null, null, '#' + id);
+            }
+
+            // Mobile Zoom Fix: Scroll to top to reset viewport context
+            if (window.innerWidth < 768) {
+                window.scrollTo(0, 0);
             }
 
             document.getElementById('modalTitle').textContent = id;
