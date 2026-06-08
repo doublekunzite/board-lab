@@ -418,6 +418,39 @@
         line-height: 1.6;
         margin: 0;
     }
+	
+	    /* ============================================
+       MOBILE ADJUSTMENTS
+       ============================================ */
+    @media (max-width: 767px) {
+      /* 1. Hide hover tooltips on grid cells. 
+         Mobile users tap once to open modal. */
+      .hold-tooltip {
+        display: none !important;
+      }
+
+      /* 2. Make grid lines visible */
+      .hold-cell {
+        border-color: rgba(255,255,255,0.15);
+      }
+
+      /* 3. Active state feedback for tapping grid */
+      .hold-cell:active {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      /* 4. Tier Tooltips - Disable sticky hover, use JS class */
+      .toggle-group:hover .tier-tooltip {
+        opacity: 0;
+        visibility: hidden;
+      }
+      
+      .tier-tooltip.show-tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
     
   </style>
   <link rel="icon" href="favicon.png?v=2" type="image/png">
@@ -723,6 +756,9 @@
     // ============================================
     // 4. INTERACTIONS
     // ============================================
+        // ============================================
+    // 4. INTERACTIONS
+    // ============================================
     function setupEventListeners() {
         const modal = document.getElementById('holdModal');
         const lightbox = document.getElementById('lightbox');
@@ -735,6 +771,41 @@
         
         const boardWrapper = document.getElementById('boardWrapper');
         const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // ============================================
+        // MOBILE TOOLTIP TOGGLE (Info Icons)
+        // ============================================
+        const infoIcons = document.querySelectorAll('.info-icon');
+        
+        infoIcons.forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent toggle switch from flipping
+                e.stopPropagation(); // Prevent document click from closing immediately
+                
+                const tooltip = icon.nextElementSibling; // The tooltip div is the next sibling
+                
+                // Check if it's already open
+                const isVisible = tooltip.classList.contains('show-tooltip');
+                
+                // Close all tooltips first
+                document.querySelectorAll('.tier-tooltip.show-tooltip').forEach(t => {
+                    t.classList.remove('show-tooltip');
+                });
+                
+                // If it wasn't visible, open it
+                if (!isVisible) {
+                    tooltip.classList.add('show-tooltip');
+                }
+            });
+        });
+
+        // Close tooltips if tapping elsewhere on the document
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.tier-tooltip.show-tooltip').forEach(t => {
+                t.classList.remove('show-tooltip');
+            });
+        });
+
 
         window.openModal = function(id) {
             const data = holdsData[id];
