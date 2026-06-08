@@ -10,7 +10,7 @@
     /* ============================================
        BOARD MAP SPECIFIC STYLES
        ============================================ */
-     :root {
+    :root {
       /* Accessible Color Palette (Blue/Orange Spectrum) */
       --tier-1: #38bdf8; /* Sky Blue / Cyan */
       --tier-2: #fb923c; /* Orange */
@@ -206,7 +206,17 @@
     .type-badge.sloper.pinch { background: linear-gradient(90deg, rgba(250, 204, 21, 0.3) 50%, rgba(244, 114, 182, 0.3) 50%); }
 
     .board-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding: 1rem; background: var(--card); border-radius: 12px; border: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; }
-    .toggle-group { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; position: relative; }
+    
+    /* New layout for toggle containers */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 1rem;
+    }
+
+    .toggle-group { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; position: relative; flex-grow: 1; }
     .toggle-switch { width: 40px; height: 20px; background: #333; border-radius: 20px; position: relative; transition: background 0.3s; }
     .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: transform 0.3s; }
     .toggle-input:checked + .toggle-switch { opacity: 1; }
@@ -334,15 +344,17 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: rgba(255,255,255,0.1);
       color: rgba(255,255,255,0.5);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: bold;
       cursor: help;
       transition: background 0.2s;
+      border: none;
+      flex-shrink: 0;
     }
 
     .info-icon:hover {
@@ -439,72 +451,72 @@
         line-height: 1.6;
         margin: 0;
     }
-	
-	    /* ============================================
-       MOBILE ADJUSTMENTS
+    
+         /* ============================================
+       MOBILE ADJUSTMENTS & ACCESSIBILITY
        ============================================ */
     @media (max-width: 767px) {
-      /* 1. Hide hover tooltips on grid cells. 
-         Mobile users tap once to open modal. */
+      /* Hide hover tooltips on grid cells */
       .hold-tooltip {
         display: none !important;
       }
 
-      /* 2. Make grid lines visible */
+      /* Make grid lines visible */
       .hold-cell {
         border-color: rgba(255,255,255,0.15);
       }
 
-      /* 3. Active state feedback for tapping grid */
+      /* Active state feedback */
       .hold-cell:active {
         background: rgba(255, 255, 255, 0.25) !important;
         border-color: rgba(255, 255, 255, 0.3);
       }
 
-      /* 4. Tier Tooltips - Disable sticky hover, use JS class */
+      /* Tier Tooltips - Force hide on mobile, we use a modal instead */
       .toggle-group:hover .tier-tooltip {
-        opacity: 0;
-        visibility: hidden;
+        opacity: 0 !important;
+        visibility: hidden !important;
       }
       
-      .tier-tooltip.show-tooltip {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto; /* Allow tapping the tooltip content if needed */
+      /* Increase spacing between toggle and info button */
+      .toggle-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        margin-bottom: 1rem;
+        width: auto;
+      }
+      
+      .toggle-group {
+        width: 100%;
       }
 
-      /* 5. Increase Info Icon touch target size */
       .info-icon {
-        padding: 8px;
-        margin: -8px;
+        margin-left: 0;
+        margin-top: 4px;
+        background: rgba(255,255,255,0.05);
+        padding: 4px 12px;
+        border-radius: 4px;
+        width: auto;
+        height: auto;
       }
 
-      /* 6. MODAL FIX: Robust handling for zoom */
+      /* Modal Robustness for Zoom */
       .modal-overlay {
-        align-items: flex-start; /* Align top to allow scrolling */
-        overflow-y: auto; /* Allow scrolling the background if zoomed */
+        align-items: flex-start;
+        overflow-y: auto;
         padding: 0;
       }
-
       .modal-content {
-        width: 90vw; /* Relative width */
-        min-width: 300px; /* Minimum readable width */
-        max-width: none; /* Override pixel limit */
-        max-height: none; /* Override height limit */
-        margin: 20px auto; /* Center with margin */
-        border-radius: 12px;
-      }
-      
-      /* Adjust modal image height for smaller screens */
-      .modal-img-container {
-         height: 200px; 
-      }
-      
-      /* Ensure images don't overflow */
-      .modal-img-container img {
+        width: 100%;
+        min-width: 100%;
         max-width: 100%;
-        max-height: 100%;
+        height: auto;
+        max-height: 90vh;
+        border-radius: 0 0 12px 12px;
+        margin-top: 0;
       }
+      .modal-img-container { height: 200px; }
     }
     
   </style>
@@ -535,45 +547,45 @@
       <div class="grid-overlay" id="gridOverlay"></div>
     </div>
 
-        <div class="board-controls">
-      <!-- Tier 1 Toggle -->
-      <label class="toggle-group">
-        <input type="checkbox" class="toggle-input" id="tier1Toggle" checked>
-        <div class="toggle-switch" style="background: var(--tier-1);"></div>
-        <div class="toggle-label-text">
-            <span>Tier 1 (Jugs)</span>
-            <span class="info-icon">?</span>
-            <div class="tier-tooltip">
-              <p><span class="t1-desc">Tier 1</span> is the "best" holds (jugs). These are ~30+ mm deeply incut holds with enough space for 1+ finger pads to fit on the hold. Usually used with an open-hand grip (as opposed to a crimp grip). Steeper wall angles don't affect the quality of these much. "Mega jugs" are ~50+ mm incut holds that are easily matchable.</p>
-            </div>
-        </div>
-      </label>
+    <div class="board-controls">
+      <!-- Tier 1 Control -->
+      <div class="toggle-container">
+        <label class="toggle-group">
+          <input type="checkbox" class="toggle-input" id="tier1Toggle" checked>
+          <div class="toggle-switch" style="background: var(--tier-1);"></div>
+          <span>Tier 1 (Jugs)</span>
+          <div class="tier-tooltip">
+             <p><span class="t1-desc">Tier 1</span> is the "best" holds (jugs). These are ~30+ mm deeply incut holds with enough space for 1+ finger pads to fit on the hold. Usually used with an open-hand grip (as opposed to a crimp grip). Steeper wall angles don't affect the quality of these much. "Mega jugs" are ~50+ mm incut holds that are easily matchable.</p>
+          </div>
+        </label>
+        <button class="info-icon" data-tier="1">?</button>
+      </div>
 
-      <!-- Tier 2 Toggle -->
-      <label class="toggle-group">
-        <input type="checkbox" class="toggle-input" id="tier2Toggle" checked>
-        <div class="toggle-switch" style="background: var(--tier-2);"></div>
-        <div class="toggle-label-text">
-            <span>Tier 2 (Intermediates)</span>
-            <span class="info-icon">?</span>
-            <div class="tier-tooltip">
-              <p><span class="t2-desc">Tier 2</span> is "intermediate" holds. These include ~20-30 mm "good" or "decent" crimps and pinches and slightly incut slopers with large edges (~30-40 mm). Steeper wall angles can make these significantly worse, especially slopers and pinches.</p>
-            </div>
-        </div>
-      </label>
+      <!-- Tier 2 Control -->
+      <div class="toggle-container">
+        <label class="toggle-group">
+          <input type="checkbox" class="toggle-input" id="tier2Toggle" checked>
+          <div class="toggle-switch" style="background: var(--tier-2);"></div>
+          <span>Tier 2 (Intermediates)</span>
+          <div class="tier-tooltip">
+            <p><span class="t2-desc">Tier 2</span> is "intermediate" holds. These include ~20-30 mm "good" or "decent" crimps and pinches and slightly incut slopers with large edges (~30-40 mm). Steeper wall angles can make these significantly worse, especially slopers and pinches.</p>
+          </div>
+        </label>
+        <button class="info-icon" data-tier="2">?</button>
+      </div>
 
-      <!-- Tier 3 Toggle -->
-      <label class="toggle-group">
-        <input type="checkbox" class="toggle-input" id="tier3Toggle" checked>
-        <div class="toggle-switch" style="background: var(--tier-3);"></div>
-        <div class="toggle-label-text">
-            <span>Tier 3 (Bad Holds)</span>
-            <span class="info-icon">?</span>
-            <div class="tier-tooltip">
-              <p><span class="t3-desc">Tier 3</span> is "bad" holds. These include slightly incut or flat crimps and foot chips (usually <~20 mm), along with fat or sloping vertical pinches. Making good use of these is highly dependent on body position and tension, and the hold quality rapidly degrades as wall angle steepens.</p>
-            </div>
-        </div>
-      </label>
+      <!-- Tier 3 Control -->
+      <div class="toggle-container">
+        <label class="toggle-group">
+          <input type="checkbox" class="toggle-input" id="tier3Toggle" checked>
+          <div class="toggle-switch" style="background: var(--tier-3);"></div>
+          <span>Tier 3 (Bad Holds)</span>
+          <div class="tier-tooltip">
+            <p><span class="t3-desc">Tier 3</span> is "bad" holds. These include slightly incut or flat crimps and foot chips (usually <~20 mm), along with fat or sloping vertical pinches. Making good use of these is highly dependent on body position and tension, and the hold quality rapidly degrades as wall angle steepens.</p>
+          </div>
+        </label>
+        <button class="info-icon" data-tier="3">?</button>
+      </div>
     </div>
 
     <section class="hold-list-section">
@@ -650,8 +662,21 @@
         </div>
 
         <div class="angle-warning" id="modalWarning">
-            ⚠️ <strong>Warning:</strong> Quality degrades significantly at steep angles. Requires high tension or specific body position.
+            ⚠️ <strong>Warning:</strong> Quality degrades significantly at steep angles. Requires high tension.
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tier Info Modal (Mobile Popup) -->
+  <div class="modal-overlay" id="tierInfoModal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-details">
+        <div class="modal-header">
+            <h3 id="tierInfoTitle" style="color: var(--fg); margin: 0;">Tier Info</h3>
+            <button class="close-btn" id="closeTierInfo">&times;</button>
+        </div>
+        <p id="tierInfoDesc" style="color: var(--fg-muted); line-height: 1.6; margin-top: 1rem;"></p>
       </div>
     </div>
   </div>
@@ -808,7 +833,7 @@
         });
     }
 
-        // ============================================
+    // ============================================
     // 4. INTERACTIONS
     // ============================================
     function setupEventListeners() {
@@ -825,61 +850,40 @@
         const filterBtns = document.querySelectorAll('.filter-btn');
 
         // ============================================
-        // MOBILE TOOLTIP TOGGLE (Info Icons)
+        // HASH ROUTING (URL Linking)
         // ============================================
-                // ============================================
-        // MOBILE TOOLTIP TOGGLE (Info Icons)
-        // ============================================
-        const infoIcons = document.querySelectorAll('.info-icon');
-        
-        infoIcons.forEach(icon => {
-            icon.addEventListener('click', (e) => {
-                e.preventDefault(); 
-                e.stopPropagation(); // Prevent the Label from triggering a toggle
-                
-                // CORRECTED SELECTOR: Find tooltip inside the parent wrapper
-                const tooltip = icon.parentElement.querySelector('.tier-tooltip');
-                
-                if (!tooltip) return;
-
-                // Check if it's already open
-                const isVisible = tooltip.classList.contains('show-tooltip');
-                
-                // Close all tooltips first
-                document.querySelectorAll('.tier-tooltip.show-tooltip').forEach(t => {
-                    t.classList.remove('show-tooltip');
-                });
-                
-                // If it wasn't visible, open it
-                if (!isVisible) {
-                    tooltip.classList.add('show-tooltip');
-                }
-            });
-        });
-
-        // Close tooltips if tapping elsewhere on the document
-        document.addEventListener('click', (e) => {
-            // Only close if we didn't tap an icon (which handles its own closing)
-            if (!e.target.closest('.info-icon')) {
-                document.querySelectorAll('.tier-tooltip.show-tooltip').forEach(t => {
-                    t.classList.remove('show-tooltip');
-                });
+        function handleHashChange() {
+            const hash = window.location.hash.substring(1); // Remove #
+            if (hash && holdsData[hash]) {
+                openModal(hash, true); // true = triggered by hash, don't push state again
+            } else if (!hash) {
+                closeModal();
             }
-        });
+        }
 
+        // Listen for back/forward button
+        window.addEventListener('hashchange', handleHashChange);
+        // Check hash on load
+        if (window.location.hash) handleHashChange();
 
-        window.openModal = function(id) {
+        // ============================================
+        // MODAL FUNCTIONS
+        // ============================================
+        window.openModal = function(id, isHashTrigger = false) {
             const data = holdsData[id];
             if (!data) return;
 
+            // Update URL if not triggered by hash change itself
+            if (!isHashTrigger) {
+                history.pushState(null, null, '#' + id);
+            }
+
             document.getElementById('modalTitle').textContent = id;
             
-            // Description: Replace '\n' with '<br>' to create line breaks
             const descEl = document.getElementById('modalDesc');
             const rawDesc = data.desc || "";
             descEl.innerHTML = rawDesc.replace(/\n/g, '<br>');
             
-            // Notes - Just populate it (empty if missing)
             document.getElementById('modalNotes').textContent = data.notes || "";
 
             const profileImg = document.getElementById('modalProfileImg');
@@ -909,58 +913,92 @@
 
         function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
         function closeLightbox() { lightbox.classList.remove('active'); }
-        function closeModal() { modal.classList.remove('active'); }
+        
+        function closeModal() {
+            // Only remove hash if modal is actually active to prevent loops
+            if (modal.classList.contains('active')) {
+                 history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
+            modal.classList.remove('active');
+        }
 
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         lightbox.addEventListener('click', closeLightbox);
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') { lightbox.classList.contains('active') ? closeLightbox() : closeModal(); }
+            if (e.key === 'Escape') { 
+                if (lightbox.classList.contains('active')) closeLightbox();
+                else closeModal();
+            }
         });
 
         // ============================================
-        // TIER TOGGLE LOGIC (Multi-Select Visibility)
+        // MOBILE TIER INFO MODAL
         // ============================================
-        const tierToggles = {
-            1: tier1Toggle,
-            2: tier2Toggle,
-            3: tier3Toggle
+        const tierInfoModal = document.getElementById('tierInfoModal');
+        const tierInfoTitle = document.getElementById('tierInfoTitle');
+        const tierInfoDesc = document.getElementById('tierInfoDesc');
+        const closeTierInfoBtn = document.getElementById('closeTierInfo');
+
+        const tierDescriptions = {
+            1: "<span class='t1-desc'>Tier 1</span> is the 'best' holds (jugs). These are ~30+ mm deeply incut holds with enough space for 1+ finger pads. Steeper wall angles don't affect the quality of these much.",
+            2: "<span class='t2-desc'>Tier 2</span> is 'intermediate' holds. These include ~20-30 mm 'good' or 'decent' crimps and pinches. Steeper wall angles can make these significantly worse.",
+            3: "<span class='t3-desc'>Tier 3</span> is 'bad' holds. These include slightly incut or flat crimps and foot chips (<~20mm). Hold quality rapidly degrades as wall angle steepens."
         };
+
+        document.querySelectorAll('.info-icon').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const tier = icon.dataset.tier;
+                
+                // Mobile Modal Behavior
+                if (window.innerWidth < 768) {
+                    tierInfoTitle.textContent = `Tier ${tier} Info`;
+                    tierInfoDesc.innerHTML = tierDescriptions[tier];
+                    tierInfoModal.classList.add('active');
+                }
+            });
+        });
+
+        closeTierInfoBtn.addEventListener('click', () => {
+            tierInfoModal.classList.remove('active');
+        });
+        tierInfoModal.addEventListener('click', (e) => {
+            if (e.target === tierInfoModal) tierInfoModal.classList.remove('active');
+        });
+
+        // ============================================
+        // TIER TOGGLE LOGIC
+        // ============================================
+        const tierToggles = { 1: tier1Toggle, 2: tier2Toggle, 3: tier3Toggle };
 
         function updateGridVisibility() {
             const cells = gridOverlay.querySelectorAll('.hold-cell');
             cells.forEach(cell => {
                 const id = cell.dataset.id;
                 const data = holdsData[id];
-                
                 if (data) {
                     const tier = data.tier;
                     const toggle = tierToggles[tier];
-                    
-                    if (toggle && toggle.checked) {
-                        cell.classList.add('show-tier-dot');
-                    } else {
-                        cell.classList.remove('show-tier-dot');
-                    }
+                    if (toggle && toggle.checked) cell.classList.add('show-tier-dot');
+                    else cell.classList.remove('show-tier-dot');
                 }
             });
         }
 
         [tier1Toggle, tier2Toggle, tier3Toggle].forEach(toggle => {
-            toggle.addEventListener('change', () => {
-                updateGridVisibility();
-            });
+            toggle.addEventListener('change', updateGridVisibility);
         });
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const group = btn.dataset.filterType;
-                
                 if (group === 'tier') {
                     document.querySelectorAll(`.filter-btn[data-filter-type="tier"]`).forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                 }
-
                 if (group === 'type') {
                     if (btn.dataset.filterValue === 'all') {
                         document.querySelectorAll(`.filter-btn[data-filter-type="type"]`).forEach(b => b.classList.remove('active'));
@@ -968,14 +1006,10 @@
                     } else {
                         document.getElementById('filterAll').classList.remove('active');
                         btn.classList.toggle('active');
-
                         const anyActive = document.querySelector('.filter-btn[data-filter-type="type"]:not([data-filter-value="all"]).active');
-                        if (!anyActive) {
-                            document.getElementById('filterAll').classList.add('active');
-                        }
+                        if (!anyActive) document.getElementById('filterAll').classList.add('active');
                     }
                 }
-
                 renderHoldList();
             });
         });
