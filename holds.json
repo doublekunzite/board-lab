@@ -1573,6 +1573,149 @@
     "gripImg": "holds/Q11-grip.png",
     "desc": "Deeply incut sidepull mini jug \nMacro foothold (sloping)"
   },
+  "A12": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/A12-profile.png",
+    "gripImg": "holds/A12-grip.png",
+    "desc": "Incut sloping crimp with square edge, angled left \nMacro foothold (incut)"
+  },
+  "B12": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/B12-profile.png",
+    "gripImg": "holds/B12-grip.png",
+    "desc": "Incut sloping crimp, angled right \nMacro foothold (incut)"
+  },
+  "C12": {
+    "tier": 1,
+    "type": ["Undercling", "Jug"],
+    "edgeSize": "~60 mm edge",
+    "profileImg": "holds/C12-profile.png",
+    "gripImg": "holds/C12-grip.png",
+    "desc": "Deeply incut undercling mini jug, angled left \nMacro foothold (sloping)"
+  },
+  "D12": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~50 mm edge",
+    "profileImg": "holds/D12-profile.png",
+    "gripImg": "holds/D12-grip.png",
+    "desc": "Slightly incut sloping jug with large edge \nMacro foothold (incut)",
+	"notes": "Edge is large enough to make it a jug even though it's only slightly incut."
+  },
+  "E12": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/E12-profile.png",
+    "gripImg": "holds/E12-grip.png",
+    "desc": "Deeply incut sloping mini jug with square edge, angled right \nMacro foothold (incut)",
+	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+  },
+  "F12": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/F12-profile.png",
+    "gripImg": "holds/F12-grip.png",
+    "desc": "Slightly incut sloping crimp, angled left \nMacro foothold (incut)"
+  },
+  "G12": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/G12-profile.png",
+    "gripImg": "holds/G12-grip.png",
+    "desc": "Slightly incut nearly flat vertical pinch wtih square edge \nMacro foothold (flat)",
+	"notes": "Longer and larger edge on the left. Right edge is around 20 mm."
+  },
+  "H12": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~40 mm edge",
+    "profileImg": "holds/H12-profile.png",
+    "gripImg": "holds/H12-grip.png",
+    "desc": "Deeply incut sloping jug, angled left \nMacro foothold (incut)"
+  },
+  "I12": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/I12-profile.png",
+    "gripImg": "holds/I12-grip.png",
+    "desc": "Flat vertical pinch with rounded edge \nMacro foothold (incut)"
+  },
+  "J12": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/J12-profile.png",
+    "gripImg": "holds/J12-grip.png",
+    "desc": "Slightly incut nearly flat crimp, angled left \nMacro foothold (incut)"
+  },
+  "K12": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/K12-profile.png",
+    "gripImg": "holds/K12-grip.png",
+    "desc": "Slightly incut nearly flat pinch \nMacro foothold (incut)",
+	"notes": "The iconic wave pinch can be used in many different ways: a pinch, a crimp, a gaston, and it can even be matched with one hand pinching and the other hand on the top tip."
+  },
+  "L12": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/L12-profile.png",
+    "gripImg": "holds/L12-grip.png",
+    "desc": "Slightly incut sloping crimp \nMacro foothold (flat)"
+  },
+  "M12": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/M12-profile.png",
+    "gripImg": "holds/M12-grip.png",
+    "desc": "Deeply incut mini jug, angled left \nMacro foothold (incut)"
+  },
+  "N12": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/N12-profile.png",
+    "gripImg": "holds/N12-grip.png",
+    "desc": "Flat sidepull crimp \nMacro foothold (flat)",
+	"notes": "Half-moon set: these are angled, flat holds that tend to be quite bad and friction-dependent unless good opposing feet or hands are provided."
+  },
+  "O12": {
+    "tier": 2,
+    "type": "Pinch",
+    "edgeSize": "~35 mm edge",
+	"angleSensitive": true,
+    "profileImg": "holds/O12-profile.png",
+    "gripImg": "holds/O12-grip.png",
+    "desc": "Flat pinch with square edge, angled right \nMacro foothold (flat)"
+	},
+  "P12": {
+    "tier": 1,
+    "type": ["Undercling", "Jug"],
+    "edgeSize": "~65 mm edge",
+    "profileImg": "holds/P12-profile.png",
+    "gripImg": "holds/P12-grip.png",
+    "desc": "Deeply incut undercling jug \nMacro foothold (incut)"
+  },
+  "Q12": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/Q12-profile.png",
+    "gripImg": "holds/Q12-grip.png",
+    "desc": "Incut crimp with square edge, angled right \nMacro foothold (incut)",
+	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+  },
   "A13": {
     "tier": 1,
     "type": "Jug",
