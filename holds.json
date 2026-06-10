@@ -471,7 +471,7 @@
     "profileImg": "holds/F4-profile.png",
     "gripImg": "holds/F4-grip.png",
     "desc": "Slightly incut sloping crimp \nMacro foothold (incut)",
-	"notes": "Can be used as a sidepull. Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Can be used as a sidepull. Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "G4": {
     "tier": 1,
@@ -647,7 +647,7 @@
     "profileImg": "holds/J5-profile.png",
     "gripImg": "holds/J5-grip.png",
     "desc": "Slightly incut sloping undercling \nMacro foothold (sloping)",
-    "notes": "On the verge of being a jug, it's just slopey and shallow enough that it doesn't quite feel like one. Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+    "notes": "On the verge of being a jug, it's just slopey and shallow enough that it doesn't quite feel like one. Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "K5": {
     "tier": 2,
@@ -697,7 +697,7 @@
     "profileImg": "holds/P5-profile.png",
     "gripImg": "holds/P5-grip.png",
     "desc": "Slightly incut sloping crimp \nMacro foothold (incut)",
-	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "Q5": {
     "tier": 1,
@@ -877,7 +877,7 @@
     "profileImg": "holds/C7-profile.png",
     "gripImg": "holds/C7-grip.png",
     "desc": "Incut crimp \nMacro foothold (incut)",
-	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "D7": {
     "tier": 1,
@@ -988,7 +988,7 @@
     "profileImg": "holds/P7-profile.png",
     "gripImg": "holds/P7-grip.png",
     "desc": "Deeply incut sidepull jug \nMacro foothold (incut)",
-	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "Q7": {
     "tier": 2,
@@ -1021,7 +1021,7 @@
     "profileImg": "holds/C8-profile.png",
     "gripImg": "holds/C8-grip.png",
     "desc": "Deeply incut sloping undercling jug \nMacro foothold (incut)",
-	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "D8": {
     "tier": 2,
@@ -1090,7 +1090,7 @@
     "profileImg": "holds/K8-profile.png",
     "gripImg": "holds/K8-grip.png",
     "desc": "Slightly incut sloping crimp \nMacro foothold (incut)",
-	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "L8": {
     "tier": 2,
@@ -1234,7 +1234,7 @@
     "profileImg": "holds/K9-profile.png",
     "gripImg": "holds/K9-grip.png",
     "desc": "Deeply incut sloping jug, angled right \nMacro foothold (incut)",
-	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "L9": {
     "tier": 2,
@@ -1580,7 +1580,7 @@
     "profileImg": "holds/A12-profile.png",
     "gripImg": "holds/A12-grip.png",
     "desc": "Incut sloping crimp with square edge, angled left \nMacro foothold (incut)",
-	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "B12": {
     "tier": 2,
@@ -1614,7 +1614,7 @@
     "profileImg": "holds/E12-profile.png",
     "gripImg": "holds/E12-grip.png",
     "desc": "Incut sloping mini jug with square edge, angled right \nMacro foothold (incut)",
-	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "F12": {
     "tier": 2,
@@ -1717,7 +1717,7 @@
     "profileImg": "holds/Q12-profile.png",
     "gripImg": "holds/Q12-grip.png",
     "desc": "Incut crimp with square edge, angled right \nMacro foothold (incut)",
-	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
+	"notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "A13": {
     "tier": 1,
