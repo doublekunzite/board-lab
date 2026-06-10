@@ -1443,7 +1443,7 @@
     "edgeSize": "~20 mm edge",
     "profileImg": "holds/B11-profile.png",
     "gripImg": "holds/B11-grip.png",
-    "desc": "Incut sidepull crimp \nMacro foothold (incut)",
+    "desc": "Incut crimp, angled left \nMacro foothold (incut)",
 	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges many Kilter Board crimps have. These are sharper and have a bite to them."
   },
   "C11": {
@@ -1469,7 +1469,7 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/E11-profile.png",
     "gripImg": "holds/E11-grip.png",
-    "desc": "Deeply incut undercling jug, angled left \nMacro foothold (sloping)"
+    "desc": "Deeply incut undercling mini jug, angled left \nMacro foothold (sloping)"
   },
   "F11": {
     "tier": 2,
@@ -1512,7 +1512,7 @@
     "profileImg": "holds/J11-profile.png",
     "gripImg": "holds/J11-grip.png",
     "desc": "Incut sloping crimp, angled right \nMacro foothold (incut)",
-	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°. There is a slightly deeper, more incut part on the left. Right side is more slopey."
+	"notes": "There is a slightly deeper, more incut part on the left. Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
   "K11": {
     "tier": 2,
@@ -1531,7 +1531,7 @@
     "profileImg": "holds/L11-profile.png",
     "gripImg": "holds/L11-grip.png",
     "desc": "Slightly incut sloper with large edge \nMacro foothold (flat)",
-	"notes": "An iconic sloper that is juggy at less steep angles due to its large edge. Becomes more dependent on friction and body position at steeper angles."
+	"notes": "An iconic sloper that is juggy at less steep angles due to its large edge and relatively flat edge. Becomes more dependent on friction and body position at steeper angles."
   },
   "M11": {
     "tier": 1,
