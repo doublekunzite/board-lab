@@ -1579,7 +1579,8 @@
     "edgeSize": "~25 mm edge",
     "profileImg": "holds/A12-profile.png",
     "gripImg": "holds/A12-grip.png",
-    "desc": "Incut sloping crimp with square edge, angled left \nMacro foothold (incut)"
+    "desc": "Incut sloping crimp with square edge, angled left \nMacro foothold (incut)",
+	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "B12": {
     "tier": 2,
@@ -1612,7 +1613,7 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/E12-profile.png",
     "gripImg": "holds/E12-grip.png",
-    "desc": "Deeply incut sloping mini jug with square edge, angled right \nMacro foothold (incut)",
+    "desc": "Incut sloping mini jug with square edge, angled right \nMacro foothold (incut)",
 	"notes": "Square edge set: These have an incut section (usually shallow) followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip."
   },
   "F12": {
@@ -1627,6 +1628,7 @@
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~30 mm edge",
+	"angleSensitive": true,
     "profileImg": "holds/G12-profile.png",
     "gripImg": "holds/G12-grip.png",
     "desc": "Slightly incut nearly flat vertical pinch wtih square edge \nMacro foothold (flat)",
@@ -1644,6 +1646,7 @@
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~30 mm edge",
+	"angleSensitive": true,
     "profileImg": "holds/I12-profile.png",
     "gripImg": "holds/I12-grip.png",
     "desc": "Flat vertical pinch with rounded edge \nMacro foothold (incut)"
