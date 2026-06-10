@@ -1573,7 +1573,7 @@
     "gripImg": "holds/Q11-grip.png",
     "desc": "Deeply incut sidepull mini jug \nMacro foothold (sloping)"
   },
-  "A12": {
+  "A13": {
     "tier": 1,
     "type": "Jug",
     "edgeSize": "~60 mm edge",
@@ -1582,7 +1582,7 @@
     "desc": "Deeply incut jug \nMacro foothold (incut)",
 	"notes": "Mega jug set: these are ~50+ mm incut holds that are easily matchable."
   },
-  "B12": {
+  "B13": {
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~30 mm edge",
@@ -1591,7 +1591,7 @@
     "desc": "Flat vertical pinch with square edge \nMacro foothold (flat)",
 	"notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges many Kilter Board crimps have. These are sharper and have a bite to them."
   },
-  "C12": {
+  "C13": {
     "tier": 1,
     "type": "Jug",
     "edgeSize": "~30 mm edge",
@@ -1599,7 +1599,7 @@
     "gripImg": "holds/C12-grip.png",
     "desc": "Deeply incut sloping sidepull mini jug \nMacro foothold (incut)"
   },
-  "D12": {
+  "D13": {
     "tier": 2,
     "type": "Sloper",
     "edgeSize": "~30 mm edge",
@@ -1608,7 +1608,7 @@
     "desc": "Incut sloper \nMacro foothold (incut)",
 	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
-  "E12": {
+  "E13": {
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~20 mm edge",
@@ -1617,7 +1617,7 @@
     "desc": "Slightly incut sloping pinch \nMacro foothold (flat)",
 	"notes": "Left edge is longer, larger, and more incut. Right edge is around 15 mm and flat."
   },
-  "F12": {
+  "F13": {
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~25 mm edge",
@@ -1626,7 +1626,7 @@
     "desc": "Slightly incut sloping sidepull crimp \nMacro foothold (incut)",
 	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
-  "G12": {
+  "G13": {
     "tier": 1,
     "type": "Jug",
     "edgeSize": "~50 mm edge",
@@ -1634,7 +1634,7 @@
     "gripImg": "holds/G12-grip.png",
     "desc": "Deeply incut sloping mini jug \nMacro foothold (incut)"
   },
-  "H12": {
+  "H13": {
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~20 mm edge",
@@ -1643,7 +1643,7 @@
     "desc": "Incut sloping pinch \nMacro foothold (incut)",
 	"notes": "Longer, deeper edge on left. Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
-  "I12": {
+  "I13": {
     "tier": 1,
     "type": "Jug",
     "edgeSize": "~50 mm edge",
@@ -1652,7 +1652,7 @@
     "desc": "Deeply incut mini jug \nMacro foothold (incut)",
 	"notes": "The best mini jug on the Kilter Board."
   },
-  "J12": {
+  "J13": {
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~20 mm edge",
@@ -1660,7 +1660,7 @@
     "gripImg": "holds/J12-grip.png",
     "desc": "Slightly incut sloping crimp, angled right \nMacro foothold (incut)"
   },
-  "K12": {
+  "K13": {
     "tier": 1,
     "type": ["Undercling", "Jug"],
     "edgeSize": "~55 mm edge",
@@ -1669,7 +1669,7 @@
     "desc": "Deeply incut undercling mini jug, angled right \nMacro foothold (incut)",
 	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
-  "L12": {
+  "L13": {
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~25 mm edge",
@@ -1678,7 +1678,7 @@
     "desc": "Incut sloping crimp \nMacro foothold (incut)",
 	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
-  "M12": {
+  "M13": {
     "tier": 1,
     "type": "Jug",
     "edgeSize": "~40 mm edge",
@@ -1687,7 +1687,7 @@
     "desc": "Deeply incut sloping jug \nMacro foothold (incut)",
 	"notes": "Less juggy and more slopey than most Kilter Board jugs."
   },
-  "N12": {
+  "N13": {
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~20 mm edge",
@@ -1695,7 +1695,7 @@
     "gripImg": "holds/N12-grip.png",
     "desc": "Slightly incut sloping crimp \nMacro foothold (incut)"
   },
-  "O12": {
+  "O13": {
     "tier": 1,
     "type": "Jug",
     "edgeSize": "~50 mm edge",
@@ -1704,7 +1704,7 @@
     "desc": "Deeply incut jug \nMacro foothold (incut)",
 	"notes": "Mega jug set: these are ~50+ mm incut holds that are easily matchable."
 	},
-  "P12": {
+  "P13": {
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~20 mm edge",
@@ -1713,7 +1713,7 @@
     "desc": "Incut crimp \nMacro foothold (incut)",
 	"notes": "Properly incut, has a bite to it."
   },
-  "Q12": {
+  "Q13": {
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~25 mm edge",
