@@ -2054,6 +2054,7 @@
     "tier": 2,
     "type": "Crimp",
     "edgeSize": "~20 mm edge",
+	"angleSensitive": true,
     "profileImg": "holds/F15-profile.png",
     "gripImg": "holds/F15-grip.png",
     "desc": "Slightly incut sloping crimp with square edge \nMacro foothold (incut)",
