@@ -2065,7 +2065,7 @@
     "edgeSize": "~25 mm edge",
     "profileImg": "holds/G15-profile.png",
     "gripImg": "holds/G15-grip.png",
-    "desc": "Incut sloping crimp, angled left \nMacro foothold (incut)",
+    "desc": "Incut sloping crimp, angled left \nMacro foothold (incut)"
   },
   "H15": {
     "tier": 2,
