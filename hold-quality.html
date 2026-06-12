@@ -399,20 +399,19 @@
     const spectrumTrack = document.getElementById('spectrumTrack');
     const spectrumBtns = document.querySelectorAll('#spectrumTypeSelector .chalk-btn');
 
-        function renderSpectrum(type) {
+    function renderSpectrum(type) {
         if (!spectrumTrack) return;
         const items = holdData[type];
         let html = ''; 
 
         items.forEach((item, i) => {
-            // Check for link
             const hasLink = item.link;
             const wrapperTag = hasLink ? 'a' : 'div';
             
-            // If it's a link, add flex styles to the <a> tag so it holds shape
+            // ADDED: flex, direction, gap, and alignment to the wrapper tag itself
             const wrapperAttrs = hasLink 
-                ? `href="${item.link}" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center; width: 100%;"` 
-                : 'style="display: flex; flex-direction: column; align-items: center; width: 100%;"';
+                ? `href="${item.link}" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center; width: 100%; gap: 1.5rem;"` 
+                : 'style="display: flex; flex-direction: column; align-items: center; width: 100%; gap: 1.5rem;"';
 
             html += `
             <div class="spectrum-item" style="transition-delay: ${i * 0.1}s">

@@ -957,22 +957,35 @@
         });
     }
 
-    // ============================================
+        // ============================================
     // 4. INTERACTIONS
     // ============================================
     
-	function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
-        function closeLightbox() { lightbox.classList.remove('active'); }
+    // 1. DECLARE VARIABLES GLOBALLY
+    // This ensures functions like openModal can access them.
+    const modal = document.getElementById('holdModal');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeBtn = document.getElementById('closeModal');
+    const tier1Toggle = document.getElementById('tier1Toggle');
+    const tier2Toggle = document.getElementById('tier2Toggle');
+    const tier3Toggle = document.getElementById('tier3Toggle');
+    const boardWrapper = document.getElementById('boardWrapper');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    // 2. HELPER FUNCTIONS
+    function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
+    function closeLightbox() { lightbox.classList.remove('active'); }
         
-        function closeModal() {
-            // Only remove hash if modal is actually active to prevent loops
-            if (modal.classList.contains('active')) {
-                 history.pushState("", document.title, window.location.pathname + window.location.search);
-            }
-            modal.classList.remove('active');
+    function closeModal() {
+        // Only remove hash if modal is actually active to prevent loops
+        if (modal.classList.contains('active')) {
+             history.pushState("", document.title, window.location.pathname + window.location.search);
         }
-		
-		  // Make openModal global so URL hash logic can call it
+        modal.classList.remove('active');
+    }
+
+    // 3. MAIN MODAL FUNCTION (Global for hash routing)
     window.openModal = function(id, isHashTrigger = false) {
         const data = holdsData[id];
         if (!data) return;
@@ -982,7 +995,7 @@
             history.pushState(null, null, '#' + id);
         }
 
-        // Mobile Zoom Fix
+        // Mobile Zoom Fix: Scroll to top
         if (window.innerWidth < 768) {
             window.scrollTo(0, 0);
         }
@@ -1019,21 +1032,12 @@
 
         modal.classList.add('active');
     };
-	
-	function setupEventListeners() {
-        const modal = document.getElementById('holdModal');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightboxImg');
-        const closeBtn = document.getElementById('closeModal');
-        
-        const tier1Toggle = document.getElementById('tier1Toggle');
-        const tier2Toggle = document.getElementById('tier2Toggle');
-        const tier3Toggle = document.getElementById('tier3Toggle');
-        
-        const boardWrapper = document.getElementById('boardWrapper');
-        const filterBtns = document.querySelectorAll('.filter-btn');
-		
-		        // ============================================
+
+    // 4. SETUP EVENT LISTENERS
+    function setupEventListeners() {
+        // Note: Variables (modal, lightbox, etc.) are already defined globally above.
+
+        // ============================================
         // ACCORDION LOGIC
         // ============================================
         const accContainer = document.querySelector('.accordion-container');
@@ -1042,10 +1046,7 @@
 
         if (accTrigger) {
             accTrigger.addEventListener('click', () => {
-                // Toggle active class
                 accContainer.classList.toggle('active');
-                
-                // Calculate height for smooth animation
                 if (accContainer.classList.contains('active')) {
                     accContent.style.maxHeight = accContent.scrollHeight + "px";
                 } else {
@@ -1071,9 +1072,9 @@
         // Check hash on load
         if (window.location.hash) handleHashChange();
 
-
-        
-
+        // ============================================
+        // STANDARD LISTENERS
+        // ============================================
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         lightbox.addEventListener('click', closeLightbox);
@@ -1092,7 +1093,7 @@
         const tierInfoDesc = document.getElementById('tierInfoDesc');
         const closeTierInfoBtn = document.getElementById('closeTierInfo');
 
-                const tierDescriptions = {
+        const tierDescriptions = {
             1: "<span class='t1-desc'>Tier 1</span> is the \"best\" holds (jugs). These are ~30+ mm deeply incut holds with enough space for 1+ finger pads to fit on the hold. Usually used with an open-hand grip (as opposed to a crimp grip). Steeper wall angles don't affect the quality of these much. \"Mega jugs\" are ~50+ mm incut holds that are easily matchable.",
             2: "<span class='t2-desc'>Tier 2</span> is \"intermediate\" holds. These include ~20-30 mm \"good\" or \"decent\" crimps and pinches and slightly incut slopers with large edges (~30-40 mm). Steeper wall angles can make these significantly worse, especially slopers and pinches.",
             3: "<span class='t3-desc'>Tier 3</span> is \"bad\" holds. These include slightly incut or flat crimps and foot chips (usually <~20 mm), along with fat or sloping vertical pinches. Making good use of these is highly dependent on body position and tension, and the hold quality rapidly degrades as wall angle steepens."
