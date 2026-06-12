@@ -960,7 +960,67 @@
     // ============================================
     // 4. INTERACTIONS
     // ============================================
-    function setupEventListeners() {
+    
+	function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
+        function closeLightbox() { lightbox.classList.remove('active'); }
+        
+        function closeModal() {
+            // Only remove hash if modal is actually active to prevent loops
+            if (modal.classList.contains('active')) {
+                 history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
+            modal.classList.remove('active');
+        }
+		
+		  // Make openModal global so URL hash logic can call it
+    window.openModal = function(id, isHashTrigger = false) {
+        const data = holdsData[id];
+        if (!data) return;
+
+        // Update URL if not triggered by hash change itself
+        if (!isHashTrigger) {
+            history.pushState(null, null, '#' + id);
+        }
+
+        // Mobile Zoom Fix
+        if (window.innerWidth < 768) {
+            window.scrollTo(0, 0);
+        }
+
+        document.getElementById('modalTitle').textContent = id;
+        
+        const descEl = document.getElementById('modalDesc');
+        const rawDesc = data.desc || "";
+        descEl.innerHTML = rawDesc.replace(/\n/g, '<br>');
+        
+        document.getElementById('modalNotes').textContent = data.notes || "";
+
+        const profileImg = document.getElementById('modalProfileImg');
+        const gripImg = document.getElementById('modalGripImg');
+        profileImg.src = data.profileImg;
+        gripImg.src = data.gripImg;
+        profileImg.onclick = () => openLightbox(data.profileImg);
+        gripImg.onclick = () => openLightbox(data.gripImg);
+
+        const tierBadge = document.getElementById('modalBadge');
+        tierBadge.textContent = `Tier ${data.tier}`;
+        tierBadge.className = `tier-badge t-${data.tier}`;
+        document.getElementById('modalEdge').textContent = data.edgeSize || 'Unknown';
+        
+        const typeBadge = document.getElementById('modalTypeBadge');
+        const typeArray = Array.isArray(data.type) ? data.type : [data.type];
+        typeBadge.textContent = typeArray.join(' ');
+        const classString = typeArray.map(t => t.toLowerCase()).join(' ');
+        typeBadge.className = `type-badge ${classString}`;
+
+        const warningEl = document.getElementById('modalWarning');
+        if (data.angleSensitive) warningEl.classList.add('visible');
+        else warningEl.classList.remove('visible');
+
+        modal.classList.add('active');
+    };
+	
+	function setupEventListeners() {
         const modal = document.getElementById('holdModal');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
@@ -1011,66 +1071,8 @@
         // Check hash on load
         if (window.location.hash) handleHashChange();
 
-        // ============================================
-        // MODAL FUNCTIONS
-        // ============================================
-                window.openModal = function(id, isHashTrigger = false) {
-            const data = holdsData[id];
-            if (!data) return;
 
-            // Update URL if not triggered by hash change itself
-            if (!isHashTrigger) {
-                history.pushState(null, null, '#' + id);
-            }
-
-            // Mobile Zoom Fix: Scroll to top to reset viewport context
-            if (window.innerWidth < 768) {
-                window.scrollTo(0, 0);
-            }
-
-            document.getElementById('modalTitle').textContent = id;
-            
-            const descEl = document.getElementById('modalDesc');
-            const rawDesc = data.desc || "";
-            descEl.innerHTML = rawDesc.replace(/\n/g, '<br>');
-            
-            document.getElementById('modalNotes').textContent = data.notes || "";
-
-            const profileImg = document.getElementById('modalProfileImg');
-            const gripImg = document.getElementById('modalGripImg');
-            profileImg.src = data.profileImg;
-            gripImg.src = data.gripImg;
-            profileImg.onclick = () => openLightbox(data.profileImg);
-            gripImg.onclick = () => openLightbox(data.gripImg);
-
-            const tierBadge = document.getElementById('modalBadge');
-            tierBadge.textContent = `Tier ${data.tier}`;
-            tierBadge.className = `tier-badge t-${data.tier}`;
-            document.getElementById('modalEdge').textContent = data.edgeSize || 'Unknown';
-            
-            const typeBadge = document.getElementById('modalTypeBadge');
-            const typeArray = Array.isArray(data.type) ? data.type : [data.type];
-            typeBadge.textContent = typeArray.join(' ');
-            const classString = typeArray.map(t => t.toLowerCase()).join(' ');
-            typeBadge.className = `type-badge ${classString}`;
-
-            const warningEl = document.getElementById('modalWarning');
-            if (data.angleSensitive) warningEl.classList.add('visible');
-            else warningEl.classList.remove('visible');
-
-            modal.classList.add('active');
-        };
-
-        function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
-        function closeLightbox() { lightbox.classList.remove('active'); }
         
-        function closeModal() {
-            // Only remove hash if modal is actually active to prevent loops
-            if (modal.classList.contains('active')) {
-                 history.pushState("", document.title, window.location.pathname + window.location.search);
-            }
-            modal.classList.remove('active');
-        }
 
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
