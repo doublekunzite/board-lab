@@ -172,6 +172,17 @@
     .q-good { background: rgba(125, 207, 182, 0.2); color: var(--chalk-green); }
     .q-medium { background: rgba(244, 211, 94, 0.2); color: var(--chalk-yellow); }
     .q-bad { background: rgba(217, 83, 79, 0.2); color: var(--chalk-red); }
+	
+	    /* Remove underline from spectrum links */
+    .spectrum-item a:hover {
+        text-decoration: none;
+    }
+    
+    /* Ensure the cursor changes over the whole item */
+    .spectrum-item a {
+        cursor: pointer;
+    }
+	
   </style>
 </head>
 <body>
@@ -203,7 +214,6 @@
               <button class="chalk-btn active" data-type="pinch">Pinch</button>
               <button class="chalk-btn" data-type="crimp">Crimp</button>
               <button class="chalk-btn" data-type="sloper">Sloper</button>
-              <button class="chalk-btn" data-type="jug">Jug</button>
             </div>
         </div>
 
@@ -372,26 +382,32 @@
     const spectrumTrack = document.getElementById('spectrumTrack');
     const spectrumBtns = document.querySelectorAll('#spectrumTypeSelector .chalk-btn');
 
-        function renderSpectrum(type) {
+    function renderSpectrum(type) {
         if (!spectrumTrack) return;
         const items = holdData[type];
         let html = ''; 
 
         items.forEach((item, i) => {
-            // If a link exists, wrap the name in an <a> tag
-            const nameContent = item.link 
-                ? `<a href="${item.link}" style="color: inherit; text-decoration: none;">${item.name}</a>` 
-                : item.name;
+            // Determine if we wrap content in a link or just a div
+            const hasLink = item.link;
+            const wrapperTag = hasLink ? 'a' : 'div';
+            
+            // Add specific styles for the anchor tag to act like a block
+            const wrapperAttrs = hasLink 
+                ? `href="${item.link}" style="color: inherit; text-decoration: none; display: block;"` 
+                : '';
 
             html += `
             <div class="spectrum-item" style="transition-delay: ${i * 0.1}s">
-                <div class="hold-display">
-                   ${item.svg}
-                </div>
-                <span class="spectrum-label font-chalk">${nameContent}</span>
-                <div class="spectrum-card">
-                   <p class="font-chalk">${item.desc}</p>
-                </div>
+                <${wrapperTag} ${wrapperAttrs}>
+                    <div class="hold-display">
+                       ${item.svg}
+                    </div>
+                    <span class="spectrum-label font-chalk">${item.name}</span>
+                    <div class="spectrum-card">
+                       <p class="font-chalk">${item.desc}</p>
+                    </div>
+                </${wrapperTag}>
             </div>`;
         });
         spectrumTrack.innerHTML = html;
