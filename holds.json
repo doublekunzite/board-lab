@@ -32,7 +32,7 @@
     "desc": "Incut sidepull crimp \nMacro foothold (incut)"
   },
   "E1": {
-    "tier": 2,
+    "tier": 3,
     "type": "Crimp",
     "edgeSize": "~20 mm edge",
     "angleSensitive": true,
@@ -85,7 +85,7 @@
     "notes": "Juggy, but rarely usd as a handhold due to being row 1. Good for drop knees and heel hooks."
   },
   "K1": {
-    "tier": 2,
+    "tier": 3,
     "type": "Crimp",
     "edgeSize": "~20 mm edge",
     "angleSensitive": true,
@@ -1109,12 +1109,13 @@
     "desc": "Incut sloping crimp \nMacro foothold (incut)"
   },
   "N8": {
-    "tier": 2,
+    "tier": 3,
     "type": "Crimp",
     "edgeSize": "~30 mm edge",
+	"angleSensitive": true,
     "profileImg": "holds/N8-profile.png",
     "gripImg": "holds/N8-grip.png",
-    "desc": "Slightly incut nearly flat sidepull crimp \nMacro foothold (flat)",
+    "desc": "Flat crimp, angled right \nMacro foothold (flat)",
 	"notes": "Half-moon set: these are angled, flat-edge or slightly incut holds that tend to be quite bad and friction-dependent unless good opposing feet or hands are provided."
   },
   "O8": {
@@ -1686,9 +1687,10 @@
     "desc": "Deeply incut mini jug, angled left \nMacro foothold (incut)"
   },
   "N12": {
-    "tier": 1,
+    "tier": 3,
     "type": "Crimp",
     "edgeSize": "~30 mm edge",
+	"angleSensitive": true,
     "profileImg": "holds/N12-profile.png",
     "gripImg": "holds/N12-grip.png",
     "desc": "Flat sidepull crimp \nMacro foothold (flat)",
@@ -2216,9 +2218,10 @@
     "desc": "Incut sloping crimp, angled right \nMacro foothold (incut)"
   },
   "H16": {
-    "tier": 2,
+    "tier": 3,
     "type": "Crimp",
     "edgeSize": "~20 mm edge",
+	"angleSensitive": true,
     "profileImg": "holds/H16-profile.png",
     "gripImg": "holds/H16-grip.png",
     "desc": "Flat sloping crimp \nMacro foothold (flat)",
