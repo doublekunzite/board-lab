@@ -614,7 +614,7 @@
     "edgeSize": "~40 mm edge",
     "profileImg": "holds/F5-profile.png",
     "gripImg": "holds/F5-grip.png",
-    "desc": "Deeply incut sidepull mini jug \nMacro foothold (incut)",
+    "desc": "Deeply incut mini jug, angled right \nMacro foothold (incut)",
     "notes": "One of the most common starting holds, and one of the most used holds on the Kilter Board in general."
   },
   "G5": {
@@ -664,7 +664,7 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/L5-profile.png",
     "gripImg": "holds/L5-grip.png",
-    "desc": "Deeply incut sidepull mini jug \nMacro foothold (incut)"
+    "desc": "Deeply incut mini jug, angled left \nMacro foothold (incut)"
   },
   "M5": {
     "tier": 2,
@@ -723,7 +723,7 @@
     "angleSensitive": true,
     "profileImg": "holds/B6-profile.png",
     "gripImg": "holds/B6-grip.png",
-    "desc": "Slightly incut nearly flat vertical pinch with square edge \nMacro foothold (incut)",
+    "desc": "Slightly incut flat pinch with square edge, vertical \nMacro foothold (incut)",
     "notes": "Left side slightly incut, right side is flat. Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut (some have more than others) makes a surprisingly big difference."
   },
   "C6": {
@@ -848,11 +848,10 @@
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~35 mm edge",
-    "angleSensitive": true,
     "profileImg": "holds/Q6-profile.png",
     "gripImg": "holds/Q6-grip.png",
-    "desc": "Flat vertical pinch with square edge, angled left \nMacro foothold (flat)",
-    "notes": "One of the better intermediate pinches on the Kilter Board: it has a square edge and a slightly larger edge size than many of the other pinches."
+    "desc": "Flat pinch with square edge, angled right \nMacro foothold (flat)",
+    "notes": "Large edge and forgiving angle make this juggy."
   },
   "A7": {
     "tier": 1,
@@ -869,7 +868,7 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/B7-profile.png",
     "gripImg": "holds/B7-grip.png",
-    "desc": "Deeply incut, sloping sidepull mini jug \nMacro foothold (incut)"
+    "desc": "Incut sloping mini jug, angled left \nMacro foothold (incut)"
   },
   "C7": {
     "tier": 2,
@@ -1046,7 +1045,8 @@
     "edgeSize": "~25 mm edge",
     "profileImg": "holds/F8-profile.png",
     "gripImg": "holds/F8-grip.png",
-    "desc": "Incut crimp, angled slightly right \nMacro foothold (incut)"
+    "desc": "Incut crimp, angled right \nMacro foothold (incut)",
+	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
   "G8": {
     "tier": 1,
@@ -1054,7 +1054,7 @@
     "edgeSize": "~35 mm edge",
     "profileImg": "holds/G8-profile.png",
     "gripImg": "holds/G8-grip.png",
-    "desc": "Deeply incut sidepull jug \nMacro foothold (incut)"
+    "desc": "Deeply incut mini jug, angled left \nMacro foothold (incut)"
   },
   "H8": {
     "tier": 2,
@@ -1165,7 +1165,8 @@
     "edgeSize": "~50 mm edge",
     "profileImg": "holds/C9-profile.png",
     "gripImg": "holds/C9-grip.png",
-    "desc": "Fat flat pinch with square edge, angled left \nMacro foothold (incut)"
+    "desc": "Flat pinch with square edge, angled right \nMacro foothold (incut)",
+	"notes": "notes": "Large edge and forgiving angle make this juggy. Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
   "D9": {
     "tier": 1,
@@ -1277,7 +1278,7 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/P9-profile.png",
     "gripImg": "holds/P9-grip.png",
-    "desc": "Slightly incut nearly flat pinch with square edge, angled right \nMacro foothold (sloping)",
+    "desc": "Slightly incut flat pinch with square edge, angled left \nMacro foothold (flat)",
 	"notes": "Top slightly incut, bottom is flat. Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut (some have more than others) makes a surprisingly big difference."
   },
   "Q9": {
@@ -1704,7 +1705,7 @@
 	"angleSensitive": true,
     "profileImg": "holds/O12-profile.png",
     "gripImg": "holds/O12-grip.png",
-    "desc": "Flat pinch with square edge, angled right \nMacro foothold (flat)"
+    "desc": "Flat pinch with square edge, angled left \nMacro foothold (flat)"
 	},
   "P12": {
     "tier": 1,
@@ -2154,6 +2155,7 @@
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~30 mm edge",
+	"angleSensitive": "true",
     "profileImg": "holds/Q15-profile.png",
     "gripImg": "holds/Q15-grip.png",
     "desc": "Flat vertical pinch with square edge \nMacro foothold (flat)"
@@ -2161,10 +2163,10 @@
   "A16": {
     "tier": 2,
     "type": "Pinch",
-    "edgeSize": "~45 mm edge",
+    "edgeSize": "~50 mm edge",
     "profileImg": "holds/A16-profile.png",
     "gripImg": "holds/A16-grip.png",
-    "desc": "Flat pinch with square edge \nMacro foothold (incut)",
+    "desc": "Flat pinch with square edge, angled right \nMacro foothold (incut)",
 	"notes": "Large edge and forgiving angle make this juggy. Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
   "B16": {
