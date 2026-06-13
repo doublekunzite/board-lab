@@ -282,7 +282,7 @@
     "profileImg": "holds/Q2-profile.png",
     "gripImg": "holds/Q2-grip.png",
     "desc": "Slightly incut flat pinch with square edge, vertical \nMacro foothold (flat)",
-	"notes": "Left side is slightly more incut. Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut makes a surprisingly big difference."
+	"notes": "Left side is incut, right side flat. Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut makes a surprisingly big difference."
   },
   "A3": {
     "tier": 2,
@@ -291,7 +291,7 @@
     "angleSensitive": true,
     "profileImg": "holds/A3-profile.png",
     "gripImg": "holds/A3-grip.png",
-    "desc": "Flat vertical pinch with square edge \nMacro foothold (flat)"
+    "desc": "Flat pinch with square edge, vertical \nMacro foothold (flat)"
   },
   "B3": {
     "tier": 2,
