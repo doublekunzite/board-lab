@@ -2216,7 +2216,8 @@
     "edgeSize": "~25 mm edge",
     "profileImg": "holds/G16-profile.png",
     "gripImg": "holds/G16-grip.png",
-    "desc": "Incut sloping crimp, angled right \nMacro foothold (incut)"
+    "desc": "Incut sloping crimp, angled right \nMacro foothold (incut)",
+	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
   "H16": {
     "tier": 3,
@@ -2272,7 +2273,7 @@
     "profileImg": "holds/M16-profile.png",
     "gripImg": "holds/M16-grip.png",
     "desc": "Slightly incut sloping pinch, angled left \nMacro foothold (incut)",
-	"notes": "Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut (some have more than others) makes a surprisingly big difference.""
+	"notes": "Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut (some have more than others) makes a surprisingly big difference."
   },
   "N16": {
     "tier": 3,
