@@ -1166,7 +1166,7 @@
     "profileImg": "holds/C9-profile.png",
     "gripImg": "holds/C9-grip.png",
     "desc": "Flat pinch with square edge, angled right \nMacro foothold (incut)",
-	"notes": "notes": "Large edge and forgiving angle make this juggy. Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
+	"notes": "Large edge and forgiving angle make this juggy. Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°."
   },
   "D9": {
     "tier": 1,
@@ -2155,7 +2155,7 @@
     "tier": 2,
     "type": "Pinch",
     "edgeSize": "~30 mm edge",
-	"angleSensitive": "true",
+	"angleSensitive": true,
     "profileImg": "holds/Q15-profile.png",
     "gripImg": "holds/Q15-grip.png",
     "desc": "Flat vertical pinch with square edge \nMacro foothold (flat)"
