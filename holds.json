@@ -1533,8 +1533,8 @@
 	"angleSensitive": true,
     "profileImg": "holds/L11-profile.png",
     "gripImg": "holds/L11-grip.png",
-    "desc": "Slightly incut sloper with large edge \nMacro foothold (flat)",
-	"notes": "An iconic sloper that is juggy at less steep angles due to its large edge and relatively flat edge. Becomes more dependent on friction and body position at steeper angles."
+    "desc": "Slightly incut sloper \nMacro foothold (flat)",
+	"notes": "This is juggy at less steep angles due to its large and relatively flat edge. Becomes more dependent on friction and body position at steeper angles."
   },
   "M11": {
     "tier": 1,
@@ -1669,7 +1669,7 @@
     "edgeSize": "~20 mm edge",
     "profileImg": "holds/K12-profile.png",
     "gripImg": "holds/K12-grip.png",
-    "desc": "Slightly incut nearly flat pinch \nMacro foothold (incut)",
+    "desc": "Slightly incut flat pinch, vertical \nMacro foothold (incut)",
 	"notes": "The iconic wave pinch can be used in many different ways: a pinch, a crimp, a gaston, and it can even be matched with one hand pinching and the other hand on the top tip."
   },
   "L12": {
