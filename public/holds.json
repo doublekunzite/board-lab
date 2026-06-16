@@ -2856,5 +2856,185 @@
     "notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°.",
     "row": 16,
     "col": 17
+  },
+  "A17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/A17-profile.png",
+    "gripImg": "holds/A17-grip.png",
+    "desc": "Slightly incut sloping crimp \nMacro foothold (incut)",
+    "row": 17,
+    "col": 1
+  },
+  "B17": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/B17-profile.png",
+    "gripImg": "holds/B17-grip.png",
+    "desc": "Incut mini jug \nMacro foothold (incut)",
+    "row": 17,
+    "col": 2
+  },
+  "C17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/C17-profile.png",
+    "gripImg": "holds/C17-grip.png",
+    "desc": "Incut sloping crimp with square edge \nMacro foothold (incut)",
+    "notes": "Square edge set: These have an incut section followed by a thick, square edge that acts as a sloper, making the part you grip thicker and forcing a more open-hand grip.",
+    "row": 17,
+    "col": 3
+  },
+  "D17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/D17-profile.png",
+    "gripImg": "holds/D17-grip.png",
+    "desc": "Slightly incut sloping crimp, angled left \nMacro foothold (incut)",
+    "row": 17,
+    "col": 4
+  },
+  "E17": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/E17-profile.png",
+    "gripImg": "holds/E17-grip.png",
+    "desc": "Incut mini jug, angled right \nMacro foothold (incut)",
+    "row": 17,
+    "col": 5
+  },
+  "F17": {
+    "tier": 1,
+    "type": ["Pinch", "Jug"],
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/F17-profile.png",
+    "gripImg": "holds/F17-grip.png",
+    "desc": "Incut pinch \nMacro foothold (incut)",
+    "notes": "Juggiest pinch on the board. Not quite a jug if you use it as a sidepull with one hand, but still very good.",
+    "row": 17,
+    "col": 6
+  },
+  "G17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/G17-profile.png",
+    "gripImg": "holds/G17-grip.png",
+    "desc": "Slightly incut flat crimp, angled left \nMacro foothold (incut)",
+    "notes": "Better than the worst half-moons due to being slightly incut. Half-moon set: these are angled, flat holds that tend to be quite bad and friction-dependent unless good opposing feet or hands are provided.",
+    "row": 17,
+    "col": 7
+  },
+  "H17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/H17-profile.png",
+    "gripImg": "holds/H17-grip.png",
+    "desc": "Incut sloping crimp \nMacro foothold (incut)",
+    "row": 17,
+    "col": 8
+  },
+  "I17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/I17-profile.png",
+    "gripImg": "holds/I17-grip.png",
+    "desc": "Flat crimp \nMacro foothold (flat)",
+    "notes": "Surprisingly juggy due to large edge. Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°.",
+    "row": 17,
+    "col": 9
+  },
+  "J17": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/J17-profile.png",
+    "gripImg": "holds/J17-grip.png",
+    "desc": "Incut mini jug, angled left \nMacro foothold (incut)",
+    "row": 17,
+    "col": 10
+  },
+  "K17": {
+    "tier": 2,
+    "type": "Sloper",
+    "edgeSize": "40 mm edge",
+	"angleSensitive": true,
+    "profileImg": "holds/K17-profile.png",
+    "gripImg": "holds/K17-grip.png",
+    "desc": "Incut sloper \nMacro foothold (incut)",
+    "notes": "Similar to the L11 sloper but slightly more incut, this is juggy at less steep angles but gets worse quickly.",
+    "row": 17,
+    "col": 11
+  },
+  "L17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/L17-profile.png",
+    "gripImg": "holds/L17-grip.png",
+    "desc": "Incut crimp, angled right \nMacro foothold (incut)",
+    "notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°.",
+    "row": 17,
+    "col": 12
+  },
+  "M17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/M17-profile.png",
+    "gripImg": "holds/M17-grip.png",
+    "desc": "Incut sloping crimp, angled left \nMacro foothold (incut)",
+    "notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°.",
+    "row": 17,
+    "col": 13
+  },
+  "N17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/N17-profile.png",
+    "gripImg": "holds/N17-grip.png",
+    "desc": "Incut crimp \nMacro foothold (incut)",
+    "notes": "Heart-shaped crimp set: these are the most classic and truly incut crimps compared with the more slopey rounded edges many Kilter Board crimps have. These are sharper and have a bite to them.",
+    "row": 16,
+    "col": 14
+  },
+  "O17": {
+    "tier": 1,
+    "type": "Jug",
+    "edgeSize": "~30 mm edge",
+    "profileImg": "holds/O17-profile.png",
+    "gripImg": "holds/O17-grip.png",
+    "desc": "Incut sloping right sidepull mini jug \nMacro foothold (incut)",
+    "row": 17,
+    "col": 15
+  },
+  "P17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~25 mm edge",
+    "profileImg": "holds/P17-profile.png",
+    "gripImg": "holds/P17-grip.png",
+    "desc": "Incut crimp \nMacro foothold (incut)",
+	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°.",
+    "row": 17,
+    "col": 16
+  },
+  "Q17": {
+    "tier": 2,
+    "type": "Crimp",
+    "edgeSize": "~20 mm edge",
+    "profileImg": "holds/Q17-profile.png",
+    "gripImg": "holds/Q17-grip.png",
+    "desc": "Slightly incut sloping crimp \nMacro foothold (incut)",
+    "row": 17,
+    "col": 17
   }
 }
