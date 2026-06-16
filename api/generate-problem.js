@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 // ============================================
 // LAYER 2: VALIDATOR (Hard Constraints)
 // ============================================
