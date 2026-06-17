@@ -458,7 +458,7 @@
       cursor: help;
       position: relative;
     }
-    .grade-tooltip {
+        .grade-tooltip {
       visibility: hidden;
       width: 220px;
       background: var(--card);
@@ -469,8 +469,10 @@
       position: absolute;
       z-index: 50;
       bottom: 130%;
-      left: 50%;
-      transform: translateX(-50%);
+      /* UPDATED THESE 3 LINES TO PREVENT CLIPPING */
+      left: 0;
+      transform: translateX(0);
+      margin-left: -10px; /* Nudge it slightly to align the arrow nicely */
       opacity: 0;
       transition: opacity 0.2s, visibility 0.2s;
       font-size: 0.75rem;
@@ -480,12 +482,13 @@
       pointer-events: none;
       box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     }
+    /* UPDATED ARROW POSITION TO MATCH */
     .grade-tooltip::after {
       content: '';
       position: absolute;
       top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 15px; /* Moved arrow to the left to match the box */
+      transform: translateX(0);
       border: 6px solid transparent;
       border-top-color: var(--border);
     }
@@ -808,7 +811,7 @@
             <div class="modal-tags" style="margin-top: 0.5rem;">
               <span class="tier-badge grade-badge" id="modalGrade">
                 <span id="gradeText">Grade</span>
-                <span class="grade-tooltip">Holds are graded within their tier from 1.1 to 3.5. <br>1.1 = terrible jug, 1.5 = great jug. <br>2.1 = bad intermediate, 2.5 = good intermediate. <br>3.1 = terrible crimp, 3.5 = positive crimp.</span>
+                <span class="grade-tooltip">Holds are graded within their tier from 1.1 to 3.5. <br>1.1 = "worst" jug, 1.5 = "best" jug. <br>2.1 = "worst" intermediate, 2.5 = "best" intermediate. <br>3.1 = "worst" bad hold, 3.5 = "best" bad hold.</span>
               </span>
               <span class="tier-badge" id="modalBadge">Tier 1</span>
               <span class="tier-badge edge-badge" id="modalEdge">Large Edge</span>
