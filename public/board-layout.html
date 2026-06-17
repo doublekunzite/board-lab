@@ -11,14 +11,10 @@
        BOARD MAP SPECIFIC STYLES
        ============================================ */
     :root {
-      /* Accessible Color Palette (Blue/Orange Spectrum) */
-      --tier-1: #38bdf8; /* Sky Blue / Cyan */
-      --tier-2: #fb923c; /* Orange */
-      --tier-3: #dc2626; /* Dark Red / Vermillion */
-      
-      --edge-color: #60a5fa; /* Blue - for Edge Size */
-      
-      /* Type Colors */
+      --tier-1: #38bdf8;
+      --tier-2: #fb923c;
+      --tier-3: #dc2626;
+      --edge-color: #60a5fa;
       --type-jug: #4ade80;
       --type-crimp: #facc15;
       --type-pinch: #f472b6;
@@ -34,8 +30,7 @@
       margin: 0 auto;
     }
 
-    .board-header { text-align: center; margin-bottom: 2rem; }
-    
+    .board-header { text-align: center; margin-bottom: 3.5rem; }
     .page-title {
       font-family: Impact, 'Arial Narrow Bold', sans-serif;
       font-size: clamp(3rem, 8vw, 5rem);
@@ -45,7 +40,6 @@
       line-height: 1;
       margin-bottom: 0.5rem;
     }
-    
     .page-subtitle {
       font-size: clamp(1rem, 2vw, 1.25rem);
       color: var(--fg-muted);
@@ -53,7 +47,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* Board Container */
     .board-wrapper {
       position: relative;
       width: 100%;
@@ -64,15 +57,7 @@
       overflow: visible;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
-
-    .board-image {
-      width: 100%; 
-      height: auto; 
-      display: block; 
-      opacity: 0.8; 
-      border-radius: 8px;
-    }
-
+    .board-image { width: 100%; height: auto; display: block; opacity: 0.8; border-radius: 8px; }
     .grid-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       display: grid;
@@ -81,86 +66,26 @@
       overflow: visible;
     }
 
-    .board-header { 
-      text-align: center; 
-      margin-bottom: 3.5rem;
-    }
-
-    /* Large Labels - Outside Grid */
     .grid-label {
-      position: absolute;
-      font-size: 1rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.6);
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      pointer-events: none;
-      z-index: 10;
+      position: absolute; font-size: 1rem; font-weight: 700;
+      color: rgba(255,255,255,0.6); font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      pointer-events: none; z-index: 10;
     }
+    .col-label { top: 0; width: calc(100% / 17); text-align: center; transform: translateY(-100%); padding-bottom: 0.5rem; }
+    .row-label { left: 0; height: calc(100% / 18); display: flex; align-items: center; justify-content: flex-end; transform: translateX(-100%); padding-right: 0.75rem; }
 
-    .col-label {
-      top: 0;
-      width: calc(100% / 17);
-      text-align: center;
-      transform: translateY(-100%); 
-      padding-bottom: 0.5rem;
-    }
-
-    .row-label {
-      left: 0;
-      height: calc(100% / 18);
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      transform: translateX(-100%);
-      padding-right: 0.75rem;
-    }
-
-    .hold-cell {
-      position: relative; border: 1px solid rgba(255,255,255,0.05);
-      cursor: pointer; transition: background 0.2s; z-index: 1;
-    }
+    .hold-cell { position: relative; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: background 0.2s; z-index: 1; }
     .hold-cell:hover { background: rgba(255,255,255,0.1); z-index: 100; }
 
-    /* RING STYLE DOTS + SHAPES */
     .hold-cell::after {
-      content: ''; 
-      position: absolute; 
-      top: 4px; 
-      left: 4px; 
-      width: 14px; 
-      height: 14px;
-      border-radius: 50%; /* Default: Circle */
-      opacity: 0; 
-      transition: opacity 0.3s, transform 0.2s, border-radius 0.2s;
-      background: transparent; 
-      border: 2px solid; 
-      box-shadow: 0 0 4px currentColor;
+      content: ''; position: absolute; top: 4px; left: 4px; width: 14px; height: 14px;
+      border-radius: 50%; opacity: 0; transition: opacity 0.3s, transform 0.2s, border-radius 0.2s;
+      background: transparent; border: 2px solid; box-shadow: 0 0 4px currentColor;
     }
     .hold-cell.show-tier-dot::after { opacity: 1; }
-    
-    /* Tier 1: Circle + Blue */
-    .hold-cell.tier-1::after {
-      border-color: var(--tier-1); 
-      color: var(--tier-1);
-      border-radius: 50%; /* Circle */
-      transform: rotate(0deg);
-    }
-
-    /* Tier 2: Square + Orange */
-    .hold-cell.tier-2::after {
-      border-color: var(--tier-2); 
-      color: var(--tier-2);
-      border-radius: 2px; /* Square with slightly soft corners */
-      transform: rotate(0deg);
-    }
-
-    /* Tier 3: Diamond + Dark Red */
-    .hold-cell.tier-3::after {
-      border-color: var(--tier-3); 
-      color: var(--tier-3);
-      border-radius: 2px; /* Square base */
-      transform: rotate(45deg); /* Rotate to Diamond */
-    }
+    .hold-cell.tier-1::after { border-color: var(--tier-1); color: var(--tier-1); border-radius: 50%; }
+    .hold-cell.tier-2::after { border-color: var(--tier-2); color: var(--tier-2); border-radius: 2px; }
+    .hold-cell.tier-3::after { border-color: var(--tier-3); color: var(--tier-3); border-radius: 2px; transform: rotate(45deg); }
 
     .hold-tooltip {
       position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 180px;
@@ -182,23 +107,12 @@
     .tier-badge.t-3 { background: rgba(220, 38, 38, 0.2); color: var(--tier-3); }
     .edge-badge { background: rgba(96, 165, 250, 0.15); color: var(--edge-color); }
 
-    .type-badge { 
-      font-size: 0.85rem; 
-      padding: 4px 10px; 
-      border-radius: 4px; 
-      font-weight: 600; 
-      text-transform: uppercase; 
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    /* Base Colors */
+    .type-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 4px; font-weight: 600; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.1); }
     .type-badge.jug { background: rgba(74, 222, 128, 0.2); color: #86efac; }
     .type-badge.crimp { background: rgba(250, 204, 21, 0.2); color: #fde047; }
     .type-badge.pinch { background: rgba(244, 114, 182, 0.2); color: #f9a8d4; }
     .type-badge.sloper { background: rgba(96, 165, 250, 0.2); color: #93c5fd; }
     .type-badge.undercling { background: rgba(167, 139, 250, 0.2); color: #c4b5fd; }
-
-    /* Combination Styles */
     .type-badge.jug.crimp { background: linear-gradient(90deg, rgba(74, 222, 128, 0.3) 50%, rgba(250, 204, 21, 0.3) 50%); }
     .type-badge.jug.pinch { background: linear-gradient(90deg, rgba(74, 222, 128, 0.3) 50%, rgba(244, 114, 182, 0.3) 50%); }
     .type-badge.jug.undercling { background: linear-gradient(90deg, rgba(74, 222, 128, 0.3) 50%, rgba(167, 139, 250, 0.3) 50%); }
@@ -206,30 +120,12 @@
     .type-badge.sloper.pinch { background: linear-gradient(90deg, rgba(250, 204, 21, 0.3) 50%, rgba(244, 114, 182, 0.3) 50%); }
 
     .board-controls { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      margin-top: 1.5rem; 
-      padding: 1rem; 
-      background: var(--card); 
-      border-radius: 12px; 
-      border: 1px solid var(--border); 
-      flex-wrap: wrap; 
-      gap: 1rem; 
-      width: fit-content;
-      max-width: 100%;
-      margin-left: auto;
-      margin-right: auto;
+      display: flex; justify-content: space-between; align-items: center; 
+      margin-top: 1.5rem; padding: 1rem; background: var(--card); border-radius: 12px; 
+      border: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; 
+      width: fit-content; max-width: 100%; margin-left: auto; margin-right: auto;
     }
-    
-    .toggle-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      gap: 1rem;
-    }
-
+    .toggle-container { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 1rem; }
     .toggle-group { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; position: relative; flex-grow: 1; }
     .toggle-switch { width: 40px; height: 20px; background: #333; border-radius: 20px; position: relative; transition: background 0.3s; }
     .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: transform 0.3s; }
@@ -244,73 +140,25 @@
       display: flex; align-items: center; justify-content: center;
       opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 1rem;
     }
-
     .modal-overlay.active { opacity: 1; pointer-events: all; }
-
     .modal-content {
       background: var(--card); width: 100%; max-width: 650px;
       border-radius: 16px; border: 1px solid var(--border);
       overflow: hidden; transform: scale(0.9); transition: transform 0.3s;
-      display: flex; flex-direction: column;
+      display: flex; flex-direction: column; position: relative;
     }
-
     .modal-overlay.active .modal-content { transform: scale(1); }
 
-    .modal-images {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .modal-img-column {
-      background: #111;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .modal-img-container {
-      height: 300px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-
-    .modal-img-container img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      cursor: zoom-in;
-    }
-
-    .modal-img-label {
-      text-align: center;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.4);
-      padding: 0.5rem 0 1rem 0;
-    }
+    .modal-images { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+    .modal-img-column { background: #111; display: flex; flex-direction: column; }
+    .modal-img-container { height: 300px; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+    .modal-img-container img { max-width: 100%; max-height: 100%; object-fit: contain; cursor: zoom-in; }
+    .modal-img-label { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.4); padding: 0.5rem 0 1rem 0; }
 
     .modal-details { padding: 1.5rem; }
-    
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1rem;
-    }
-
-    .modal-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    
-    .close-btn {
-      background: transparent; border: none; color: var(--fg-muted);
-      font-size: 1.5rem; cursor: pointer; padding: 0.5rem; line-height: 1;
-    }
+    .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .close-btn { background: transparent; border: none; color: var(--fg-muted); font-size: 1.5rem; cursor: pointer; padding: 0.5rem; line-height: 1; }
     .close-btn:hover { color: var(--fg); }
 
     #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
@@ -319,22 +167,15 @@
 
     .hold-list-section { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
     .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
-        .filters-container { 
-      display: flex; 
-      flex-direction: column; /* Stack the groups vertically */
-      gap: 1rem; 
-      width: 100%; 
-    }
-    .filter-group { 
-      display: flex; 
-      gap: 0.5rem; 
-      align-items: center; 
-      flex-wrap: wrap; /* Allow buttons to wrap on small screens */
-    }
+    .filters-container { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
+    .filter-group { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
     .filter-group-label { font-size: 0.75rem; color: var(--fg-muted); text-transform: uppercase; margin-right: 0.25rem; }
     .filter-btn { background: transparent; border: 1px solid var(--border); color: var(--fg-muted); padding: 0.4rem 0.8rem; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; }
     .filter-btn:hover { border-color: var(--fg-muted); color: var(--fg); }
     .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .filter-btn.set-icon-btn { padding: 0.35rem 0.5rem; display: inline-flex; align-items: center; justify-content: center; }
+    .filter-btn.set-icon-btn svg { display: block; }
+
     .hold-list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
     .hold-list-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; display: flex; gap: 1rem; align-items: flex-start; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
     .hold-list-card:hover { border-color: var(--accent); transform: translateY(-2px); }
@@ -348,180 +189,34 @@
 
     #modalTitleRow { align-items: center; }
     #modalTitleRow .type-badge { margin-top: -2px; }
-
     .toggle-label-text { display: flex; align-items: center; gap: 0.5rem; }
+    .info-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 12px; font-weight: bold; cursor: help; transition: background 0.2s; border: none; flex-shrink: 0; }
+    .info-icon:hover { background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); }
 
-    .info-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.5);
-      font-size: 12px;
-      font-weight: bold;
-      cursor: help;
-      transition: background 0.2s;
-      border: none;
-      flex-shrink: 0;
-    }
-
-    .info-icon:hover {
-      background: rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.9);
-    }
-
-    .tier-tooltip {
-      position: absolute;
-      bottom: 130%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 320px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem;
-      font-size: 0.8rem;
-      line-height: 1.5;
-      color: var(--fg);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.2s, visibility 0.2s;
-      z-index: 50;
-      text-align: left;
-      pointer-events: none;
-    }
-
-    .tier-tooltip::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 6px solid transparent;
-      border-top-color: var(--border);
-    }
-
-    .toggle-group:hover .tier-tooltip {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .tier-tooltip p {
-      margin: 0;
-      color: rgba(255,255,255,0.8);
-    }
-
+    .tier-tooltip { position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); width: 320px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-size: 0.8rem; line-height: 1.5; color: var(--fg); box-shadow: 0 10px 25px rgba(0,0,0,0.4); opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; z-index: 50; text-align: left; pointer-events: none; }
+    .tier-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--border); }
+    .toggle-group:hover .tier-tooltip { opacity: 1; visibility: visible; }
+    .tier-tooltip p { margin: 0; color: rgba(255,255,255,0.8); }
     .t1-desc { color: var(--tier-1); font-weight: 600; }
     .t2-desc { color: var(--tier-2); font-weight: 600; }
     .t3-desc { color: var(--tier-3); font-weight: 600; }
 
-    .modal-text-grid {
-        display: grid;
-        grid-template-columns: 2fr 3fr; 
-        margin-bottom: 1.5rem;
-        gap: 2rem;
-        align-items: start;
-    }
-
+    .modal-text-grid { display: grid; grid-template-columns: 2fr 3fr; margin-bottom: 1.5rem; gap: 2rem; align-items: start; }
     .desc-section { width: 100%; }
-
-    #modalDesc {
-        color: rgba(255,255,255,0.85);
-        line-height: 1.6;
-        margin: 0;
-        text-align: left; 
-        hyphens: auto;
-    }
-
-    .notes-section {
-        border-left: 1px solid var(--border);
-        padding-left: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .notes-title {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: rgba(255,255,255,0.5);
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-    }
-
-    #modalNotes {
-        font-style: italic;
-        color: rgba(255,255,255,0.8);
-        line-height: 1.6;
-        margin: 0;
-    }
+    #modalDesc { color: rgba(255,255,255,0.85); line-height: 1.6; margin: 0; text-align: left; hyphens: auto; }
+    .notes-section { border-left: 1px solid var(--border); padding-left: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .notes-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 0.5rem; }
+    #modalNotes { font-style: italic; color: rgba(255,255,255,0.8); line-height: 1.6; margin: 0; }
     
     /* Grade Badge & Tooltip */
-    .grade-badge {
-      background: rgba(255, 255, 255, 0.1);
-      color: #e0e0e0;
-      cursor: help;
-      position: relative;
-    }
-        .grade-tooltip {
-      visibility: hidden;
-      width: 220px;
-      background: var(--card);
-      color: var(--fg);
-      border: 1px solid var(--border);
-      padding: 0.75rem;
-      border-radius: 6px;
-      position: absolute;
-      z-index: 50;
-      bottom: 130%;
-      /* UPDATED THESE 3 LINES TO PREVENT CLIPPING */
-      left: 0;
-      transform: translateX(0);
-      margin-left: -10px; /* Nudge it slightly to align the arrow nicely */
-      opacity: 0;
-      transition: opacity 0.2s, visibility 0.2s;
-      font-size: 0.75rem;
-      text-transform: none;
-      font-weight: normal;
-      line-height: 1.4;
-      pointer-events: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    }
-    /* UPDATED ARROW POSITION TO MATCH */
-    .grade-tooltip::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 15px; /* Moved arrow to the left to match the box */
-      transform: translateX(0);
-      border: 6px solid transparent;
-      border-top-color: var(--border);
-    }
-    .grade-badge:hover .grade-tooltip {
-      visibility: visible;
-      opacity: 1;
-    }
+    .grade-badge { background: rgba(255, 255, 255, 0.1); color: #e0e0e0; cursor: help; position: relative; }
+    .grade-tooltip { visibility: hidden; width: 220px; background: var(--card); color: var(--fg); border: 1px solid var(--border); padding: 0.75rem; border-radius: 6px; position: absolute; z-index: 50; bottom: 130%; left: 0; transform: translateX(0); margin-left: -10px; opacity: 0; transition: opacity 0.2s, visibility 0.2s; font-size: 0.75rem; text-transform: none; font-weight: normal; line-height: 1.4; pointer-events: none; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    .grade-tooltip::after { content: ''; position: absolute; top: 100%; left: 15px; transform: translateX(0); border: 6px solid transparent; border-top-color: var(--border); }
+    .grade-badge:hover .grade-tooltip { visibility: visible; opacity: 1; }
 
     /* Holdset Pullout */
-    .holdset-pullout {
-      margin-top: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255,255,255,0.05);
-      padding: 0.5rem 0.75rem;
-      border-radius: 6px;
-      border-left: 3px solid #ccc;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    .holdset-icon { display: flex; align-items: center; }
-    
+    .holdset-pullout { margin-top: 1.5rem; display: flex; align-items: flex-start; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 6px; border-left: 3px solid #ccc; font-size: 0.85rem; font-weight: 500; line-height: 1.5; flex-wrap: wrap; }
+    .holdset-icon { display: flex; align-items: center; flex-shrink: 0; }
     .holdset-pullout.set-square { border-color: #94a3b8; color: #cbd5e1; }
     .holdset-pullout.set-fat-pinch { border-color: #d97706; color: #fbbf24; }
     .holdset-pullout.set-heart-crimp { border-color: #ec4899; color: #f9a8d4; }
@@ -529,22 +224,18 @@
     .holdset-pullout.set-half-moon { border-color: #3b82f6; color: #93c5fd; }
     .holdset-pullout.set-nearly-jug { border-color: #06b6d4; color: #67e8f9; }
     .holdset-pullout.set-slightly-incut { border-color: #8b5cf6; color: #c4b5fd; }
-	
-	    .holdset-pullout {
-      margin-top: 1.5rem;
-      display: flex;
-      align-items: flex-start; /* Changed from center to flex-start so icons stay top-left */
-      gap: 0.5rem;
-      background: rgba(255,255,255,0.05);
-      padding: 0.75rem;
-      border-radius: 6px;
-      border-left: 3px solid #ccc;
-      font-size: 0.85rem;
-      font-weight: 500; /* Slightly reduced from 600 for easier paragraph reading */
-      line-height: 1.5; /* Added for multi-line readability */
-      flex-wrap: wrap; /* Allows text to wrap */
+
+    /* Modal Navigation Arrows */
+    .modal-nav-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.6); color: white; border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%; width: 48px; height: 48px; font-size: 1.5rem;
+      cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s, opacity 0.2s; backdrop-filter: blur(4px);
     }
-    .holdset-icon { display: flex; align-items: center; flex-shrink: 0; }
+    .modal-nav-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-50%) scale(1.05); }
+    .modal-nav-left { left: -24px; } 
+    .modal-nav-right { right: -24px; }
 
     /* ============================================
        MOBILE ADJUSTMENTS & ACCESSIBILITY
@@ -552,72 +243,15 @@
     @media (max-width: 767px) {
       .hold-tooltip { display: none !important; }
       .hold-cell { border-color: rgba(255,255,255,0.15); }
-      .hold-cell:active {
-        background: rgba(255, 255, 255, 0.25) !important;
-        border-color: rgba(255, 255, 255, 0.3);
-      }
+      .hold-cell:active { background: rgba(255, 255, 255, 0.25) !important; border-color: rgba(255, 255, 255, 0.3); }
       .toggle-group:hover .tier-tooltip { opacity: 0 !important; visibility: hidden !important; }
       .toggle-container { margin-bottom: 1rem; align-items: center; }
-      .info-icon {
-        margin-left: 1rem;
-        background: rgba(255,255,255,0.1);
-        padding: 2px 8px;
-        border-radius: 4px;
-      }
-      .modal-overlay {
-        align-items: flex-start;
-        overflow-y: auto;
-        padding: 0;
-        transform: translateZ(0); 
-      }
-      .modal-content {
-        width: 100%;
-        max-width: 100%;
-        border-radius: 0 0 12px 12px;
-        margin-top: 0;      <!-- Navigation Arrows -->
-      <button id="prevHoldBtn" class="modal-nav-btn modal-nav-left">&larr;</button>
-      <button id="nextHoldBtn" class="modal-nav-btn modal-nav-right">&rarr;</button>
-      }
+      .info-icon { margin-left: 1rem; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px; }
+      .modal-overlay { align-items: flex-start; overflow-y: auto; padding: 0; transform: translateZ(0); }
+      .modal-content { width: 100%; max-width: 100%; border-radius: 0 0 12px 12px; margin-top: 0; }
       .modal-img-container { height: 200px; }
       .board-controls { width: 100%; }
-    }
-	
-    /* Modal Navigation Arrows */
-    .modal-content { position: relative; }
-    .modal-nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.6);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      z-index: 20; /* Increased z-index so images don't block clicks */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, transform 0.2s, opacity 0.2s;
-      backdrop-filter: blur(4px); /* Slight blur to make them pop */
-    }
-    .modal-nav-btn:hover { 
-      background: rgba(255,255,255,0.2); 
-      transform: translateY(-50%) scale(1.05); 
-    }
-    /* Move them completely outside the image area */
-    .modal-nav-left { left: -24px; } 
-    .modal-nav-right { right: -24px; }
-    
-    @media (max-width: 767px) {
-      .modal-nav-btn { 
-        width: 36px; 
-        height: 36px; 
-        font-size: 1.2rem;
-        border-radius: 8px; /* Square on mobile so they don't get cut off screen */
-      }
+      .modal-nav-btn { width: 36px; height: 36px; font-size: 1.2rem; border-radius: 8px; }
       .modal-nav-left { left: 0; }
       .modal-nav-right { right: 0; }
     }
@@ -625,66 +259,18 @@
     /* ============================================
        ACCORDION STYLES
        ============================================ */
-    .accordion-container {
-      margin-top: 2rem;
-      margin-bottom: 1.5rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .accordion-trigger {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      background: transparent;
-      border: none;
-      color: var(--fg);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
+    .accordion-container { margin-top: 2rem; margin-bottom: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .accordion-trigger { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: transparent; border: none; color: var(--fg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
     .accordion-trigger:hover { background: rgba(255,255,255,0.03); }
-
-    .accordion-icon {
-      font-size: 1.5rem;
-      font-weight: 300;
-      transition: transform 0.3s ease;
-    }
-
+    .accordion-icon { font-size: 1.5rem; font-weight: 300; transition: transform 0.3s ease; }
     .accordion-container.active .accordion-icon { transform: rotate(45deg); }
-
-    .accordion-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-    }
-
-    .accordion-inner {
-      padding: 0 1.5rem 1.5rem 1.5rem;
-      color: var(--fg);
-      line-height: 1.6;
-    }
-
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .accordion-inner { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--fg); line-height: 1.6; }
     .accordion-inner p { margin-bottom: 1rem; }
     .accordion-inner ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
     .accordion-inner li { margin-bottom: 0.5rem; }
     .accordion-inner strong { color: var(--fg); }
-
-    .accordion-warning {
-      background: rgba(250, 204, 21, 0.1);
-      border-left: 3px solid var(--tier-2);
-      padding: 0.75rem;
-      font-size: 0.875rem;
-      color: var(--fg);
-      margin-top: 1rem;
-    }
+    .accordion-warning { background: rgba(250, 204, 21, 0.1); border-left: 3px solid var(--tier-2); padding: 0.75rem; font-size: 0.875rem; color: var(--fg); margin-top: 1rem; }
     
   </style>
   <link rel="icon" href="favicon.png?v=2" type="image/png">
@@ -736,7 +322,6 @@
           <div class="accordion-warning">
             ⚠️ <strong>A note on edge size:</strong> I did not measure each hold, however I tried to press my fingers in as deeply as possible in the photos and my finger pads are almost exactly 30 mm. I estimated edge size by looking at my finger pads in the grip photos. In some of the photos I had to lift my palm out of the way of the camera so my finger pads are not fully pressed on the entire hold surface.
           </div>
-          
         </div>
       </div>
     </div>
@@ -747,33 +332,25 @@
           <input type="checkbox" class="toggle-input" id="tier1Toggle" checked>
           <div class="toggle-switch" style="background: var(--tier-1);"></div>
           <span>Tier 1 (Jugs)</span>
-          <div class="tier-tooltip">
-             <p><span class="t1-desc">Tier 1</span> is the "best" holds (jugs). These are ~30+ mm incut holds with enough space for 1+ finger pads to fit on the hold. Usually used with an open-hand grip (as opposed to a crimp grip). Steeper wall angles don't affect the quality of these much. "Mega jugs" are ~50+ mm incut holds that are easily matchable.</p>
-          </div>
+          <div class="tier-tooltip"><p><span class="t1-desc">Tier 1</span> is the "best" holds (jugs). These are ~30+ mm incut holds with enough space for 1+ finger pads to fit on the hold. Usually used with an open-hand grip (as opposed to a crimp grip). Steeper wall angles don't affect the quality of these much. "Mega jugs" are ~50+ mm incut holds that are easily matchable.</p></div>
         </label>
         <button class="info-icon" data-tier="1">?</button>
       </div>
-
       <div class="toggle-container">
         <label class="toggle-group">
           <input type="checkbox" class="toggle-input" id="tier2Toggle" checked>
           <div class="toggle-switch" style="background: var(--tier-2);"></div>
           <span>Tier 2 (Intermediates)</span>
-          <div class="tier-tooltip">
-            <p><span class="t2-desc">Tier 2</span> is "intermediate" holds. These include ~20-30 mm "good" or "decent" crimps and pinches and slightly incut slopers with large edges (~30-40 mm). Steeper wall angles can make these significantly worse, especially slopers and pinches.</p>
-          </div>
+          <div class="tier-tooltip"><p><span class="t2-desc">Tier 2</span> is "intermediate" holds. These include ~20-30 mm "good" or "decent" crimps and pinches and slightly incut slopers with large edges (~30-40 mm). Steeper wall angles can make these significantly worse, especially slopers and pinches.</p></div>
         </label>
         <button class="info-icon" data-tier="2">?</button>
       </div>
-
       <div class="toggle-container">
         <label class="toggle-group">
           <input type="checkbox" class="toggle-input" id="tier3Toggle" checked>
           <div class="toggle-switch" style="background: var(--tier-3);"></div>
           <span>Tier 3 (Bad Holds)</span>
-          <div class="tier-tooltip">
-            <p><span class="t3-desc">Tier 3</span> is "bad" holds. These include slightly incut or flat crimps and foot chips (usually <~20 mm), along with fat or sloping vertical pinches. Making good use of these is highly dependent on body position and tension, and the hold quality rapidly degrades as wall angle steepens.</p>
-          </div>
+          <div class="tier-tooltip"><p><span class="t3-desc">Tier 3</span> is "bad" holds. These include slightly incut or flat crimps and foot chips (usually <~20 mm), along with fat or sloping vertical pinches. Making good use of these is highly dependent on body position and tension, and the hold quality rapidly degrades as wall angle steepens.</p></div>
         </label>
         <button class="info-icon" data-tier="3">?</button>
       </div>
@@ -801,20 +378,33 @@
             </div>
         </div>
       </div>
-	  
-	   <!-- NEW: Set filters moved here to sit directly above the grid -->
+      
       <div class="filter-group" style="margin-bottom: 1.5rem;">
           <span class="filter-group-label">Set:</span>
           <button class="filter-btn active" data-filter-type="set" data-filter-value="all" id="filterSetAll">All</button>
-          <button class="filter-btn" data-filter-type="set" data-filter-value="Square edge set" title="Square edge set">⬜</button>
-          <button class="filter-btn" data-filter-type="set" data-filter-value="Fat sloping pinch set" title="Fat sloping pinch set">🟧</button>
-          <button class="filter-btn" data-filter-type="set" data-filter-value="Heart-shaped crimp set" title="Heart-shaped crimp set">🩷</button>
-          <button class="filter-btn" data-filter-type="set" data-filter-value="Mega jug set" title="Mega jug set">🟩</button>
-          <button class="filter-btn" data-filter-type="set" data-filter-value="Half-moon set" title="Half-moon set">🌙</button>
-          <button class="filter-btn" data-filter-type="set" data-filter-value="Nearly-a-jug set" title="Nearly-a-jug set">🔵</button>
-          <button class="filter-btn" data-filter-type="set" data-filter-value="Slightly incut pinch set" title="Slightly incut pinch set">🟪</button>
+          <button class="filter-btn set-icon-btn" data-filter-type="set" data-filter-value="Square edge set" title="Square edge set" style="color: #cbd5e1;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          </button>
+          <button class="filter-btn set-icon-btn" data-filter-type="set" data-filter-value="Fat sloping pinch set" title="Fat sloping pinch set" style="color: #fbbf24;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16M18 4v16M6 12h12"/></svg>
+          </button>
+          <button class="filter-btn set-icon-btn" data-filter-type="set" data-filter-value="Heart-shaped crimp set" title="Heart-shaped crimp set" style="color: #f9a8d4;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <button class="filter-btn set-icon-btn" data-filter-type="set" data-filter-value="Mega jug set" title="Mega jug set" style="color: #86efac;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v6a8 8 0 0 1-16 0V4z"/></svg>
+          </button>
+          <button class="filter-btn set-icon-btn" data-filter-type="set" data-filter-value="Half-moon set" title="Half-moon set" style="color: #93c5fd;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c.132 0 .263 0 .393 0a5.5 5.5 0 0 0 5.5 5.5c0 .13 0 .26 0 .39a9 9 0 1 1-5.893-5.89z"/></svg>
+          </button>
+          <button class="filter-btn set-icon-btn" data-filter-type="set" data-filter-value="Nearly-a-jug set" title="Nearly-a-jug set" style="color: #67e8f9;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="4 4"/></svg>
+          </button>
+          <button class="filter-btn set-icon-btn" data-filter-type="set" data-filter-value="Slightly incut pinch set" title="Slightly incut pinch set" style="color: #c4b5fd;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4v16M17 4v16M7 14c4 0 6-2 10-2"/></svg>
+          </button>
       </div>
-	  
+
       <div class="hold-list-grid" id="holdListGrid"></div>
     </section>
   </main>
@@ -822,13 +412,9 @@
   <!-- Modal -->
   <div class="modal-overlay" id="holdModal">
     <div class="modal-content">
-	    <div class="modal-content">
-      <!-- Navigation Arrows -->
       <button id="prevHoldBtn" class="modal-nav-btn modal-nav-left">&larr;</button>
       <button id="nextHoldBtn" class="modal-nav-btn modal-nav-right">&rarr;</button>
       
-      <div class="modal-images">
-        <!-- ... rest of the modal ... -->
       <div class="modal-images">
         <div class="modal-img-column">
           <div class="modal-img-container">
@@ -891,9 +477,6 @@
   <!-- Tier Info Modal (Mobile Popup) -->
   <div class="modal-overlay" id="tierInfoModal">
     <div class="modal-content" style="max-width: 400px;">
-	      <!-- Navigation Arrows -->
-      <button id="prevHoldBtn" class="modal-nav-btn modal-nav-left">&larr;</button>
-      <button id="nextHoldBtn" class="modal-nav-btn modal-nav-right">&rarr;</button>
       <div class="modal-details">
         <div class="modal-header">
             <h3 id="tierInfoTitle" style="color: var(--fg); margin: 0;">Tier Info</h3>
@@ -908,8 +491,8 @@
 
   <script src="nav.js"></script>
   <script>
-        let holdsData = {}; // Will be populated from JSON
-    let sortedHoldIds = []; // NEW: Array to hold sorted IDs for navigation
+    let holdsData = {};
+    let sortedHoldIds = [];
 
     // ============================================
     // 1. LOAD DATA
@@ -920,7 +503,6 @@
             if (!response.ok) throw new Error('Network response was not ok');
             holdsData = await response.json();
             
-            // NEW: Sort holds: Row 1 (A-Q), Row 2 (A-Q)... Row 18 (A-Q)
             const cols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
             sortedHoldIds = Object.keys(holdsData).sort((a, b) => {
                 const rowA = parseInt(a.match(/\d+/)[0]);
@@ -948,7 +530,6 @@
             document.getElementById('tier2Toggle').checked = false;
             document.getElementById('tier3Toggle').checked = false;
         }
-
         renderGrid();
         renderGridLabels();
         renderHoldList();
@@ -958,14 +539,12 @@
     // ============================================
     // 3. RENDER FUNCTIONS
     // ============================================
-    
     const gridOverlay = document.getElementById('gridOverlay');
     const holdListGrid = document.getElementById('holdListGrid');
     const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
 
     function renderGrid() {
         gridOverlay.innerHTML = '';
-        
         const t1Active = document.getElementById('tier1Toggle') ? document.getElementById('tier1Toggle').checked : true;
         const t2Active = document.getElementById('tier2Toggle') ? document.getElementById('tier2Toggle').checked : true;
         const t3Active = document.getElementById('tier3Toggle') ? document.getElementById('tier3Toggle').checked : true;
@@ -984,24 +563,11 @@
                 if (holdsData[holdId]) {
                     const data = holdsData[holdId];
                     cell.classList.add(`tier-${data.tier}`);
-                    
-                    if ((data.tier === 1 && t1Active) || 
-                        (data.tier === 2 && t2Active) || 
-                        (data.tier === 3 && t3Active)) {
+                    if ((data.tier === 1 && t1Active) || (data.tier === 2 && t2Active) || (data.tier === 3 && t3Active)) {
                         cell.classList.add('show-tier-dot');
                     }
-
                     const typeText = Array.isArray(data.type) ? data.type.join(' / ') : data.type;
-
-                    cell.innerHTML = `
-                        <div class="hold-tooltip">
-                            <img src="${data.profileImg}" class="tooltip-img" alt="${holdId}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x100/222/555?text=No+Image'">
-                            <div class="tooltip-info">
-                                <h4>${holdId}</h4>
-                                <p>${typeText}</p>
-                                <span class="tier-badge t-${data.tier}">Tier ${data.tier}</span>
-                            </div>
-                        </div>`;
+                    cell.innerHTML = `<div class="hold-tooltip"><img src="${data.profileImg}" class="tooltip-img" alt="${holdId}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x100/222/555?text=No+Image'"><div class="tooltip-info"><h4>${holdId}</h4><p>${typeText}</p><span class="tier-badge t-${data.tier}">Tier ${data.tier}</span></div></div>`;
                     cell.addEventListener('click', () => openModal(holdId));
                 }
                 gridOverlay.appendChild(cell);
@@ -1012,7 +578,6 @@
     function renderGridLabels() {
         const existingLabels = gridOverlay.querySelectorAll('.grid-label');
         existingLabels.forEach(label => label.remove());
-
         columns.forEach((letter, i) => {
             const label = document.createElement('div');
             label.className = 'grid-label col-label';
@@ -1020,7 +585,6 @@
             label.style.left = `calc((${i} / 17) * 100%)`;
             gridOverlay.appendChild(label);
         });
-
         for (let r = 18; r >= 1; r--) {
             const label = document.createElement('div');
             label.className = 'grid-label row-label';
@@ -1033,37 +597,32 @@
 
     function renderHoldList() {
         holdListGrid.innerHTML = '';
-        
         const activeTier = document.querySelector('.filter-btn[data-filter-type="tier"].active').dataset.filterValue;
-
         const activeTypeButtons = document.querySelectorAll('.filter-btn[data-filter-type="type"].active');
         const activeTypes = Array.from(activeTypeButtons).map(btn => btn.dataset.filterValue);
         const isFilteringByType = !activeTypes.includes('all');
 
+        const activeSetBtn = document.querySelector('.filter-btn[data-filter-type="set"].active');
+        const activeSet = activeSetBtn ? activeSetBtn.dataset.filterValue : 'all';
+
         Object.keys(holdsData).forEach(id => {
             const data = holdsData[id];
-            
             if (activeTier !== 'all' && `tier-${data.tier}` !== activeTier) return;
-
             if (isFilteringByType) {
                 const holdTypes = Array.isArray(data.type) ? data.type : [data.type];
                 const hasAllSelected = activeTypes.every(t => holdTypes.includes(t));
                 if (!hasAllSelected) return;
             }
+            if (activeSet !== 'all') {
+                const notes = data.notes || "";
+                if (!notes.includes(activeSet)) return;
+            }
 
             const card = document.createElement('div');
             card.className = 'hold-list-card';
             card.onclick = () => openModal(id);
-
             const typeText = Array.isArray(data.type) ? data.type.join(' / ') : data.type;
-
-            card.innerHTML = `
-                <img src="${data.profileImg}" class="list-card-img" alt="${id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80x80/222/555?text=N/A'">
-                <div class="list-card-info">
-                    <h4>${id}</h4>
-                    <p class="type-text">${typeText}</p>
-                    <span class="tier-badge t-${data.tier}">Tier ${data.tier}</span>
-                </div>`;
+            card.innerHTML = `<img src="${data.profileImg}" class="list-card-img" alt="${id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80x80/222/555?text=N/A'"><div class="list-card-info"><h4>${id}</h4><p class="type-text">${typeText}</p><span class="tier-badge t-${data.tier}">Tier ${data.tier}</span></div>`;
             holdListGrid.appendChild(card);
         });
     }
@@ -1071,7 +630,6 @@
     // ============================================
     // 4. INTERACTIONS
     // ============================================
-    
     const modal = document.getElementById('holdModal');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
@@ -1079,41 +637,27 @@
     const tier1Toggle = document.getElementById('tier1Toggle');
     const tier2Toggle = document.getElementById('tier2Toggle');
     const tier3Toggle = document.getElementById('tier3Toggle');
-    const boardWrapper = document.getElementById('boardWrapper');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
     function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
     function closeLightbox() { lightbox.classList.remove('active'); }
-        
     function closeModal() {
-        if (modal.classList.contains('active')) {
-             history.pushState("", document.title, window.location.pathname + window.location.search);
-        }
+        if (modal.classList.contains('active')) { history.pushState("", document.title, window.location.pathname + window.location.search); }
         modal.classList.remove('active');
     }
 
     window.openModal = function(id, isHashTrigger = false) {
         const data = holdsData[id];
         if (!data) return;
-
-        if (!isHashTrigger) {
-            history.pushState(null, null, '#' + id);
-        }
-
-        if (window.innerWidth < 768) {
-            window.scrollTo(0, 0);
-        }
+        if (!isHashTrigger) { history.pushState(null, null, '#' + id); }
+        if (window.innerWidth < 768) { window.scrollTo(0, 0); }
 
         document.getElementById('modalTitle').textContent = id;
-        
         const descEl = document.getElementById('modalDesc');
         const rawDesc = data.desc || "";
         descEl.innerHTML = rawDesc.replace(/\n/g, '<br>');
         
-        // --- Tags & Grade ---
-        const gradeBadge = document.getElementById('modalGrade');
         document.getElementById('gradeText').textContent = data.grade ? `Grade ${data.grade}` : 'Grade N/A';
-        
         const tierBadge = document.getElementById('modalBadge');
         tierBadge.textContent = `Tier ${data.tier}`;
         tierBadge.className = `tier-badge t-${data.tier}`;
@@ -1133,70 +677,35 @@
         let holdsetClass = "";
         let holdsetIcon = "";
         
-        // Search anywhere in the string for the set descriptor
         const setMatch = notesText.match(/(Square edge set|Fat sloping pinch set|Heart-shaped crimp set|Mega jug set|Half-moon set|Nearly-a-jug set|Slightly incut pinch set):\s*(.*)/s);
-        
         if (setMatch) {
-            holdsetName = setMatch[1]; // e.g., "Mega jug set"
-            holdsetDescription = setMatch[2].trim(); // e.g., "these are ~50+ mm incut holds..."
-            
-            // Remove ONLY the matched set block from the regular notes text
-            // This leaves behind any custom notes you wrote before or after it
+            holdsetName = setMatch[1];
+            holdsetDescription = setMatch[2].trim();
             cleanNotes = notesText.replace(setMatch[0], "").trim();
         }
 
-        // Map icons and colors based on the set name
         const holdsetMap = {
-            "Square edge set": { 
-                class: "set-square", 
-                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>' 
-            },
-            "Fat sloping pinch set": { 
-                class: "set-fat-pinch", 
-                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16M18 4v16M6 12h12"/></svg>' 
-            },
-            "Heart-shaped crimp set": { 
-                class: "set-heart-crimp", 
-                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' 
-            },
-            "Mega jug set": { 
-                class: "set-mega-jug", 
-                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v6a8 8 0 0 1-16 0V4z"/></svg>' 
-            },
-            "Half-moon set": { 
-                class: "set-half-moon", 
-                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c.132 0 .263 0 .393 0a5.5 5.5 0 0 0 5.5 5.5c0 .13 0 .26 0 .39a9 9 0 1 1-5.893-5.89z"/></svg>' 
-            },
-            "Nearly-a-jug set": { 
-                class: "set-nearly-jug", 
-                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="4 4"/></svg>' 
-            },
-            "Slightly incut pinch set": { 
-                class: "set-slightly-incut", 
-                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4v16M17 4v16M7 14c4 0 6-2 10-2"/></svg>' 
-            }
+            "Square edge set": { class: "set-square", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>' },
+            "Fat sloping pinch set": { class: "set-fat-pinch", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16M18 4v16M6 12h12"/></svg>' },
+            "Heart-shaped crimp set": { class: "set-heart-crimp", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' },
+            "Mega jug set": { class: "set-mega-jug", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v6a8 8 0 0 1-16 0V4z"/></svg>' },
+            "Half-moon set": { class: "set-half-moon", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c.132 0 .263 0 .393 0a5.5 5.5 0 0 0 5.5 5.5c0 .13 0 .26 0 .39a9 9 0 1 1-5.893-5.89z"/></svg>' },
+            "Nearly-a-jug set": { class: "set-nearly-jug", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="4 4"/></svg>' },
+            "Slightly incut pinch set": { class: "set-slightly-incut", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4v16M17 4v16M7 14c4 0 6-2 10-2"/></svg>' }
         };
 
         const pullout = document.getElementById('modalHoldset');
-
         if (holdsetMap[holdsetName]) {
-            // Valid set found: populate and show the pullout
             holdsetClass = holdsetMap[holdsetName].class;
             holdsetIcon = holdsetMap[holdsetName].icon;
-            
-            // Combine the name and description into the pullout label
             const pulloutText = `${holdsetName}: ${holdsetDescription}`;
-            
             document.getElementById('holdsetName').textContent = pulloutText;
             document.getElementById('holdsetIcon').innerHTML = holdsetIcon;
             pullout.className = `holdset-pullout ${holdsetClass}`;
-            pullout.style.display = "flex"; // Explicitly show it
+            pullout.style.display = "flex";
         } else {
-            // No valid set found: hide the pullout entirely
             pullout.style.display = "none";
         }
-
-        // Apply cleaned notes text (which no longer contains the set block)
         document.getElementById('modalNotes').textContent = cleanNotes;
 
         const profileImg = document.getElementById('modalProfileImg');
@@ -1213,23 +722,14 @@
         modal.classList.add('active');
     };
 
-	    // ============================================
-    // MODAL NAVIGATION (Left/Right)
-    // ============================================
     function navigateModal(direction) {
-        // Don't navigate if modal is closed or lightbox is open
         if (!modal.classList.contains('active') || lightbox.classList.contains('active')) return;
-        
         const currentId = window.location.hash.substring(1);
         const currentIndex = sortedHoldIds.indexOf(currentId);
-        
         if (currentIndex === -1) return;
-        
-        // Calculate new index with wraparound (A1 left -> Q18, Q18 right -> A1)
         let newIndex = currentIndex + direction;
         if (newIndex < 0) newIndex = sortedHoldIds.length - 1;
         if (newIndex >= sortedHoldIds.length) newIndex = 0;
-        
         openModal(sortedHoldIds[newIndex]);
     }
 
@@ -1237,63 +737,44 @@
         const accContainer = document.querySelector('.accordion-container');
         const accTrigger = document.getElementById('characteristicsTrigger');
         const accContent = document.getElementById('characteristicsContent');
-
         if (accTrigger) {
             accTrigger.addEventListener('click', () => {
                 accContainer.classList.toggle('active');
-                if (accContainer.classList.contains('active')) {
-                    accContent.style.maxHeight = accContent.scrollHeight + "px";
-                } else {
-                    accContent.style.maxHeight = null;
-                }
+                if (accContainer.classList.contains('active')) { accContent.style.maxHeight = accContent.scrollHeight + "px"; } 
+                else { accContent.style.maxHeight = null; }
             });
         }
 
         function handleHashChange() {
             const hash = window.location.hash.substring(1);
-            if (hash && holdsData[hash]) {
-                openModal(hash, true);
-            } else if (!hash) {
-                closeModal();
-            }
+            if (hash && holdsData[hash]) { openModal(hash, true); } 
+            else if (!hash) { closeModal(); }
         }
-
         window.addEventListener('hashchange', handleHashChange);
         if (window.location.hash) handleHashChange();
 
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         lightbox.addEventListener('click', closeLightbox);
-		
-		 // NEW: Navigation Button Listeners
-        document.getElementById('prevHoldBtn').addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            navigateModal(-1); 
-        });
-        document.getElementById('nextHoldBtn').addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            navigateModal(1); 
-        });
-		
+        
+        document.getElementById('prevHoldBtn').addEventListener('click', (e) => { e.stopPropagation(); navigateModal(-1); });
+        document.getElementById('nextHoldBtn').addEventListener('click', (e) => { e.stopPropagation(); navigateModal(1); });
+        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') { 
                 if (lightbox.classList.contains('active')) closeLightbox();
                 else closeModal();
             }
-			
-			// NEW: Keyboard Arrow Listeners
             if (modal.classList.contains('active') && !lightbox.classList.contains('active')) {
                 if (e.key === 'ArrowLeft') navigateModal(-1);
                 if (e.key === 'ArrowRight') navigateModal(1);
             }
-			
         });
 
         const tierInfoModal = document.getElementById('tierInfoModal');
         const tierInfoTitle = document.getElementById('tierInfoTitle');
         const tierInfoDesc = document.getElementById('tierInfoDesc');
         const closeTierInfoBtn = document.getElementById('closeTierInfo');
-
         const tierDescriptions = {
             1: "<span class='t1-desc'>Tier 1</span> is the \"best\" holds (jugs). These are ~30+ mm deeply incut holds with enough space for 1+ finger pads to fit on the hold. Usually used with an open-hand grip (as opposed to a crimp grip). Steeper wall angles don't affect the quality of these much. \"Mega jugs\" are ~50+ mm incut holds that are easily matchable.",
             2: "<span class='t2-desc'>Tier 2</span> is \"intermediate\" holds. These include ~20-30 mm \"good\" or \"decent\" crimps and pinches and slightly incut slopers with large edges (~30-40 mm). Steeper wall angles can make these significantly worse, especially slopers and pinches.",
@@ -1302,11 +783,8 @@
 
         document.querySelectorAll('.info-icon').forEach(icon => {
             icon.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
+                e.preventDefault(); e.stopPropagation();
                 const tier = icon.dataset.tier;
-                
                 if (window.innerWidth < 768) {
                     tierInfoTitle.textContent = `Tier ${tier} Info`;
                     tierInfoDesc.innerHTML = tierDescriptions[tier];
@@ -1314,16 +792,10 @@
                 }
             });
         });
-
-        closeTierInfoBtn.addEventListener('click', () => {
-            tierInfoModal.classList.remove('active');
-        });
-        tierInfoModal.addEventListener('click', (e) => {
-            if (e.target === tierInfoModal) tierInfoModal.classList.remove('active');
-        });
+        closeTierInfoBtn.addEventListener('click', () => { tierInfoModal.classList.remove('active'); });
+        tierInfoModal.addEventListener('click', (e) => { if (e.target === tierInfoModal) tierInfoModal.classList.remove('active'); });
 
         const tierToggles = { 1: tier1Toggle, 2: tier2Toggle, 3: tier3Toggle };
-
         function updateGridVisibility() {
             const cells = gridOverlay.querySelectorAll('.hold-cell');
             cells.forEach(cell => {
@@ -1337,10 +809,7 @@
                 }
             });
         }
-
-        [tier1Toggle, tier2Toggle, tier3Toggle].forEach(toggle => {
-            toggle.addEventListener('change', updateGridVisibility);
-        });
+        [tier1Toggle, tier2Toggle, tier3Toggle].forEach(toggle => { toggle.addEventListener('change', updateGridVisibility); });
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -1359,6 +828,10 @@
                         const anyActive = document.querySelector('.filter-btn[data-filter-type="type"]:not([data-filter-value="all"]).active');
                         if (!anyActive) document.getElementById('filterAll').classList.add('active');
                     }
+                }
+                if (group === 'set') {
+                    document.querySelectorAll(`.filter-btn[data-filter-type="set"]`).forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
                 }
                 renderHoldList();
             });
