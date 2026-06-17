@@ -205,7 +205,7 @@
     .type-badge.sloper.undercling { background: linear-gradient(90deg, rgba(96, 165, 250, 0.3) 50%, rgba(167, 139, 250, 0.3) 50%); }
     .type-badge.sloper.pinch { background: linear-gradient(90deg, rgba(250, 204, 21, 0.3) 50%, rgba(244, 114, 182, 0.3) 50%); }
 
-        .board-controls { 
+    .board-controls { 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
@@ -216,15 +216,12 @@
       border: 1px solid var(--border); 
       flex-wrap: wrap; 
       gap: 1rem; 
-      
-      /* NEW: Shrink width on desktop and center */
       width: fit-content;
-      max-width: 100%; /* Safety catch */
+      max-width: 100%;
       margin-left: auto;
       margin-right: auto;
     }
-	
-    /* New layout for toggle containers */
+    
     .toggle-container {
       display: flex;
       align-items: center;
@@ -259,7 +256,6 @@
 
     .modal-overlay.active .modal-content { transform: scale(1); }
 
-    /* Side-by-Side Images */
     .modal-images {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -297,7 +293,6 @@
 
     .modal-details { padding: 1.5rem; }
     
-    /* Header Layout */
     .modal-header {
       display: flex;
       justify-content: space-between;
@@ -322,7 +317,6 @@
     #lightbox.active { opacity: 1; pointer-events: all; }
     #lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
 
-    /* Hold List Section */
     .hold-list-section { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
     .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
     .filters-container { display: flex; gap: 1rem; flex-wrap: wrap; width: 100%; }
@@ -342,20 +336,10 @@
     .angle-warning { background: rgba(248, 113, 113, 0.1); border-left: 3px solid var(--tier-3); padding: 0.75rem; margin-top: 1rem; font-size: 0.875rem; display: none; }
     .angle-warning.visible { display: block; }
 
-    /* Modal Title Alignment */
-    #modalTitleRow {
-      align-items: center;
-    }
-    #modalTitleRow .type-badge {
-      margin-top: -2px;
-    }
+    #modalTitleRow { align-items: center; }
+    #modalTitleRow .type-badge { margin-top: -2px; }
 
-    /* Toggle Tooltips */
-    .toggle-label-text {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+    .toggle-label-text { display: flex; align-items: center; gap: 0.5rem; }
 
     .info-icon {
       display: inline-flex;
@@ -425,7 +409,6 @@
     .t2-desc { color: var(--tier-2); font-weight: 600; }
     .t3-desc { color: var(--tier-3); font-weight: 600; }
 
-        /* Description & Notes Layout - 40/60 Split */
     .modal-text-grid {
         display: grid;
         grid-template-columns: 2fr 3fr; 
@@ -434,23 +417,22 @@
         align-items: start;
     }
 
-    /* Force Description Text to fill width better */
-    .desc-section {
-        width: 100%; /* Ensure it uses the full 40% allocated space */
-    }
+    .desc-section { width: 100%; }
 
     #modalDesc {
         color: rgba(255,255,255,0.85);
         line-height: 1.6;
         margin: 0;
-        /* These two lines help distribute words more evenly */
         text-align: left; 
-        hyphens: auto; /* Allows long words to hyphenate if needed */
+        hyphens: auto;
     }
 
     .notes-section {
         border-left: 1px solid var(--border);
         padding-left: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .notes-title {
@@ -469,68 +451,137 @@
         margin: 0;
     }
     
-        /* ============================================
+    /* Grade Badge & Tooltip */
+    .grade-badge {
+      background: rgba(255, 255, 255, 0.1);
+      color: #e0e0e0;
+      cursor: help;
+      position: relative;
+    }
+    .grade-tooltip {
+      visibility: hidden;
+      width: 220px;
+      background: var(--card);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 50;
+      bottom: 130%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s, visibility 0.2s;
+      font-size: 0.75rem;
+      text-transform: none;
+      font-weight: normal;
+      line-height: 1.4;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .grade-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--border);
+    }
+    .grade-badge:hover .grade-tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Holdset Pullout */
+    .holdset-pullout {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.05);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      border-left: 3px solid #ccc;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .holdset-icon { display: flex; align-items: center; }
+    
+    .holdset-pullout.set-square { border-color: #94a3b8; color: #cbd5e1; }
+    .holdset-pullout.set-fat-pinch { border-color: #d97706; color: #fbbf24; }
+    .holdset-pullout.set-heart-crimp { border-color: #ec4899; color: #f9a8d4; }
+    .holdset-pullout.set-mega-jug { border-color: #22c55e; color: #86efac; }
+    .holdset-pullout.set-half-moon { border-color: #3b82f6; color: #93c5fd; }
+    .holdset-pullout.set-nearly-jug { border-color: #06b6d4; color: #67e8f9; }
+    .holdset-pullout.set-slightly-incut { border-color: #8b5cf6; color: #c4b5fd; }
+
+    /* ============================================
        MOBILE ADJUSTMENTS & ACCESSIBILITY
        ============================================ */
     @media (max-width: 767px) {
-      /* Hide hover tooltips on grid cells */
-      .hold-tooltip {
-        display: none !important;
-      }
-
-      /* Make grid lines visible */
-      .hold-cell {
-        border-color: rgba(255,255,255,0.15);
-      }
-
-      /* Active state feedback */
+      .hold-tooltip { display: none !important; }
+      .hold-cell { border-color: rgba(255,255,255,0.15); }
       .hold-cell:active {
         background: rgba(255, 255, 255, 0.25) !important;
         border-color: rgba(255, 255, 255, 0.3);
       }
-
-      /* Tier Tooltips - Force hide on mobile */
-      .toggle-group:hover .tier-tooltip {
-        opacity: 0 !important;
-        visibility: hidden !important;
-      }
-      
-      /* FIX: Keep layout horizontal but add spacing */
-      .toggle-container {
-        margin-bottom: 1rem;
-        align-items: center; /* Vertically center items */
-      }
-
-      /* FIX: Push the ? button further away from the text */
+      .toggle-group:hover .tier-tooltip { opacity: 0 !important; visibility: hidden !important; }
+      .toggle-container { margin-bottom: 1rem; align-items: center; }
       .info-icon {
-        margin-left: 1rem; /* Add significant space between text and icon */
+        margin-left: 1rem;
         background: rgba(255,255,255,0.1);
         padding: 2px 8px;
         border-radius: 4px;
       }
-
-      /* Modal Robustness for Zoom */
       .modal-overlay {
         align-items: flex-start;
         overflow-y: auto;
         padding: 0;
-        /* Force hardware acceleration to ignore parent zoom */
         transform: translateZ(0); 
       }
       .modal-content {
         width: 100%;
         max-width: 100%;
         border-radius: 0 0 12px 12px;
-        margin-top: 0;
+        margin-top: 0;      <!-- Navigation Arrows -->
+      <button id="prevHoldBtn" class="modal-nav-btn modal-nav-left">&larr;</button>
+      <button id="nextHoldBtn" class="modal-nav-btn modal-nav-right">&rarr;</button>
       }
       .modal-img-container { height: 200px; }
-	  /* Force controls to be full width on mobile */
-      .board-controls {
-        width: 100%;
-      }
+      .board-controls { width: 100%; }
     }
 	
-	    /* ============================================
+	    /* Modal Navigation Arrows */
+    .modal-content { position: relative; }
+    .modal-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, opacity 0.2s;
+    }
+    .modal-nav-btn:hover { background: rgba(0,0,0,0.8); }
+    .modal-nav-left { left: 10px; }
+    .modal-nav-right { right: 10px; }
+    
+    @media (max-width: 767px) {
+      .modal-nav-btn { width: 32px; height: 32px; font-size: 1rem; }
+    }
+    
+    /* ============================================
        ACCORDION STYLES
        ============================================ */
     .accordion-container {
@@ -558,9 +609,7 @@
       transition: background 0.2s;
     }
 
-    .accordion-trigger:hover {
-      background: rgba(255,255,255,0.03);
-    }
+    .accordion-trigger:hover { background: rgba(255,255,255,0.03); }
 
     .accordion-icon {
       font-size: 1.5rem;
@@ -568,10 +617,7 @@
       transition: transform 0.3s ease;
     }
 
-    /* Rotate icon when open */
-    .accordion-container.active .accordion-icon {
-      transform: rotate(45deg);
-    }
+    .accordion-container.active .accordion-icon { transform: rotate(45deg); }
 
     .accordion-content {
       max-height: 0;
@@ -585,23 +631,10 @@
       line-height: 1.6;
     }
 
-    .accordion-inner p {
-      margin-bottom: 1rem;
-    }
-
-    .accordion-inner ul {
-      list-style: disc;
-      padding-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .accordion-inner li {
-      margin-bottom: 0.5rem;
-    }
-
-    .accordion-inner strong {
-      color: var(--fg);
-    }
+    .accordion-inner p { margin-bottom: 1rem; }
+    .accordion-inner ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .accordion-inner li { margin-bottom: 0.5rem; }
+    .accordion-inner strong { color: var(--fg); }
 
     .accordion-warning {
       background: rgba(250, 204, 21, 0.1);
@@ -632,15 +665,14 @@
   <main class="board-page">
     <header class="board-header">
       <h1 class="page-title">Kilter Board Map</h1>
-      <p class="page-subtitle">The original 12x12 layout.</p>
+      <p class="page-subtitle">The original 12x12 layout</p>
     </header>
 
     <div class="board-wrapper" id="boardWrapper">
       <img src="board-layout.png" alt="Kilter Board Layout" class="board-image">
       <div class="grid-overlay" id="gridOverlay"></div>
     </div>
-	
-	    <!-- Characteristics Accordion -->
+    
     <div class="accordion-container">
       <button class="accordion-trigger" id="characteristicsTrigger">
         <span>Board Characteristics</span>
@@ -649,30 +681,26 @@
       <div class="accordion-content" id="characteristicsContent">
         <div class="accordion-inner">
           <p>The original Kilter Board layout is known for its large hold size, numerous juggy holds, and soft grading (in general). It's the antithesis of the old Moonboards with their tiny pinches and crimps, almost no jugs, and brutally sandbagged grading.</p>
-		  <p>The holds have an ergonomic design: most of them have gentle curves, comfortable to grip. Some of the crimps are a little sharper, but many have rounded and slopey edges. The texture of the holds is quite smooth: they're pretty easy to grip without being very abrasive.</p>
-		  <p>The fact that the board has so many large, positive, juggy holds presents challenges for setting difficult problems, particularly at less steep angles like 40°. There is a tendency to set huge dynamic moves between juggy holds, which is a fun and flashy style, but these type of moves tend to be very height and span dependent. That being said, there are enough bad holds (especially when you include the foot chips as handholds) to set in a more classic resistance-and-tension climbing style. These latter are my favorite sets.</p>
-		  <p>The least steep angles (most commonly 30° and 20°) have climbs in odd and niche styles at higher grades, often involving huge moves requiring a large span. Using the "Routes" feature on the Kilter Board works very well at these angles.</p>
-		  <p><strong>40°</strong> is probably the most commonly used angle as some Kilter Boards are fixed at this angle. Most of the holds including the slopers feel quite juggy at this angle, but it's certainly possible to set tension-style climbs on bad holds with smaller moves at 40°, and there are plenty of such sets.</p>
-		  <p><strong>50°</strong> is a contender for the best Kilter Board angle for hard climbs because the holds, particularly the pinches and slopers, get bad enough that they become more versatile for use in hard sets (say V8+). A great example is the L11 sloper: it's very positive and has a large edge that makes it juggy enough to catch with one hand while cutting feet at 40° (see "Deathtouch"), but at 50° the hold becomes significantly harder to use, much more dependent on friction and body position.</p>
-		  <p><strong>60°</strong> is also a contender for the best Kilter Board angle for the same reasons. It feels completely different climbing at this angle compared with 50°: the slopers become even more dependent on friction and body position, and keeping tension through the feet is noticeably harder. On deadpoints with feet cuts, the swing can be massive (can approach a 180° arc) and even mega jugs can be hard to hold. Tension-style climbs with smaller moves and high feet are very common at this angle.</p>
-		  <p><strong>70°</strong> feels fairly similar to 60°. It's fun to climb at 70° but this angle creates a logistical problem: limited space between the board and the mat. If your Kilter Board doesn't have a kickboard, the wall can be just a few feet from the mats which makes it hard to climb without touching the ground. Even with a kickboard, holds near the bottom of the wall tend to be very difficult to use as anything but footholds. Feet cuts will usually result in your feet hitting the mats (dabbing) unless done near the top of the wall, or with the legs tucked.</p>
-
+          <p>The holds have an ergonomic design: most of them have gentle curves, comfortable to grip. Some of the crimps are a little sharper, but many have rounded and slopey edges. The texture of the holds is quite smooth: they're pretty easy to grip without being very abrasive.</p>
+          <p>The fact that the board has so many large, positive, juggy holds presents challenges for setting difficult problems, particularly at less steep angles like 40°. There is a tendency to set huge dynamic moves between juggy holds, which is a fun and flashy style, but these type of moves tend to be very height and span dependent. That being said, there are enough bad holds (especially when you include the foot chips as handholds) to set in a more classic resistance-and-tension climbing style. These latter are my favorite sets.</p>
+          <p>The least steep angles (most commonly 30° and 20°) have climbs in odd and niche styles at higher grades, often involving huge moves requiring a large span. Using the "Routes" feature on the Kilter Board works very well at these angles.</p>
+          <p><strong>40°</strong> is probably the most commonly used angle as some Kilter Boards are fixed at this angle. Most of the holds including the slopers feel quite juggy at this angle, but it's certainly possible to set tension-style climbs on bad holds with smaller moves at 40°, and there are plenty of such sets.</p>
+          <p><strong>50°</strong> is a contender for the best Kilter Board angle for hard climbs because the holds, particularly the pinches and slopers, get bad enough that they become more versatile for use in hard sets (say V8+). A great example is the L11 sloper: it's very positive and has a large edge that makes it juggy enough to catch with one hand while cutting feet at 40° (see "Deathtouch"), but at 50° the hold becomes significantly harder to use, much more dependent on friction and body position.</p>
+          <p><strong>60°</strong> is also a contender for the best Kilter Board angle for the same reasons. It feels completely different climbing at this angle compared with 50°: the slopers become even more dependent on friction and body position, and keeping tension through the feet is noticeably harder. On deadpoints with feet cuts, the swing can be massive (can approach a 180° arc) and even mega jugs can be hard to hold. Tension-style climbs with smaller moves and high feet are very common at this angle.</p>
+          <p><strong>70°</strong> feels fairly similar to 60°. It's fun to climb at 70° but this angle creates a logistical problem: limited space between the board and the mat. If your Kilter Board doesn't have a kickboard, the wall can be just a few feet from the mats which makes it hard to climb without touching the ground. Even with a kickboard, holds near the bottom of the wall tend to be very difficult to use as anything but footholds. Feet cuts will usually result in your feet hitting the mats (dabbing) unless done near the top of the wall, or with the legs tucked.</p>
 
           <div class="accordion-warning">
             ⚠️ <strong>A note on hold quality:</strong> Wear and tear (polishing, shoe rubber) and atmospheric conditions (humidity) can significantly change the "Tier 1" vs "Tier 3" feel of the plastic over time.
-
           </div>
-		  <div class="accordion-warning">
+          <div class="accordion-warning">
             ⚠️ <strong>A note on edge size:</strong> I did not measure each hold, however I tried to press my fingers in as deeply as possible in the photos and my finger pads are almost exactly 30 mm. I estimated edge size by looking at my finger pads in the grip photos. In some of the photos I had to lift my palm out of the way of the camera so my finger pads are not fully pressed on the entire hold surface.
-
           </div>
-		  
+          
         </div>
       </div>
     </div>
 
     <div class="board-controls">
-      <!-- Tier 1 Control -->
       <div class="toggle-container">
         <label class="toggle-group">
           <input type="checkbox" class="toggle-input" id="tier1Toggle" checked>
@@ -685,7 +713,6 @@
         <button class="info-icon" data-tier="1">?</button>
       </div>
 
-      <!-- Tier 2 Control -->
       <div class="toggle-container">
         <label class="toggle-group">
           <input type="checkbox" class="toggle-input" id="tier2Toggle" checked>
@@ -698,7 +725,6 @@
         <button class="info-icon" data-tier="2">?</button>
       </div>
 
-      <!-- Tier 3 Control -->
       <div class="toggle-container">
         <label class="toggle-group">
           <input type="checkbox" class="toggle-input" id="tier3Toggle" checked>
@@ -741,7 +767,6 @@
   <!-- Modal -->
   <div class="modal-overlay" id="holdModal">
     <div class="modal-content">
-      <!-- Images Section (Side by Side) -->
       <div class="modal-images">
         <div class="modal-img-column">
           <div class="modal-img-container">
@@ -757,7 +782,6 @@
         </div>
       </div>
 
-      <!-- Details Section -->
       <div class="modal-details">
         <div class="modal-header">
           <div class="modal-title-group">
@@ -766,6 +790,10 @@
                 <span class="type-badge" id="modalTypeBadge">Jug</span>
             </div>
             <div class="modal-tags" style="margin-top: 0.5rem;">
+              <span class="tier-badge grade-badge" id="modalGrade">
+                <span id="gradeText">Grade</span>
+                <span class="grade-tooltip">Holds are graded within their tier from 1.1 to 3.5. <br>1.1 = terrible jug, 1.5 = great jug. <br>2.1 = bad intermediate, 2.5 = good intermediate. <br>3.1 = terrible crimp, 3.5 = positive crimp.</span>
+              </span>
               <span class="tier-badge" id="modalBadge">Tier 1</span>
               <span class="tier-badge edge-badge" id="modalEdge">Large Edge</span>
             </div>
@@ -773,15 +801,21 @@
           <button class="close-btn" id="closeModal">&times;</button>
         </div>
 
-        <!-- Text Grid Container (Split View) -->
         <div class="modal-text-grid" id="modalTextGrid">
             <div class="desc-section">
                 <p style="color: rgba(255,255,255,0.85); line-height: 1.6; margin: 0;" id="modalDesc">Description goes here.</p>
             </div>
             
             <div class="notes-section">
-                <div class="notes-title">Notes</div>
-                <p id="modalNotes">Notes go here.</p>
+                <div>
+                    <div class="notes-title">Notes</div>
+                    <p id="modalNotes">Notes go here.</p>
+                </div>
+                
+                <div class="holdset-pullout" id="modalHoldset" style="display: none;">
+                    <span class="holdset-icon" id="holdsetIcon"></span>
+                    <span class="holdset-name" id="holdsetName">Set Name</span>
+                </div>
             </div>
         </div>
 
@@ -795,6 +829,9 @@
   <!-- Tier Info Modal (Mobile Popup) -->
   <div class="modal-overlay" id="tierInfoModal">
     <div class="modal-content" style="max-width: 400px;">
+	      <!-- Navigation Arrows -->
+      <button id="prevHoldBtn" class="modal-nav-btn modal-nav-left">&larr;</button>
+      <button id="nextHoldBtn" class="modal-nav-btn modal-nav-right">&rarr;</button>
       <div class="modal-details">
         <div class="modal-header">
             <h3 id="tierInfoTitle" style="color: var(--fg); margin: 0;">Tier Info</h3>
@@ -809,7 +846,8 @@
 
   <script src="nav.js"></script>
   <script>
-    let holdsData = {}; // Will be populated from JSON
+        let holdsData = {}; // Will be populated from JSON
+    let sortedHoldIds = []; // NEW: Array to hold sorted IDs for navigation
 
     // ============================================
     // 1. LOAD DATA
@@ -819,6 +857,18 @@
             const response = await fetch('holds.json');
             if (!response.ok) throw new Error('Network response was not ok');
             holdsData = await response.json();
+            
+            // NEW: Sort holds: Row 1 (A-Q), Row 2 (A-Q)... Row 18 (A-Q)
+            const cols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
+            sortedHoldIds = Object.keys(holdsData).sort((a, b) => {
+                const rowA = parseInt(a.match(/\d+/)[0]);
+                const colA = a.match(/[A-Z]+/)[0];
+                const rowB = parseInt(b.match(/\d+/)[0]);
+                const colB = b.match(/[A-Z]+/)[0];
+                
+                if (rowA !== rowB) return rowA - rowB;
+                return cols.indexOf(colA) - cols.indexOf(colB);
+            });
             
             initPage();
         } catch (error) {
@@ -831,7 +881,6 @@
     // 2. INITIALIZATION
     // ============================================
     function initPage() {
-        // Mobile Default: Turn off tiers by default on small screens
         if (window.innerWidth < 768) {
             document.getElementById('tier1Toggle').checked = false;
             document.getElementById('tier2Toggle').checked = false;
@@ -957,12 +1006,10 @@
         });
     }
 
-        // ============================================
+    // ============================================
     // 4. INTERACTIONS
     // ============================================
     
-    // 1. DECLARE VARIABLES GLOBALLY
-    // This ensures functions like openModal can access them.
     const modal = document.getElementById('holdModal');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
@@ -973,29 +1020,24 @@
     const boardWrapper = document.getElementById('boardWrapper');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
-    // 2. HELPER FUNCTIONS
     function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
     function closeLightbox() { lightbox.classList.remove('active'); }
         
     function closeModal() {
-        // Only remove hash if modal is actually active to prevent loops
         if (modal.classList.contains('active')) {
              history.pushState("", document.title, window.location.pathname + window.location.search);
         }
         modal.classList.remove('active');
     }
 
-    // 3. MAIN MODAL FUNCTION (Global for hash routing)
     window.openModal = function(id, isHashTrigger = false) {
         const data = holdsData[id];
         if (!data) return;
 
-        // Update URL if not triggered by hash change itself
         if (!isHashTrigger) {
             history.pushState(null, null, '#' + id);
         }
 
-        // Mobile Zoom Fix: Scroll to top
         if (window.innerWidth < 768) {
             window.scrollTo(0, 0);
         }
@@ -1006,15 +1048,10 @@
         const rawDesc = data.desc || "";
         descEl.innerHTML = rawDesc.replace(/\n/g, '<br>');
         
-        document.getElementById('modalNotes').textContent = data.notes || "";
-
-        const profileImg = document.getElementById('modalProfileImg');
-        const gripImg = document.getElementById('modalGripImg');
-        profileImg.src = data.profileImg;
-        gripImg.src = data.gripImg;
-        profileImg.onclick = () => openLightbox(data.profileImg);
-        gripImg.onclick = () => openLightbox(data.gripImg);
-
+        // --- Tags & Grade ---
+        const gradeBadge = document.getElementById('modalGrade');
+        document.getElementById('gradeText').textContent = data.grade ? `Grade ${data.grade}` : 'Grade N/A';
+        
         const tierBadge = document.getElementById('modalBadge');
         tierBadge.textContent = `Tier ${data.tier}`;
         tierBadge.className = `tier-badge t-${data.tier}`;
@@ -1026,6 +1063,80 @@
         const classString = typeArray.map(t => t.toLowerCase()).join(' ');
         typeBadge.className = `type-badge ${classString}`;
 
+                // --- Notes & Holdset Pullout Logic ---
+        const notesText = data.notes || "";
+        let cleanNotes = notesText;
+        let holdsetName = "";
+        let holdsetClass = "";
+        let holdsetIcon = "";
+        
+        // Search anywhere in the string for the set descriptor
+        const setMatch = notesText.match(/(Square edge set|Fat sloping pinch set|Heart-shaped crimp set|Mega jug set|Half-moon set|Nearly-a-jug set|Slightly incut pinch set):\s*(.*)/s);
+        
+        if (setMatch) {
+            holdsetName = setMatch[1]; // The set name
+            // Remove ONLY the set name and its colon, leaving the rest of the notes intact
+            cleanNotes = notesText.replace(setMatch[1] + ":", "").trim();
+        }
+
+        // Map icons and colors based on the set name
+        const holdsetMap = {
+            "Square edge set": { 
+                class: "set-square", 
+                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>' 
+            },
+            "Fat sloping pinch set": { 
+                class: "set-fat-pinch", 
+                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16M18 4v16M6 12h12"/></svg>' 
+            },
+            "Heart-shaped crimp set": { 
+                class: "set-heart-crimp", 
+                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' 
+            },
+            "Mega jug set": { 
+                class: "set-mega-jug", 
+                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v6a8 8 0 0 1-16 0V4z"/></svg>' 
+            },
+            "Half-moon set": { 
+                class: "set-half-moon", 
+                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c.132 0 .263 0 .393 0a5.5 5.5 0 0 0 5.5 5.5c0 .13 0 .26 0 .39a9 9 0 1 1-5.893-5.89z"/></svg>' 
+            },
+            "Nearly-a-jug set": { 
+                class: "set-nearly-jug", 
+                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="4 4"/></svg>' 
+            },
+            "Slightly incut pinch set": { 
+                class: "set-slightly-incut", 
+                icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4v16M17 4v16M7 14c4 0 6-2 10-2"/></svg>' 
+            }
+        };
+
+        const pullout = document.getElementById('modalHoldset');
+
+        if (holdsetMap[holdsetName]) {
+            // Valid set found: populate and show the pullout
+            holdsetClass = holdsetMap[holdsetName].class;
+            holdsetIcon = holdsetMap[holdsetName].icon;
+            
+            document.getElementById('holdsetName').textContent = holdsetName;
+            document.getElementById('holdsetIcon').innerHTML = holdsetIcon;
+            pullout.className = `holdset-pullout ${holdsetClass}`;
+            pullout.style.display = "flex"; // Explicitly show it
+        } else {
+            // No valid set found: hide the pullout entirely
+            pullout.style.display = "none";
+        }
+
+        // Apply cleaned notes text
+        document.getElementById('modalNotes').textContent = cleanNotes;
+
+        const profileImg = document.getElementById('modalProfileImg');
+        const gripImg = document.getElementById('modalGripImg');
+        profileImg.src = data.profileImg;
+        gripImg.src = data.gripImg;
+        profileImg.onclick = () => openLightbox(data.profileImg);
+        gripImg.onclick = () => openLightbox(data.gripImg);
+
         const warningEl = document.getElementById('modalWarning');
         if (data.angleSensitive) warningEl.classList.add('visible');
         else warningEl.classList.remove('visible');
@@ -1033,13 +1144,27 @@
         modal.classList.add('active');
     };
 
-    // 4. SETUP EVENT LISTENERS
-    function setupEventListeners() {
-        // Note: Variables (modal, lightbox, etc.) are already defined globally above.
+	    // ============================================
+    // MODAL NAVIGATION (Left/Right)
+    // ============================================
+    function navigateModal(direction) {
+        // Don't navigate if modal is closed or lightbox is open
+        if (!modal.classList.contains('active') || lightbox.classList.contains('active')) return;
+        
+        const currentId = window.location.hash.substring(1);
+        const currentIndex = sortedHoldIds.indexOf(currentId);
+        
+        if (currentIndex === -1) return;
+        
+        // Calculate new index with wraparound (A1 left -> Q18, Q18 right -> A1)
+        let newIndex = currentIndex + direction;
+        if (newIndex < 0) newIndex = sortedHoldIds.length - 1;
+        if (newIndex >= sortedHoldIds.length) newIndex = 0;
+        
+        openModal(sortedHoldIds[newIndex]);
+    }
 
-        // ============================================
-        // ACCORDION LOGIC
-        // ============================================
+    function setupEventListeners() {
         const accContainer = document.querySelector('.accordion-container');
         const accTrigger = document.getElementById('characteristicsTrigger');
         const accContent = document.getElementById('characteristicsContent');
@@ -1055,39 +1180,46 @@
             });
         }
 
-        // ============================================
-        // HASH ROUTING (URL Linking)
-        // ============================================
         function handleHashChange() {
-            const hash = window.location.hash.substring(1); // Remove #
+            const hash = window.location.hash.substring(1);
             if (hash && holdsData[hash]) {
-                openModal(hash, true); // true = triggered by hash, don't push state again
+                openModal(hash, true);
             } else if (!hash) {
                 closeModal();
             }
         }
 
-        // Listen for back/forward button
         window.addEventListener('hashchange', handleHashChange);
-        // Check hash on load
         if (window.location.hash) handleHashChange();
 
-        // ============================================
-        // STANDARD LISTENERS
-        // ============================================
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         lightbox.addEventListener('click', closeLightbox);
+		
+		 // NEW: Navigation Button Listeners
+        document.getElementById('prevHoldBtn').addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            navigateModal(-1); 
+        });
+        document.getElementById('nextHoldBtn').addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            navigateModal(1); 
+        });
+		
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') { 
                 if (lightbox.classList.contains('active')) closeLightbox();
                 else closeModal();
             }
+			
+			// NEW: Keyboard Arrow Listeners
+            if (modal.classList.contains('active') && !lightbox.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') navigateModal(-1);
+                if (e.key === 'ArrowRight') navigateModal(1);
+            }
+			
         });
 
-        // ============================================
-        // MOBILE TIER INFO MODAL
-        // ============================================
         const tierInfoModal = document.getElementById('tierInfoModal');
         const tierInfoTitle = document.getElementById('tierInfoTitle');
         const tierInfoDesc = document.getElementById('tierInfoDesc');
@@ -1106,7 +1238,6 @@
                 
                 const tier = icon.dataset.tier;
                 
-                // Mobile Modal Behavior
                 if (window.innerWidth < 768) {
                     tierInfoTitle.textContent = `Tier ${tier} Info`;
                     tierInfoDesc.innerHTML = tierDescriptions[tier];
@@ -1122,9 +1253,6 @@
             if (e.target === tierInfoModal) tierInfoModal.classList.remove('active');
         });
 
-        // ============================================
-        // TIER TOGGLE LOGIC
-        // ============================================
         const tierToggles = { 1: tier1Toggle, 2: tier2Toggle, 3: tier3Toggle };
 
         function updateGridVisibility() {

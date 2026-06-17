@@ -271,6 +271,16 @@
                 <option value="Crimp Strength">Crimp Strength</option>
                 <option value="Random">Surprise Me</option>
             </select>
+			
+			<div class="control-group">
+            <label for="gradeSelect">Difficulty</label>
+            <select id="gradeSelect">
+                <option value="Easy">Easy</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+        </div>
+			
         </div>
 
         <button id="generateBtn" class="btn-generate">Generate Problem</button>
@@ -321,6 +331,7 @@
         const loadingOverlay = document.getElementById('loadingOverlay');
         const heightInput = document.getElementById('userHeight');
         const styleInput = document.getElementById('styleSelect');
+        const gradeInput = document.getElementById('gradeSelect'); // NEW
 
         // --- Initialization ---
         document.addEventListener('DOMContentLoaded', init);
@@ -367,7 +378,7 @@
             });
         }
 
-        // --- API Interaction ---
+         // --- API Interaction ---
         generateBtn.addEventListener('click', async () => {
             clearBoardVisuals();
             statusArea.innerText = "Contacting AI...";
@@ -378,7 +389,8 @@
                 const payload = {
                     holdsMap: holdsData,
                     userHeight: parseInt(heightInput.value),
-                    style: styleInput.value
+                    style: styleInput.value,
+                    grade: gradeInput.value // NEW
                 };
 
                 const response = await fetch(API_ENDPOINT, {
@@ -391,13 +403,11 @@
 
                 if (response.ok) {
                     if (result.warning) {
-                        statusArea.innerHTML = `<span class="status-success">Success:</span> ${result.warning}`;
+                        statusArea.innerHTML = `<span class="status-error">Warning:</span> ${result.warning}`;
                     } else {
                         statusArea.innerHTML = `<span class="status-success">Problem generated!</span>`;
                     }
-                    
                     renderProblem(result);
-
                 } else {
                     throw new Error(result.error || "Server error");
                 }
