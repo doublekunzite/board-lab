@@ -516,6 +516,22 @@
     .holdset-pullout.set-half-moon { border-color: #3b82f6; color: #93c5fd; }
     .holdset-pullout.set-nearly-jug { border-color: #06b6d4; color: #67e8f9; }
     .holdset-pullout.set-slightly-incut { border-color: #8b5cf6; color: #c4b5fd; }
+	
+	    .holdset-pullout {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: flex-start; /* Changed from center to flex-start so icons stay top-left */
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.05);
+      padding: 0.75rem;
+      border-radius: 6px;
+      border-left: 3px solid #ccc;
+      font-size: 0.85rem;
+      font-weight: 500; /* Slightly reduced from 600 for easier paragraph reading */
+      line-height: 1.5; /* Added for multi-line readability */
+      flex-wrap: wrap; /* Allows text to wrap */
+    }
+    .holdset-icon { display: flex; align-items: center; flex-shrink: 0; }
 
     /* ============================================
        MOBILE ADJUSTMENTS & ACCESSIBILITY
@@ -1063,10 +1079,11 @@
         const classString = typeArray.map(t => t.toLowerCase()).join(' ');
         typeBadge.className = `type-badge ${classString}`;
 
-                // --- Notes & Holdset Pullout Logic ---
+        // --- Notes & Holdset Pullout Logic ---
         const notesText = data.notes || "";
         let cleanNotes = notesText;
         let holdsetName = "";
+        let holdsetDescription = "";
         let holdsetClass = "";
         let holdsetIcon = "";
         
@@ -1074,9 +1091,12 @@
         const setMatch = notesText.match(/(Square edge set|Fat sloping pinch set|Heart-shaped crimp set|Mega jug set|Half-moon set|Nearly-a-jug set|Slightly incut pinch set):\s*(.*)/s);
         
         if (setMatch) {
-            holdsetName = setMatch[1]; // The set name
-            // Remove ONLY the set name and its colon, leaving the rest of the notes intact
-            cleanNotes = notesText.replace(setMatch[1] + ":", "").trim();
+            holdsetName = setMatch[1]; // e.g., "Mega jug set"
+            holdsetDescription = setMatch[2].trim(); // e.g., "these are ~50+ mm incut holds..."
+            
+            // Remove ONLY the matched set block from the regular notes text
+            // This leaves behind any custom notes you wrote before or after it
+            cleanNotes = notesText.replace(setMatch[0], "").trim();
         }
 
         // Map icons and colors based on the set name
@@ -1118,7 +1138,10 @@
             holdsetClass = holdsetMap[holdsetName].class;
             holdsetIcon = holdsetMap[holdsetName].icon;
             
-            document.getElementById('holdsetName').textContent = holdsetName;
+            // Combine the name and description into the pullout label
+            const pulloutText = `${holdsetName}: ${holdsetDescription}`;
+            
+            document.getElementById('holdsetName').textContent = pulloutText;
             document.getElementById('holdsetIcon').innerHTML = holdsetIcon;
             pullout.className = `holdset-pullout ${holdsetClass}`;
             pullout.style.display = "flex"; // Explicitly show it
@@ -1127,7 +1150,7 @@
             pullout.style.display = "none";
         }
 
-        // Apply cleaned notes text
+        // Apply cleaned notes text (which no longer contains the set block)
         document.getElementById('modalNotes').textContent = cleanNotes;
 
         const profileImg = document.getElementById('modalProfileImg');
