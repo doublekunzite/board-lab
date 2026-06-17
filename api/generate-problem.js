@@ -54,8 +54,11 @@ const validateSequence = (problem, holdsMap, maxReach) => {
     const foot = holdsMap[footId];
     if (!foot) return;
 
+    // Normalize type to array so .some() works safely
+    const footTypes = Array.isArray(foot.type) ? foot.type : [foot.type];
+    
     // Check for Underclings
-    if (foot.type && foot.type.toLowerCase().includes('undercling')) {
+    if (footTypes.some(t => t && t.toLowerCase().includes('undercling'))) {
       errors.push(`Foot hold ${footId} is an undercling. Feet must be positive holds.`);
     }
 
@@ -172,12 +175,14 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Missing required fields: holdsMap, userHeight, style, grade" });
   }
 
-  // Prepare Spatial Context (Assuming holds.json has a "grade" property like 1.5, 2.3, etc.)
+  // Prepare Spatial Context
   let boardContext = "ID | Row | Col | Type | Grade\n";
   boardContext += "----------------------------------\n";
   for (const [id, hold] of Object.entries(holdsMap)) {
-    // If your JSON key isn't "grade", change it here:
-    boardContext += `${id} | ${hold.row} | ${hold.col} | ${hold.type} | ${hold.grade}\n`;
+    // Ensure type is a string if it's an array, for the LLM context
+    const typeStr = Array.isArray(hold.type) ? hold.type.join('/') : hold.type;
+    const gradeStr = hold.grade || 'N/A';
+    boardContext += `${id} | ${hold.row} | ${hold.col} | ${typeStr} | ${gradeStr}\n`;
   }
 
   const maxReach = Math.floor(0.75 * userHeight / 15);
