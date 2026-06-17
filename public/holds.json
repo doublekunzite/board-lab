@@ -18,8 +18,7 @@
     "gripImg": "holds/B1-grip.png",
     "desc": "Incut crimp, angled left, or pinch \nMacro foothold (incut)",
     "row": 1,
-    "col": 2,
-	"grade": 
+    "col": 2
   },
   "C1": {
     "tier": 1,
@@ -1950,9 +1949,10 @@
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/Q11-profile.png",
     "gripImg": "holds/Q11-grip.png",
-    "desc": "Deeply incut right sidepull mini jug \nMacro foothold (sloping)",
+    "desc": "Incut right sidepull mini jug \nMacro foothold (sloping)",
     "row": 11,
     "col": 17,
+	"grade": 1.3
   },
   "A12": {
     "tier": 2,
@@ -2092,7 +2092,7 @@
     "profileImg": "holds/L12-profile.png",
     "gripImg": "holds/L12-grip.png",
     "desc": "Slightly incut sloping crimp \nMacro foothold (flat)",
-	"grade": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°.",
+	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°.",
     "row": 12,
     "col": 12,
 	"grade": 2.4
@@ -2835,7 +2835,7 @@
     "notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. big deadpoints to many of these are commonly set, especially at 40°-50°.",
     "row": 16,
     "col": 7,
-	"grae": 2.4
+	"grade": 2.4
   },
   "H16": {
     "tier": 3,
@@ -2966,7 +2966,7 @@
     "gripImg": "holds/A17-grip.png",
     "desc": "Slightly incut sloping crimp \nMacro foothold (incut)",
     "row": 17,
-    "col": 1
+    "col": 1,
 	"grade": 2.3
   },
   "B17": {
@@ -3075,7 +3075,7 @@
   "K17": {
     "tier": 2,
     "type": "Sloper",
-    "edgeSize": "40 mm edge",
+    "edgeSize": "~40 mm edge",
 	"angleSensitive": true,
     "profileImg": "holds/K17-profile.png",
     "gripImg": "holds/K17-grip.png",
@@ -3275,7 +3275,7 @@
   "K18": {
     "tier": 1,
     "type": ["Sloper", "Jug"],
-    "edgeSize": "45 mm edge",
+    "edgeSize": "~45 mm edge",
     "profileImg": "holds/K18-profile.png",
     "gripImg": "holds/K18-grip.png",
     "desc": "Incut sloping jug, angled 70° right \nMacro foothold (incut)",
