@@ -582,32 +582,44 @@
       .board-controls { width: 100%; }
     }
 	
-	    /* Modal Navigation Arrows */
+    /* Modal Navigation Arrows */
     .modal-content { position: relative; }
     .modal-nav-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       color: white;
-      border: none;
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 1.2rem;
+      width: 48px;
+      height: 48px;
+      font-size: 1.5rem;
       cursor: pointer;
-      z-index: 10;
+      z-index: 20; /* Increased z-index so images don't block clicks */
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s, opacity 0.2s;
+      transition: background 0.2s, transform 0.2s, opacity 0.2s;
+      backdrop-filter: blur(4px); /* Slight blur to make them pop */
     }
-    .modal-nav-btn:hover { background: rgba(0,0,0,0.8); }
-    .modal-nav-left { left: 10px; }
-    .modal-nav-right { right: 10px; }
+    .modal-nav-btn:hover { 
+      background: rgba(255,255,255,0.2); 
+      transform: translateY(-50%) scale(1.05); 
+    }
+    /* Move them completely outside the image area */
+    .modal-nav-left { left: -24px; } 
+    .modal-nav-right { right: -24px; }
     
     @media (max-width: 767px) {
-      .modal-nav-btn { width: 32px; height: 32px; font-size: 1rem; }
+      .modal-nav-btn { 
+        width: 36px; 
+        height: 36px; 
+        font-size: 1.2rem;
+        border-radius: 8px; /* Square on mobile so they don't get cut off screen */
+      }
+      .modal-nav-left { left: 0; }
+      .modal-nav-right { right: 0; }
     }
     
     /* ============================================
@@ -810,6 +822,13 @@
   <!-- Modal -->
   <div class="modal-overlay" id="holdModal">
     <div class="modal-content">
+	    <div class="modal-content">
+      <!-- Navigation Arrows -->
+      <button id="prevHoldBtn" class="modal-nav-btn modal-nav-left">&larr;</button>
+      <button id="nextHoldBtn" class="modal-nav-btn modal-nav-right">&rarr;</button>
+      
+      <div class="modal-images">
+        <!-- ... rest of the modal ... -->
       <div class="modal-images">
         <div class="modal-img-column">
           <div class="modal-img-container">
