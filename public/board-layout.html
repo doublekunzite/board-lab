@@ -141,10 +141,11 @@
       opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 1rem;
     }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
-    .modal-content {
+        .modal-content {
       background: var(--card); width: 100%; max-width: 650px;
       border-radius: 16px; border: 1px solid var(--border);
-      overflow: hidden; transform: scale(0.9); transition: transform 0.3s;
+      overflow: visible; /* CHANGED FROM hidden TO visible */
+      transform: scale(0.9); transition: transform 0.3s;
       display: flex; flex-direction: column; position: relative;
     }
     .modal-overlay.active .modal-content { transform: scale(1); }
