@@ -988,7 +988,7 @@
     "profileImg": "holds/H6-profile.png",
     "gripImg": "holds/H6-grip.png",
     "desc": "Incut sloping right sidepull crimp \nMacro foothold (incut)",
-	"notes": "Quite slopey and shallow."
+	"notes": "Quite slopey and shallow.",
     "row": 6,
     "col": 8,
 	"grade": 2.2
@@ -1012,7 +1012,7 @@
     "profileImg": "holds/J6-profile.png",
     "gripImg": "holds/J6-grip.png",
     "desc": "Incut sloping left sidepull crimp \nMacro foothold (incut)",
-	"notes": "Quite slopey and shallow."
+	"notes": "Quite slopey and shallow.",
     "row": 6,
     "col": 10,
 	"grade": 2.2
@@ -1309,7 +1309,7 @@
 	"grade": 2.2
   },
   "B8": {
-    "tier": 2,
+    "tier": 1,
     "type": "Jug",
     "edgeSize": "~30 mm edge",
     "profileImg": "holds/B8-profile.png",
@@ -1385,7 +1385,7 @@
     "profileImg": "holds/H8-profile.png",
     "gripImg": "holds/H8-grip.png",
     "desc": "Slightly incut sloping pinch, vertical \nMacro foothold (incut)",
-    "notes": "Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut (some have more than others) (some have more than others) makes a surprisingly big difference.",
+    "notes": "Slightly incut pinch set: some of the better intermediate pinches on the Kilter Board, that slight incut (some have more than others) makes a surprisingly big difference.",
     "row": 8,
     "col": 8,
 	"grade": 2.3
@@ -1841,7 +1841,7 @@
     "desc": "Incut sloping crimp \nMacro foothold (incut)",
 	"notes": "Nearly-a-jug set: Very good holds that are just shallow or slopey enough that they're not quite a jug. Big deadpoints to these are commonly set, especially at 40°-50°.",
     "row": 10,
-    "col": 13
+    "col": 13,
 	"grade": 2.4
   },
   "N10": {
