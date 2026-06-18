@@ -1,38 +1,50 @@
-// nav.js
-document.addEventListener('DOMContentLoaded', () => {
+// ============================================
+// 1. AUTO-INJECT FAVICON
+// ============================================
+(function injectFavicon() {
+    if (!document.querySelector('link[rel="icon"]')) {
+        const favicon = document.createElement('link');
+        favicon.rel = 'icon';
+        favicon.type = 'image/png';
+        // Calculate the relative path depth (e.g., '../' for pages in subdirectories)
+        const path = window.location.pathname;
+        const depth = path.split('/').length - 2; 
+        let prefix = '';
+        for (let i = 0; i < depth; i++) {
+            prefix += '../';
+        }
+        favicon.href = `${prefix}favicon.png?v=2`;
+        document.head.appendChild(favicon);
+    }
+})();
+
+// ============================================
+// 2. AUTO-INJECT NAV LINKS
+// ============================================
+(function injectNavLinks() {
     const navList = document.querySelector('.nav-links');
-    if (!navList) return; // Safety check
+    if (!navList) return; // If there's no nav list on this page, do nothing
+
+    // Calculate relative path depth again for links
+    const path = window.location.pathname;
+    const depth = path.split('/').length - 2; 
+    let prefix = '';
+    for (let i = 0; i < depth; i++) {
+        prefix += '../';
+    }
 
     // Define your navigation links here
-    // Add new pages to this list in the future
     const links = [
-        { name: 'Moves', href: 'index.html#moves' },
-		{ name: 'Board Map', href: 'board-layout.html' },
-		{ name: 'AI Setter', href: 'ai-setter.html' },
-        { name: 'Links', href: 'links.html' }
+        { name: 'Home', href: `${prefix}index.html` },
+        { name: 'Board Map', href: `${prefix}board-layout.html` },
+        { name: 'AI Setter', href: `${prefix}ai-setter.html` },
+        { name: 'Moves', href: `${prefix}moves/moves.html` } // Adjust path if needed
     ];
 
-    // Get current page filename (e.g., "links.html" or "index.html")
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-
-    // Clear existing static links (optional, but good for clean injection)
-    navList.innerHTML = '';
-
+    let html = '';
     links.forEach(link => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        
-        a.href = link.href;
-        a.className = 'nav-link';
-        a.textContent = link.name;
-
-        // Check if this is the current page (ignoring anchors like #moves for active state logic if desired)
-        // Simple match:
-        if (currentPage === link.href.split('#')[0]) {
-            a.style.color = 'var(--accent)'; // Highlight current page
-        }
-
-        li.appendChild(a);
-        navList.appendChild(li);
+        html += `<li><a href="${link.href}">${link.name}</a></li>`;
     });
-});
+    
+    navList.innerHTML = html;
+})();

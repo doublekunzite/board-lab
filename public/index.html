@@ -51,6 +51,77 @@
   }
   
   
+      /* Feature Card Grid (Full Width) */
+    .cards-grid-feature {
+      grid-template-columns: 1fr; /* Force full width */
+      max-width: 800px;
+      margin: 0 auto 4rem; /* Center it with spacing below */
+    }
+
+    /* The Feature Card Itself */
+    .feature-card {
+      padding: 2.5rem;
+      background: linear-gradient(135deg, var(--card) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--accent);
+    }
+
+    .feature-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card .move-card-title {
+      font-size: 1.8rem;
+      margin: 0;
+      color: var(--fg);
+    }
+
+    .feature-badge {
+      display: inline-block;
+      width: fit-content;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      background: rgba(255,255,255,0.05);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .feature-card .move-card-desc {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--fg-muted);
+      max-width: 600px;
+    }
+
+    /* Mobile adjustment for feature card */
+    @media (max-width: 767px) {
+      .feature-card { padding: 1.5rem; }
+      .feature-card .move-card-title { font-size: 1.4rem; }
+      .feature-card .move-card-desc { font-size: 1rem; }
+    }
+  
 </style>
 <link rel="icon" type="image/png" href="favicon.png?v=2">
 </head>
@@ -80,15 +151,29 @@
       board climbing</p>
     </section>
 	
-	 <!-- NEW SECTION: Concepts -->
-        <section class="moves-section" id="concepts">
-            <div class="category-section">
-                <h2 class="category-title">Concepts & Analysis</h2>
-                <div class="cards-grid" id="conceptsGrid">
-                    <!-- Populated by JS -->
-                </div>
+	     <!-- Main Feature: Board Map -->
+    <section class="cards-section">
+      <div class="cards-grid cards-grid-feature">
+        <!-- Board Map Card (Header Style) -->
+        <a href="board-layout.html" class="move-card feature-card">
+          <div class="move-card-content">
+            <div class="feature-header">
+              <h3 class="move-card-title">The Kilter Board Map
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </h3>
+              <span class="feature-badge">Interactive Map & Hold Database</span>
             </div>
-        </section>
+            <p class="move-card-desc">Explore every hold on the original 12x12 Kilter Board layout. Filter by tier, type, and special hold sets. Click any hold to view grip angles, edge sizes, and detailed routesetting notes.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Moves Archive (Keep this as is, if you have it below) -->
+    <!-- <section class="moves-section"> ... </section> -->
 
     <section class="moves-section" id="moves">
       
