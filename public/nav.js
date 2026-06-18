@@ -1,44 +1,44 @@
 // ============================================
-// 1. AUTO-INJECT FAVICON
+// 1. DETERMINE RELATIVE PATH TO ROOT
+// ============================================
+// Look at how this script was loaded to figure out the depth
+const navScriptTag = document.querySelector('script[src*="nav.js"]');
+let rootPath = '';
+if (navScriptTag) {
+    // e.g., if src is "../nav.js", slashes = 1, so rootPath becomes "../"
+    const src = navScriptTag.getAttribute('src');
+    const slashes = src.split('/').length - 1;
+    for (let i = 0; i < slashes; i++) {
+        rootPath += '../';
+    }
+}
+
+// ============================================
+// 2. AUTO-INJECT FAVICON
 // ============================================
 (function injectFavicon() {
     if (!document.querySelector('link[rel="icon"]')) {
         const favicon = document.createElement('link');
         favicon.rel = 'icon';
         favicon.type = 'image/png';
-        // Calculate the relative path depth (e.g., '../' for pages in subdirectories)
-        const path = window.location.pathname;
-        const depth = path.split('/').length - 2; 
-        let prefix = '';
-        for (let i = 0; i < depth; i++) {
-            prefix += '../';
-        }
-        favicon.href = `${prefix}favicon.png?v=2`;
+        favicon.href = `${rootPath}favicon.png?v=2`;
         document.head.appendChild(favicon);
     }
 })();
 
 // ============================================
-// 2. AUTO-INJECT NAV LINKS
+// 3. AUTO-INJECT NAV LINKS
 // ============================================
 (function injectNavLinks() {
     const navList = document.querySelector('.nav-links');
     if (!navList) return; // If there's no nav list on this page, do nothing
 
-    // Calculate relative path depth again for links
-    const path = window.location.pathname;
-    const depth = path.split('/').length - 2; 
-    let prefix = '';
-    for (let i = 0; i < depth; i++) {
-        prefix += '../';
-    }
-
-    // Define your navigation links here
+    // Define your navigation links using the calculated rootPath
     const links = [
-        { name: 'Home', href: `${prefix}index.html` },
-        { name: 'Board Map', href: `${prefix}board-layout.html` },
-        { name: 'AI Setter', href: `${prefix}ai-setter.html` },
-        { name: 'Moves', href: `${prefix}moves/moves.html` } // Adjust path if needed
+        { name: 'Home', href: `${rootPath}index.html` },
+        { name: 'Board Map', href: `${rootPath}board-layout.html` },
+        { name: 'AI Setter', href: `${rootPath}ai-setter.html` },
+        { name: 'Moves', href: `${rootPath}moves/moves.html` } // Adjust if your moves index has a different name
     ];
 
     let html = '';
