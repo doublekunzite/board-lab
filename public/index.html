@@ -51,11 +51,11 @@
   }
   
   
-      /* Feature Card Grid (Full Width) */
+        /* Feature Card Grid (Full Width) */
     .cards-grid-feature {
-      grid-template-columns: 1fr; /* Force full width */
-      max-width: 800px;
-      margin: 0 auto 4rem; /* Center it with spacing below */
+      grid-template-columns: 1fr;
+      max-width: 900px; /* Slightly wider max-width */
+      margin: 0 auto 4rem;
     }
 
     /* The Feature Card Itself */
@@ -82,11 +82,17 @@
       background: var(--accent);
     }
 
-    .feature-header {
+    /* NEW: Flex layout to force horizontal/wide appearance on desktop */
+    .feature-card .move-card-content {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 1.5rem;
+    }
+
+    .feature-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
     .feature-card .move-card-title {
@@ -112,7 +118,27 @@
       font-size: 1.1rem;
       line-height: 1.6;
       color: var(--fg-muted);
-      max-width: 600px;
+      margin: 0;
+    }
+
+    /* DESKTOP ONLY: Split into left/right columns to force wide aspect ratio */
+    @media (min-width: 768px) {
+      .feature-card {
+        min-height: 180px; /* Keeps it from getting too tall */
+      }
+      .feature-card .move-card-content {
+        flex-direction: row; /* Side-by-side layout */
+        align-items: center;
+        justify-content: space-between;
+      }
+      .feature-header-left {
+        flex: 0 0 40%; /* Title takes up 40% of the width */
+      }
+      .feature-card .move-card-desc {
+        flex: 1; /* Description takes up the remaining 60% */
+        border-left: 1px solid var(--border);
+        padding-left: 2rem;
+      }
     }
 
     /* Mobile adjustment for feature card */
