@@ -16,13 +16,36 @@ const validateSequence = (problem, holdsMap, maxReach) => {
     errors.push(`Sequence length is ${allHands.length}. Must be between 3 and 10 handholds.`);
   }
 
-  // 2. Check Start Zone (Rows 1-3) & Count (At least 2)
-  if (!problem.start || problem.start.length < 2) {
-    errors.push("Must have at least 2 start holds.");
+  // 2. Check Start Zone (Rows 1-6) & Count (1 or 2 holds, max 1 in row 1)
+  if (!problem.start || problem.start.length === 0 || problem.start.length > 2) {
+    errors.push("Must have 1 or 2 start holds.");
   } else {
+    let row1Count = 0;
     problem.start.forEach(id => {
-      if (holdsMap[id] && holdsMap[id].row > 3) errors.push(`Start hold ${id} is not in rows 1-3.`);
+      if (holdsMap[id]) {
+        if (holdsMap[id].row > 6) {
+          errors.push(`Start hold ${id} is not in rows 1-6.`);
+        }
+        if (holdsMap[id].row === 1) {
+          row1Count++;
+        }
+      }
     });
+    if (row1Count > 1) {
+      errors.push("Cannot have 2 start holds in Row 1.");
+    }
+
+    // NEW: Check Start Hold Spacing (must be within maxReach of each other)
+    if (problem.start.length === 2) {
+      const h1 = holdsMap[problem.start[0]];
+      const h2 = holdsMap[problem.start[1]];
+      if (h1 && h2) {
+        const startDist = calculateDistance(h1, h2);
+        if (startDist > maxReach) {
+          errors.push(`Start holds ${problem.start[0]} and ${problem.start[1]} are too far apart (${startDist.toFixed(1)} units vs max ${maxReach}).`);
+        }
+      }
+    }
   }
 
   // 3. Check Finish Zone (Rows 16-18)
@@ -89,8 +112,17 @@ Your goal is to output a JSON object representing a boulder problem.
 
 HOLD GRADING SYSTEM:
 - Holds have a Tier (1=Jug, 2=Medium, 3=Crimp) and a precise difficulty grade: 1.1 to 1.5, 2.1 to 2.5, and 3.1 to 3.5.
-- 1.1 is a terrible jug, 1.5 is a great jug. 3.1 is a terrible crimp, 3.5 is a positive crimp.
+- .1 is the "worst" hold in that tier, .5 is the "best" hold in that tier.
 - Combining positive holds with bad holds is essential for creating difficult, tension-heavy sequences.
+
+HOLD ORIENTATION, GEOMETRY & BIOMECHANICS:
+- Pay close attention to the "Orientation/Desc" column in the board layout.
+- "angled X° left/right": The hold is rotated by X degrees.
+- "sidepull": Rotated 90 degrees (labeled left or right). Requires pulling sideways.
+- "vertical" pinches: The edge you grip is parallel to the side edges of the wall.
+- If no orientation is mentioned, the hold is in standard positive orientation.
+- OPPOSING FORCES: A hold angled left (or left sidepull) is often unusable unless paired with a hold angled right (opposition), creating tension. 
+- OPPOSING FEET FOR SIDEPUTLLS/GASTONS: Sidepulls and Gastons (holds pulled outward/inward at 45-90 degrees) REQUIRE stable opposing feet. If a start hand is a left-facing sidepull, you MUST place a foot on the RIGHT side of the hold so the climber can push against it to maintain tension.
 
 DIFFICULTY LOGIC (Target Grade: ${grade}):
 - Easy: Use mostly Tier 1 (1.3-1.5) and easy Tier 2 (2.4-2.5).
@@ -98,14 +130,16 @@ DIFFICULTY LOGIC (Target Grade: ${grade}):
 - Hard: Use mostly Tier 3 (3.1-3.3) and worst Tier 2 (2.1-2.2). Combine intermediate holds with bad holds to force tension.
 
 RULES:
-1. Start holds: Must be in rows 1-3. Provide at least 2 start holds.
+1. Start holds: Must be in rows 1-6. Provide 1 or 2 start holds. Do NOT place 2 start holds in Row 1.
+   - If you use 2 start holds, they MUST be within ${maxReach} units of each other.
 2. Finish hold: Must be in rows 16-18. Provide 1 finish hold.
 3. Sequence: 3-10 total handholds is ideal.
-4. Movement: Avoid ladders (straight up one column). Create interesting movement.
+4. Movement: Avoid ladders (straight up one column). Create interesting movement based on hold angles, opposition, and orientations.
 5. Max Reach Distance: ${maxReach} units.
 6. Feet: You MUST designate specific feet.
    - Feet must be positive holds (Jugs, Pinches), NEVER underclings.
    - If feet are in the same row as start hands, they MUST be at least 3 columns apart.
+   - CRITICAL: If start hands are sidepulls, gastons, or heavily angled, you MUST set feet that oppose the pull direction to create biomechanical stability.
 
 OUTPUT FORMAT:
 Return a valid JSON object with these keys:
@@ -116,7 +150,7 @@ Return a valid JSON object with these keys:
   "feet": ["HoldID", ...]
 }
 
-CURRENT BOARD LAYOUT (ID | Row | Col | Type | Grade):
+CURRENT BOARD LAYOUT (ID | Row | Col | Type | Grade | Orientation/Desc):
  ${boardContext}
 `;
 
@@ -175,14 +209,20 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Missing required fields: holdsMap, userHeight, style, grade" });
   }
 
-  // Prepare Spatial Context
-  let boardContext = "ID | Row | Col | Type | Grade\n";
-  boardContext += "----------------------------------\n";
+  // Prepare Spatial Context (Including Orientation/Desc so AI can read angles)
+  let boardContext = "ID | Row | Col | Type | Grade | Orientation/Desc\n";
+  boardContext += "----------------------------------------------------------\n";
+  
   for (const [id, hold] of Object.entries(holdsMap)) {
-    // Ensure type is a string if it's an array, for the LLM context
+    // Ensure type is a string if it's an array
     const typeStr = Array.isArray(hold.type) ? hold.type.join('/') : hold.type;
     const gradeStr = hold.grade || 'N/A';
-    boardContext += `${id} | ${hold.row} | ${hold.col} | ${typeStr} | ${gradeStr}\n`;
+    
+    // Combine desc and notes, remove newlines, and limit length to save tokens
+    let orientDesc = `${hold.desc || ""} ${hold.notes || ""}`.replace(/\n/g, ' ').trim();
+    if (orientDesc.length > 50) orientDesc = orientDesc.substring(0, 50) + '...';
+    
+    boardContext += `${id} | ${hold.row} | ${hold.col} | ${typeStr} | ${gradeStr} | ${orientDesc}\n`;
   }
 
   const maxReach = Math.floor(0.75 * userHeight / 15);

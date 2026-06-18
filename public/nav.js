@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Moves', href: 'index.html#moves' },
 		{ name: 'Board Map', href: 'board-layout.html' },
 		{ name: 'AI Setter', href: 'ai-setter.html' },
-        { name: 'Hold Quality', href: 'hold-quality.html' },
         { name: 'Links', href: 'links.html' }
     ];
 
