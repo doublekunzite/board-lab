@@ -430,7 +430,7 @@
       <!-- TAB HEADERS -->
       <div class="tab-headers">
         <button class="tab-btn active" data-tab="list">List & Filters</button>
-        <button class="tab-btn" data-tab="quality">Quality Explorer</button>
+        <button class="tab-btn" data-tab="quality">Hold Quality</button>
       </div>
 
       <!-- TAB 1: HOLD LIST -->
@@ -931,7 +931,7 @@
         openModal(sortedHoldIds[newIndex]);
     }
 
-    function setupEventListeners() {
+        function setupEventListeners() {
         const accContainer = document.querySelector('.accordion-container');
         const accTrigger = document.getElementById('characteristicsTrigger');
         const accContent = document.getElementById('characteristicsContent');
@@ -943,27 +943,57 @@
             });
         }
 
-                function handleHashChange() {
+        // ============================================
+        // TAB SWITCHING LOGIC (Moved up so it exists before hash changes)
+        // ============================================
+        function activateTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+            const targetContent = document.getElementById(`tab-${tabName}`);
+            
+            if (targetBtn && targetContent) {
+                targetBtn.classList.add('active');
+                targetContent.classList.add('active');
+            }
+        }
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.dataset.tab;
+                history.replaceState(null, null, `#${tabName}`);
+                activateTab(tabName);
+            });
+        });
+
+        // ============================================
+        // HASH CHANGE LOGIC
+        // ============================================
+        function handleHashChange() {
             const hash = window.location.hash.substring(1);
             
-            // 1. Check if it's a hold ID (Standard holds or V-holds)
+            // 1. Check if it's a hold ID
             if (hash && holdsData[hash]) { 
                 openModal(hash, true); 
             } 
             // 2. Check if it's a tab name
             else if (hash === 'list' || hash === 'quality') {
-                // Note: We use 'list' instead of 'hold-list' for a cleaner URL
                 activateTab(hash);
             } 
-            // 3. If no hash, close modal (but don't mess with tabs)
+            // 3. If no hash, close modal
             else if (!hash) { 
                 closeModal(); 
             }
         }
-		
+        
         window.addEventListener('hashchange', handleHashChange);
+        window.addEventListener('popstate', handleHashChange); // FIXED: was handleTabHashChange
         if (window.location.hash) handleHashChange();
 
+        // ============================================
+        // STANDARD MODAL & LIGHTBOX LISTENERS
+        // ============================================
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         lightbox.addEventListener('click', closeLightbox);
@@ -1022,6 +1052,9 @@
         }
         [tier1Toggle, tier2Toggle, tier3Toggle].forEach(toggle => { toggle.addEventListener('change', updateGridVisibility); });
 
+        // ============================================
+        // FILTER LOGIC
+        // ============================================
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const group = btn.dataset.filterType;
@@ -1048,33 +1081,9 @@
             });
         });
 
-                // TAB SWITCHING LOGIC
-        function activateTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            
-            const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
-            const targetContent = document.getElementById(`tab-${tabName}`);
-            
-            if (targetBtn && targetContent) {
-                targetBtn.classList.add('active');
-                targetContent.classList.add('active');
-            }
-        }
-
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabName = btn.dataset.tab;
-                // Update hash without adding a new history entry every time
-                history.replaceState(null, null, `#${tabName}`);
-                activateTab(tabName);
-            });
-        });
-
-        // Handle browser back/forward buttons
-        window.addEventListener('popstate', handleTabHashChange);
-
+        // ============================================
         // SPECTRUM BUTTON LOGIC
+        // ============================================
         document.querySelectorAll('#spectrumTypeSelector .chalk-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('#spectrumTypeSelector .chalk-btn').forEach(b => b.classList.remove('active'));
