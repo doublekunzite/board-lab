@@ -7,7 +7,7 @@
     <!-- Global Styles -->
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.png?v=2" type="image/png">
-    
+
     <style>
         /* ============================================
            PAGE LAYOUT & SIDEBAR
@@ -92,10 +92,38 @@
             border-radius: 6px;
             font-size: 0.9rem;
             min-height: 60px;
-            line-height: 1.4;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .status-area strong {
+            font-size: 1.05rem;
+            display: block;
+            margin-bottom: 0.25rem;
         }
         .status-error { color: #dc3545; font-weight: bold; }
         .status-success { color: #28a745; font-weight: bold; }
+        .status-beta {
+            font-size: 0.85rem;
+            opacity: 0.75;
+            font-style: italic;
+            margin-top: 0.25rem;
+            display: block;
+        }
+        .status-area details {
+            margin-top: 0.5rem;
+        }
+        .status-area summary {
+            color: #dc3545;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .status-area ul {
+            margin: 0.5rem 0 0 1.2rem;
+            padding: 0;
+            font-size: 0.85rem;
+            color: #dc3545;
+        }
 
         /* Legend */
         .legend {
@@ -120,7 +148,7 @@
         }
 
         /* ============================================
-           BOARD CONTAINER (Copied from board-layout.html)
+           BOARD CONTAINER
            ============================================ */
         .main-content {
             flex: 1;
@@ -128,18 +156,18 @@
             justify-content: center;
             align-items: center;
             padding: 2rem;
-            background: #e9ecef; /* Distinct background */
+            background: #e9ecef;
             overflow: auto;
         }
 
         .board-wrapper {
             position: relative;
             width: 100%;
-            max-width: 800px; /* Same as original */
+            max-width: 800px;
             margin: 0 auto;
             background: #111;
             border-radius: 8px;
-            overflow: visible; /* Allow tooltips if we add them later */
+            overflow: visible;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
@@ -159,11 +187,10 @@
             overflow: visible;
         }
 
-        /* The Grid Cells */
         .hold-cell {
             position: relative; 
             border: 1px solid rgba(255,255,255,0.05);
-            cursor: default; /* Not clickable like the map page */
+            cursor: default;
             transition: background 0.2s; 
             z-index: 1;
         }
@@ -171,62 +198,72 @@
         /* ============================================
            AI PROBLEM VISUALIZATION (Circles)
            ============================================ */
-        
-        /* The Circle Marker (Centered in cell) */
+
         .hold-cell::after {
             content: ''; 
             position: absolute; 
-            /* Positioning logic to center a circle */
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%);
-            
             width: 18px; 
             height: 18px;
             border-radius: 50%;
-            
-            /* Default state: invisible */
             opacity: 0; 
             background: transparent;
-            
-            /* Animation */
             transition: opacity 0.2s, background 0.2s, box-shadow 0.2s;
         }
 
-        /* ACTIVE STATES (Colors) */
-        
-        /* 1. Start: Green */
         .hold-cell.is-start::after {
             opacity: 1;
-            background-color: #4ade80; /* Green 400 */
+            background-color: #4ade80;
             border: 2px solid rgba(255,255,255,0.8);
             box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
             z-index: 10;
         }
 
-        /* 2. Intermediate (Hands): Teal */
         .hold-cell.is-hand::after {
             opacity: 1;
-            background-color: #2dd4bf; /* Teal 400 */
+            background-color: #2dd4bf;
             border: 2px solid rgba(255,255,255,0.5);
             box-shadow: 0 0 4px rgba(45, 212, 191, 0.4);
         }
 
-        /* 3. Feet: Yellow */
         .hold-cell.is-feet::after {
             opacity: 1;
-            background-color: #facc15; /* Yellow 400 */
+            background-color: #facc15;
             border: 2px solid rgba(255,255,255,0.5);
             box-shadow: 0 0 4px rgba(250, 204, 21, 0.4);
         }
 
-        /* 4. Finish: Purple */
         .hold-cell.is-finish::after {
             opacity: 1;
-            background-color: #a855f7; /* Purple 500 */
+            background-color: #a855f7;
             border: 2px solid rgba(255,255,255,0.8);
             box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
             z-index: 10;
+        }
+
+        /* Hold tooltip on hover */
+        .hold-cell[data-info]::before {
+            content: attr(data-info);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s;
+            z-index: 100;
+            margin-bottom: 4px;
+        }
+        .hold-cell[data-info]:hover::before {
+            opacity: 1;
         }
 
         /* Loading Overlay */
@@ -238,7 +275,7 @@
             opacity: 0; pointer-events: none; transition: opacity 0.3s;
         }
         .loading-overlay.active { opacity: 1; pointer-events: all; }
-        
+
         .spinner {
             border: 4px solid rgba(255,255,255,0.2);
             border-top: 4px solid var(--accent-color, #fff);
@@ -249,6 +286,7 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -271,16 +309,15 @@
                 <option value="Crimp Strength">Crimp Strength</option>
                 <option value="Random">Surprise Me</option>
             </select>
-			
-			<div class="control-group">
+        </div>
+
+        <div class="control-group">
             <label for="gradeSelect">Difficulty</label>
             <select id="gradeSelect">
                 <option value="Easy">Easy</option>
                 <option value="Medium" selected>Medium</option>
                 <option value="Hard">Hard</option>
             </select>
-        </div>
-			
         </div>
 
         <button id="generateBtn" class="btn-generate">Generate Problem</button>
@@ -319,7 +356,7 @@
         // --- Configuration ---
         const HOLDS_FILE = 'holds.json';
         const API_ENDPOINT = '/api/generate-problem';
-        
+
         // --- State ---
         let holdsData = {}; 
 
@@ -331,7 +368,7 @@
         const loadingOverlay = document.getElementById('loadingOverlay');
         const heightInput = document.getElementById('userHeight');
         const styleInput = document.getElementById('styleSelect');
-        const gradeInput = document.getElementById('gradeSelect'); // NEW
+        const gradeInput = document.getElementById('gradeSelect');
 
         // --- Initialization ---
         document.addEventListener('DOMContentLoaded', init);
@@ -342,7 +379,7 @@
                 const response = await fetch(HOLDS_FILE);
                 if (!response.ok) throw new Error("Could not load holds.json");
                 holdsData = await response.json();
-                
+
                 renderGrid();
                 statusArea.innerText = "Ready to set.";
             } catch (err) {
@@ -350,35 +387,40 @@
             }
         }
 
-        // --- Render Logic (Mirrors board-layout.html) ---
+        // --- Render Logic ---
         function renderGrid() {
             gridOverlay.innerHTML = '';
-            const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
+            const columns = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q'];
 
-            // Render from Row 18 down to 1 (Visual top to bottom)
             for (let r = 18; r >= 1; r--) {
-                // Render from Col A to Q (Left to Right)
                 for (let c = 0; c < 17; c++) {
                     const colLetter = columns[c];
                     const holdId = `${colLetter}${r}`;
-                    
+                    const hold = holdsData[holdId];
+
                     const cell = document.createElement('div');
                     cell.className = 'hold-cell';
-                    cell.dataset.id = holdId; // Store ID for easy selection
-                    
+                    cell.dataset.id = holdId;
+
+                    // Add tooltip data for holds that exist in the data
+                    if (hold) {
+                        const typeStr = Array.isArray(hold.type) ? hold.type.join('/') : hold.type;
+                        const info = `${holdId} | ${typeStr} | ${hold.grade || 'N/A'} | ${hold.angleCategory || 'N/A'}`;
+                        cell.dataset.info = info;
+                    }
+
                     gridOverlay.appendChild(cell);
                 }
             }
         }
 
         function clearBoardVisuals() {
-            // Remove all color classes from cells
             document.querySelectorAll('.hold-cell').forEach(cell => {
                 cell.classList.remove('is-start', 'is-hand', 'is-feet', 'is-finish');
             });
         }
 
-         // --- API Interaction ---
+        // --- API Interaction ---
         generateBtn.addEventListener('click', async () => {
             clearBoardVisuals();
             statusArea.innerText = "Contacting AI...";
@@ -390,7 +432,7 @@
                     holdsMap: holdsData,
                     userHeight: parseInt(heightInput.value),
                     style: styleInput.value,
-                    grade: gradeInput.value // NEW
+                    grade: gradeInput.value
                 };
 
                 const response = await fetch(API_ENDPOINT, {
@@ -402,11 +444,6 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    if (result.warning) {
-                        statusArea.innerHTML = `<span class="status-error">Warning:</span> ${result.warning}`;
-                    } else {
-                        statusArea.innerHTML = `<span class="status-success">Problem generated!</span>`;
-                    }
                     renderProblem(result);
                 } else {
                     throw new Error(result.error || "Server error");
@@ -425,38 +462,62 @@
             statusArea.innerText = "Board cleared.";
         });
 
-        // --- Visualization Helper ---
+        // --- Visualization & Status ---
         function renderProblem(data) {
-            // Helper to find a cell and add a class
+            clearBoardVisuals();
+
             const lightUp = (ids, className) => {
                 if (!ids) return;
                 ids.forEach(id => {
-                    // Find the cell by data-id
                     const cell = gridOverlay.querySelector(`[data-id="${id}"]`);
-                    if (cell) {
-                        cell.classList.add(className);
-                    }
+                    if (cell) cell.classList.add(className);
                 });
             };
 
-            // 1. Start (Green)
             if (data.start) lightUp(data.start, 'is-start');
-            
-            // 2. Finish (Purple)
             if (data.finish) lightUp(data.finish, 'is-finish');
-            
-            // 3. Intermediates (Teal)
             if (data.intermediate) lightUp(data.intermediate, 'is-hand');
-            
-            // 4. Feet (Yellow)
             if (data.feet) lightUp(data.feet, 'is-feet');
 
-            // Legacy/Backup: Handle flat sequence if backend doesn't categorize
-            if (data.sequence && Array.isArray(data.sequence)) {
-                if (data.sequence.length > 0) lightUp([data.sequence[0]], 'is-start');
-                if (data.sequence.length > 1) lightUp([data.sequence[data.sequence.length - 1]], 'is-finish');
-                if (data.sequence.length > 2) lightUp(data.sequence.slice(1, -1), 'is-hand');
+            // Build status display with metadata and errors
+            let statusHTML = '';
+
+            if (data.name) {
+                statusHTML += `<strong>${escapeHtml(data.name)}</strong>`;
             }
+            if (data.description) {
+                statusHTML += `<span>${escapeHtml(data.description)}</span>`;
+            }
+            if (data.beta) {
+                statusHTML += `<span class="status-beta">Beta: ${escapeHtml(data.beta)}</span>`;
+            }
+
+            if (data.warning) {
+                statusHTML += `<span class="status-error">Warning:</span> ${escapeHtml(data.warning)}`;
+            }
+
+            if (data.errors && data.errors.length > 0) {
+                statusHTML += `<details>`;
+                statusHTML += `<summary>Validation Errors (${data.errors.length})</summary>`;
+                statusHTML += `<ul>`;
+                data.errors.forEach(err => {
+                    statusHTML += `<li>${escapeHtml(err)}</li>`;
+                });
+                statusHTML += `</ul></details>`;
+            }
+
+            if (!statusHTML) {
+                statusHTML = `<span class="status-success">Problem generated!</span>`;
+            }
+
+            statusArea.innerHTML = statusHTML;
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
     </script>
 </body>
