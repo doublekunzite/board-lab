@@ -420,42 +420,50 @@
             });
         }
 
-        // --- API Interaction ---
         generateBtn.addEventListener('click', async () => {
-            clearBoardVisuals();
-            statusArea.innerText = "Contacting AI...";
-            loadingOverlay.classList.add('active');
-            generateBtn.disabled = true;
+    clearBoardVisuals();
+    statusArea.innerText = "Contacting AI...";
+    loadingOverlay.classList.add('active');
+    generateBtn.disabled = true;
 
-            try {
-                const payload = {
-                    holdsMap: holdsData,
-                    userHeight: parseInt(heightInput.value),
-                    style: styleInput.value,
-                    grade: gradeInput.value
-                };
+    try {
+        const payload = {
+            holdsMap: holdsData,
+            userHeight: parseInt(heightInput.value),
+            style: styleInput.value,
+            grade: gradeInput.value
+        };
 
-                const response = await fetch(API_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    renderProblem(result);
-                } else {
-                    throw new Error(result.error || "Server error");
-                }
-
-            } catch (err) {
-                statusArea.innerHTML = `<span class="status-error">Error: ${err.message}</span>`;
-            } finally {
-                loadingOverlay.classList.remove('active');
-                generateBtn.disabled = false;
-            }
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
         });
+
+        // Check if response is actually JSON before parsing
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const errorText = await response.text();
+            console.error('Non-JSON response:', errorText);
+            throw new Error(`Server error (${response.status}): ${errorText.substring(0, 150)}...`);
+        }
+
+        const result = await response.json();
+
+        if (response.ok) {
+            renderProblem(result);
+        } else {
+            throw new Error(result.error || `Server error ${response.status}`);
+        }
+
+    } catch (err) {
+        console.error('Generate error:', err);
+        statusArea.innerHTML = `<span class="status-error">Error: ${escapeHtml(err.message)}</span>`;
+    } finally {
+        loadingOverlay.classList.remove('active');
+        generateBtn.disabled = false;
+    }
+});
 
         clearBtn.addEventListener('click', () => {
             clearBoardVisuals();
