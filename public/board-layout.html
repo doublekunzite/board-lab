@@ -970,16 +970,16 @@
         // ============================================
         // HASH CHANGE LOGIC
         // ============================================
-        function handleHashChange() {
+                function handleHashChange() {
             const hash = window.location.hash.substring(1);
             
-            // 1. Check if it's a hold ID
-            if (hash && holdsData[hash]) { 
-                openModal(hash, true); 
-            } 
-            // 2. Check if it's a tab name
-            else if (hash === 'list' || hash === 'quality') {
+            // 1. Check if it's a tab name (DO THIS FIRST)
+            if (hash === 'list' || hash === 'quality') {
                 activateTab(hash);
+            } 
+            // 2. Check if it's a hold ID (Standard holds or V-holds)
+            else if (hash && holdsData[hash]) { 
+                openModal(hash, true); 
             } 
             // 3. If no hash, close modal
             else if (!hash) { 
