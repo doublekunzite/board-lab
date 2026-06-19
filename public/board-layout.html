@@ -249,7 +249,7 @@
 
     .spectrum-container { display: flex; flex-direction: column; gap: 2rem; }
     .spectrum-track { position: relative; width: 100%; display: flex; justify-content: space-between; align-items: flex-start; padding: 0 1rem; gap: 1rem; }
-    .spectrum-end-labels { 
+        .spectrum-end-labels { 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
@@ -258,22 +258,36 @@
       color: var(--fg); 
       padding: 0 1rem; 
       box-sizing: border-box; 
+      position: relative; /* Added for arrow positioning */
     }
     .label-text { white-space: nowrap; }
     
-    /* NEW: Smooth gradient line */
+    /* The smooth fading line */
     .spectrum-arrow-line {
       flex-grow: 1;
       height: 2px;
       margin: 0 1.5rem;
       position: relative;
-      top: -0.3em;
       background: linear-gradient(90deg, 
         transparent 0%, 
         var(--fg-muted) 20%, 
         var(--fg-muted) 80%, 
         transparent 100%
       );
+    }
+    
+    /* The clean SVG arrowhead */
+    .spectrum-arrow-line::before {
+      content: '';
+      position: absolute;
+      right: -1px; /* Connect perfectly to the end of the line */
+      bottom: 50%; /* Align vertically with the center of the line */
+      transform: translateY(50%); /* Perfectly center the arrowhead */
+      width: 14px;
+      height: 14px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M12 5l7 7-7 7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
     }
     .spectrum-item { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; cursor: pointer; transition: transform 0.2s ease; flex: 1; padding-top: 1rem; }
     .spectrum-item:hover { transform: translateY(-10px); }
