@@ -1,4 +1,21 @@
 // ============================================
+// 0. PASSWORD GATE
+// ============================================
+(function passwordGate() {
+    const PASSWORD = 'boardlab2026#';
+    const stored = sessionStorage.getItem('boardlab_auth');
+    
+    if (stored !== 'ok') {
+        const entered = prompt('Enter password to view Board Lab:');
+        if (entered !== PASSWORD) {
+            document.body.innerHTML = '<h1>Access denied</h1>';
+            throw new Error('Access denied');
+        }
+        sessionStorage.setItem('boardlab_auth', 'ok');
+    }
+})();
+
+// ============================================
 // 1. DETERMINE RELATIVE PATH TO ROOT
 // ============================================
 // Look at how this script was loaded to figure out the depth
