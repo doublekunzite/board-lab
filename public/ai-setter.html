@@ -4,14 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Setter | Board Lab</title>
-    <!-- Global Styles -->
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.png?v=2" type="image/png">
 
     <style>
-        /* ============================================
-           PAGE LAYOUT & SIDEBAR
-           ============================================ */
         body {
             display: flex;
             min-height: 100vh;
@@ -21,7 +17,6 @@
             color: var(--text-color, #333);
         }
 
-        /* Sidebar */
         .sidebar {
             width: 320px;
             background: var(--panel-bg, #fff);
@@ -83,15 +78,15 @@
             letter-spacing: 0.05em;
         }
 
-        .btn-generate:hover { opacity: 0.9; }
-        .btn-generate:disabled { background-color: #ccc; cursor: not-allowed; }
+        .btn-generate:hover:not(:disabled) { opacity: 0.9; }
+        .btn-generate:disabled { background-color: #ccc; cursor: not-allowed; opacity: 0.6; }
 
         .status-area {
             padding: 1rem;
             background: var(--status-bg, #eef2f7);
             border-radius: 6px;
             font-size: 0.9rem;
-            min-height: 60px;
+            min-height: 80px;
             line-height: 1.5;
             word-break: break-word;
         }
@@ -99,6 +94,9 @@
             font-size: 1.05rem;
             display: block;
             margin-bottom: 0.25rem;
+        }
+        .status-area span {
+            display: block;
         }
         .status-error { color: #dc3545; font-weight: bold; }
         .status-success { color: #28a745; font-weight: bold; }
@@ -124,8 +122,13 @@
             font-size: 0.85rem;
             color: #dc3545;
         }
+        .status-selection-hint {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-top: 0.25rem;
+            display: block;
+        }
 
-        /* Legend */
         .legend {
             margin-top: auto;
             padding-top: 1.5rem;
@@ -146,10 +149,14 @@
             border-radius: 50%;
             border: 1px solid rgba(0,0,0,0.1);
         }
+        .legend-outline {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px dashed;
+            background: transparent;
+        }
 
-        /* ============================================
-           BOARD CONTAINER
-           ============================================ */
         .main-content {
             flex: 1;
             display: flex;
@@ -195,10 +202,27 @@
             z-index: 1;
         }
 
-        /* ============================================
-           AI PROBLEM VISUALIZATION (Circles)
-           ============================================ */
+        /* Clickable holds get a pointer */
+        .hold-cell.has-hold {
+            cursor: pointer;
+        }
+        .hold-cell.has-hold:hover {
+            background: rgba(255,255,255,0.06);
+        }
 
+        /* User selection: dashed outlines (distinct from AI filled circles) */
+        .hold-cell.selected-start {
+            outline: 2px dashed #4ade80;
+            outline-offset: 1px;
+            z-index: 5;
+        }
+        .hold-cell.selected-finish {
+            outline: 2px dashed #a855f7;
+            outline-offset: 1px;
+            z-index: 5;
+        }
+
+        /* AI result: filled circles */
         .hold-cell::after {
             content: ''; 
             position: absolute; 
@@ -243,7 +267,7 @@
             z-index: 10;
         }
 
-        /* Hold tooltip on hover */
+        /* Hold tooltip */
         .hold-cell[data-info]::before {
             content: attr(data-info);
             position: absolute;
@@ -266,7 +290,6 @@
             opacity: 1;
         }
 
-        /* Loading Overlay */
         .loading-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.85);
             backdrop-filter: blur(5px); z-index: 1000;
@@ -284,16 +307,14 @@
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
     </style>
 <base target="_blank">
 </head>
 <body>
 
-    <!-- Sidebar -->
     <aside class="sidebar">
         <h2>AI Setter</h2>
-        <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 1rem;">Generate boulder problems using AI.</p>
+        <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 0;">Click holds on the board to set start & finish, then generate.</p>
 
         <div class="control-group">
             <label for="userHeight">User Height (cm)</label>
@@ -320,47 +341,45 @@
             </select>
         </div>
 
-        <button id="generateBtn" class="btn-generate">Generate Problem</button>
-        <button id="clearBtn" class="btn-generate" style="background-color: #6c757d; margin-top: -0.5rem;">Clear Board</button>
+        <button id="generateBtn" class="btn-generate" disabled>Generate Problem</button>
+        <button id="clearBtn" class="btn-generate" style="background-color: #6c757d; margin-top: -0.5rem;">Clear All</button>
 
         <div id="statusArea" class="status-area">
-            Ready to set.
+            Loading board data...
         </div>
 
-        <!-- Legend -->
         <div class="legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#4ade80;"></div> Start</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div> Finish</div>
+            <div class="legend-item"><div class="legend-outline" style="border-color:#4ade80;"></div> Start (yours)</div>
+            <div class="legend-item"><div class="legend-outline" style="border-color:#a855f7;"></div> Finish (yours)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#4ade80;"></div> Start (AI)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div> Finish (AI)</div>
             <div class="legend-item"><div class="legend-dot" style="background:#2dd4bf;"></div> Hands</div>
             <div class="legend-item"><div class="legend-dot" style="background:#facc15;"></div> Feet</div>
         </div>
     </aside>
 
-    <!-- Main Content -->
     <main class="main-content">
         <div class="board-wrapper" id="boardWrapper">
             <img src="board-layout.png" alt="Kilter Board Layout" class="board-image">
-            <div class="grid-overlay" id="gridOverlay">
-                <!-- Grid cells generated by JS -->
-            </div>
+            <div class="grid-overlay" id="gridOverlay"></div>
         </div>
     </main>
 
-    <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay">
         <div class="spinner"></div>
         <div>Setting Problem...</div>
     </div>
 
     <script>
-        // --- Configuration ---
         const HOLDS_FILE = 'holds.json';
         const API_ENDPOINT = '/api/generate-problem';
 
         // --- State ---
-        let holdsData = {}; 
+        let holdsData = {};
+        let selectedStarts = [];
+        let selectedFinish = null;
 
-        // --- DOM Elements ---
+        // --- DOM ---
         const gridOverlay = document.getElementById('gridOverlay');
         const generateBtn = document.getElementById('generateBtn');
         const clearBtn = document.getElementById('clearBtn');
@@ -370,24 +389,22 @@
         const styleInput = document.getElementById('styleSelect');
         const gradeInput = document.getElementById('gradeSelect');
 
-        // --- Initialization ---
         document.addEventListener('DOMContentLoaded', init);
 
         async function init() {
             try {
-                statusArea.innerText = "Loading board data...";
+                statusArea.innerHTML = "Loading board data...";
                 const response = await fetch(HOLDS_FILE);
                 if (!response.ok) throw new Error("Could not load holds.json");
                 holdsData = await response.json();
-
                 renderGrid();
-                statusArea.innerText = "Ready to set.";
+                updateSelectionUI();
             } catch (err) {
                 statusArea.innerHTML = `<span class="status-error">Error: ${err.message}</span>`;
             }
         }
 
-        // --- Render Logic ---
+        // --- Grid Rendering ---
         function renderGrid() {
             gridOverlay.innerHTML = '';
             const columns = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q'];
@@ -402,16 +419,125 @@
                     cell.className = 'hold-cell';
                     cell.dataset.id = holdId;
 
-                    // Add tooltip data for holds that exist in the data
                     if (hold) {
+                        cell.classList.add('has-hold');
                         const typeStr = Array.isArray(hold.type) ? hold.type.join('/') : hold.type;
-                        const info = `${holdId} | ${typeStr} | ${hold.grade || 'N/A'} | ${hold.angleCategory || 'N/A'}`;
-                        cell.dataset.info = info;
+                        cell.dataset.info = `${holdId} | ${typeStr} | ${hold.grade || 'N/A'} | ${hold.angleCategory || 'N/A'}`;
                     }
 
                     gridOverlay.appendChild(cell);
                 }
             }
+        }
+
+        // --- Selection Logic ---
+        gridOverlay.addEventListener('click', (e) => {
+            const cell = e.target.closest('.hold-cell');
+            if (!cell || !cell.classList.contains('has-hold')) return;
+
+            const holdId = cell.dataset.id;
+            const hold = holdsData[holdId];
+            if (!hold) return;
+
+            const maxReach = Math.floor(0.75 * parseInt(heightInput.value) / 15);
+
+            if (hold.row <= 6) {
+                handleStartClick(holdId, hold, cell, maxReach);
+            } else if (hold.row >= 16) {
+                handleFinishClick(holdId, cell);
+            } else {
+                statusArea.innerHTML = `<span class="status-error">Click holds in the bottom 6 rows (start) or top 3 rows (finish).</span>`;
+                setTimeout(updateSelectionUI, 2000);
+            }
+        });
+
+        function handleStartClick(holdId, hold, cell, maxReach) {
+            if (selectedStarts.includes(holdId)) {
+                // Deselect
+                selectedStarts = selectedStarts.filter(id => id !== holdId);
+                cell.classList.remove('selected-start');
+            } else if (selectedStarts.length >= 2) {
+                statusArea.innerHTML = `<span class="status-error">Max 2 start holds. Click a selected start to remove it first.</span>`;
+                setTimeout(updateSelectionUI, 2000);
+                return;
+            } else {
+                // Check spacing if this is the 2nd start
+                if (selectedStarts.length === 1) {
+                    const existing = holdsData[selectedStarts[0]];
+                    const dist = Math.sqrt(Math.pow(existing.row - hold.row, 2) + Math.pow(existing.col - hold.col, 2));
+                    if (dist > maxReach) {
+                        statusArea.innerHTML = `<span class="status-error">Too far from other start hold (${dist.toFixed(1)} units vs max ${maxReach}).</span>`;
+                        setTimeout(updateSelectionUI, 2000);
+                        return;
+                    }
+                }
+                selectedStarts.push(holdId);
+                cell.classList.add('selected-start');
+            }
+            updateSelectionUI();
+        }
+
+        function handleFinishClick(holdId, cell) {
+            if (selectedFinish === holdId) {
+                // Deselect
+                selectedFinish = null;
+                cell.classList.remove('selected-finish');
+            } else {
+                // Remove previous finish selection
+                if (selectedFinish) {
+                    const prevCell = gridOverlay.querySelector(`[data-id="${selectedFinish}"]`);
+                    if (prevCell) prevCell.classList.remove('selected-finish');
+                }
+                selectedFinish = holdId;
+                cell.classList.add('selected-finish');
+            }
+            updateSelectionUI();
+        }
+
+        function updateSelectionUI() {
+            const sc = selectedStarts.length;
+            const hasFinish = !!selectedFinish;
+
+            let html = '';
+
+            if (sc === 0) {
+                html = '<strong>Step 1: Select Start Holds</strong>';
+                html += '<span>Click 1–2 holds in the bottom 6 rows (rows 1–6).</span>';
+                html += '<span class="status-selection-hint">Green dashed outline = your selection</span>';
+            } else if (!hasFinish) {
+                html = `<strong>Step 2: Select Finish Hold</strong>`;
+                html += `<span>${sc} start hold${sc > 1 ? 's' : ''} selected. Now click 1 hold in the top 3 rows (rows 16–18).</span>`;
+                html += '<span class="status-selection-hint">Click a selected start hold to remove it</span>';
+            } else {
+                // Check if start and finish are too close
+                const startMaxRow = Math.max(...selectedStarts.map(id => holdsData[id]?.row || 0));
+                const finishHold = holdsData[selectedFinish];
+                if (finishHold && (finishHold.row - startMaxRow) <= 2) {
+                    html = '<span class="status-error">Start and finish are too close together. Move start down or finish higher.</span>';
+                    generateBtn.disabled = true;
+                    statusArea.innerHTML = html;
+                    return;
+                }
+                html = '<strong>Ready</strong>';
+                html += `<span>${sc} start + 1 finish selected. Adjust settings and click Generate.</span>`;
+                html += '<span class="status-selection-hint">Click holds to adjust selection. Purple dashed = finish.</span>';
+            }
+
+            generateBtn.disabled = !(sc >= 1 && hasFinish);
+            statusArea.innerHTML = html;
+        }
+
+        function clearSelections() {
+            selectedStarts.forEach(id => {
+                const cell = gridOverlay.querySelector(`[data-id="${id}"]`);
+                if (cell) cell.classList.remove('selected-start');
+            });
+            if (selectedFinish) {
+                const cell = gridOverlay.querySelector(`[data-id="${selectedFinish}"]`);
+                if (cell) cell.classList.remove('selected-finish');
+            }
+            selectedStarts = [];
+            selectedFinish = null;
         }
 
         function clearBoardVisuals() {
@@ -420,58 +546,59 @@
             });
         }
 
+        // --- API ---
         generateBtn.addEventListener('click', async () => {
-    clearBoardVisuals();
-    statusArea.innerText = "Contacting AI...";
-    loadingOverlay.classList.add('active');
-    generateBtn.disabled = true;
+            clearBoardVisuals();
+            statusArea.innerHTML = "Contacting AI...";
+            loadingOverlay.classList.add('active');
+            generateBtn.disabled = true;
 
-    try {
-        const payload = {
-            holdsMap: holdsData,
-            userHeight: parseInt(heightInput.value),
-            style: styleInput.value,
-            grade: gradeInput.value
-        };
+            try {
+                const payload = {
+                    holdsMap: holdsData,
+                    userHeight: parseInt(heightInput.value),
+                    style: styleInput.value,
+                    grade: gradeInput.value,
+                    start: selectedStarts,
+                    finish: [selectedFinish]
+                };
 
-        const response = await fetch(API_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const errorText = await response.text();
+                    throw new Error(`Server error (${response.status}): ${errorText.substring(0, 150)}`);
+                }
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    renderProblem(result, selectedStarts, [selectedFinish]);
+                } else {
+                    throw new Error(result.error || `Server error ${response.status}`);
+                }
+
+            } catch (err) {
+                statusArea.innerHTML = `<span class="status-error">Error: ${escapeHtml(err.message)}</span>`;
+            } finally {
+                loadingOverlay.classList.remove('active');
+                updateSelectionUI();
+            }
         });
-
-        // Check if response is actually JSON before parsing
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-            const errorText = await response.text();
-            console.error('Non-JSON response:', errorText);
-            throw new Error(`Server error (${response.status}): ${errorText.substring(0, 150)}...`);
-        }
-
-        const result = await response.json();
-
-        if (response.ok) {
-            renderProblem(result);
-        } else {
-            throw new Error(result.error || `Server error ${response.status}`);
-        }
-
-    } catch (err) {
-        console.error('Generate error:', err);
-        statusArea.innerHTML = `<span class="status-error">Error: ${escapeHtml(err.message)}</span>`;
-    } finally {
-        loadingOverlay.classList.remove('active');
-        generateBtn.disabled = false;
-    }
-});
 
         clearBtn.addEventListener('click', () => {
             clearBoardVisuals();
-            statusArea.innerText = "Board cleared.";
+            clearSelections();
+            updateSelectionUI();
         });
 
-        // --- Visualization & Status ---
-        function renderProblem(data) {
+        // --- Render AI Result ---
+        function renderProblem(data, userStarts, userFinish) {
             clearBoardVisuals();
 
             const lightUp = (ids, className) => {
@@ -482,43 +609,34 @@
                 });
             };
 
+            // Light up all hands as 'is-hand', then override start/finish
             if (data.start) lightUp(data.start, 'is-start');
-            if (data.finish) lightUp(data.finish, 'is-finish');
             if (data.intermediate) lightUp(data.intermediate, 'is-hand');
+            if (data.finish) lightUp(data.finish, 'is-finish');
             if (data.feet) lightUp(data.feet, 'is-feet');
 
-            // Build status display with metadata and errors
-            let statusHTML = '';
+            // Build status
+            let html = '';
+            const totalHands = (data.start?.length || 0) + (data.intermediate?.length || 0) + (data.finish?.length || 0);
 
-            if (data.name) {
-                statusHTML += `<strong>${escapeHtml(data.name)}</strong>`;
-            }
-            if (data.description) {
-                statusHTML += `<span>${escapeHtml(data.description)}</span>`;
-            }
-            if (data.beta) {
-                statusHTML += `<span class="status-beta">Beta: ${escapeHtml(data.beta)}</span>`;
-            }
+            html += `<span class="status-success">Problem generated: ${totalHands} hands, ${data.feet?.length || 0} feet</span>`;
 
             if (data.warning) {
-                statusHTML += `<span class="status-error">Warning:</span> ${escapeHtml(data.warning)}`;
+                html += `<span class="status-error">${escapeHtml(data.warning)}</span>`;
             }
 
-            if (data.errors && data.errors.length > 0) {
-                statusHTML += `<details>`;
-                statusHTML += `<summary>Validation Errors (${data.errors.length})</summary>`;
-                statusHTML += `<ul>`;
-                data.errors.forEach(err => {
-                    statusHTML += `<li>${escapeHtml(err)}</li>`;
-                });
-                statusHTML += `</ul></details>`;
+            const allMessages = [
+                ...(data.errors || []),
+                ...(data.feetWarnings || [])
+            ];
+
+            if (allMessages.length > 0) {
+                html += `<details><summary>Warnings (${allMessages.length})</summary><ul>`;
+                allMessages.forEach(msg => { html += `<li>${escapeHtml(msg)}</li>`; });
+                html += `</ul></details>`;
             }
 
-            if (!statusHTML) {
-                statusHTML = `<span class="status-success">Problem generated!</span>`;
-            }
-
-            statusArea.innerHTML = statusHTML;
+            statusArea.innerHTML = html;
         }
 
         function escapeHtml(text) {

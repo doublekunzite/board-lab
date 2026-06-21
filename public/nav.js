@@ -17,13 +17,15 @@ if (navScriptTag) {
 // 2. AUTO-INJECT FAVICON
 // ============================================
 (function injectFavicon() {
-    if (!document.querySelector('link[rel="icon"]')) {
-        const favicon = document.createElement('link');
-        favicon.rel = 'icon';
-        favicon.type = 'image/png';
-        favicon.href = `${rootPath}favicon.png?v=2`;
-        document.head.appendChild(favicon);
-    }
+    // Remove any existing favicon to handle path changes from subdirectories
+    const existing = document.querySelector('link[rel="icon"]');
+    if (existing) existing.remove();
+
+    const favicon = document.createElement('link');
+    favicon.rel = 'icon';
+    favicon.type = 'image/png';
+    favicon.href = `${rootPath}favicon.png?v=2`;
+    document.head.appendChild(favicon);
 })();
 
 // ============================================
@@ -38,7 +40,7 @@ if (navScriptTag) {
         { name: 'Home', href: `${rootPath}index.html` },
         { name: 'Board Map', href: `${rootPath}board-layout.html` },
         { name: 'AI Setter', href: `${rootPath}ai-setter.html` },
-        { name: 'Moves', href: `${rootPath}moves/moves.html` } // Adjust if your moves index has a different name
+        { name: 'Moves', href: `${rootPath}#moves` } // Adjust if your moves index has a different name
     ];
 
     let html = '';
