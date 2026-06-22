@@ -261,9 +261,9 @@ const validateFootPairing = (feet, handSequence, holdsMap, userHeight) => {
 
   // Calculate ideal foot distance based on height
   // Taller climbers need wider stances
+  const minVerticalDist = 1; // at least 1 row below
   const idealHorizontalDist = Math.max(2, Math.min(5, Math.floor(userHeight / 40)));
   const maxVerticalDist = Math.max(3, Math.floor(userHeight / 50)); // rows below hand
-  const minVerticalDist = 1; // at least 1 row below
 
   for (let i = 0; i < feet.length; i++) {
     const footId = feet[i];
@@ -410,6 +410,7 @@ function buildFootPairingContext(holdsMap, fullProblem, userHeight) {
     return `HAND ${idx + 1}: ${id} | row=${h.row} col=${h.col} | type=${t} | force=${force} | angle=${angle} | IDEAL FOOT: ${idealFoot}`;
   }).join('\n');
 
+  const minVerticalDist = 1;
   const idealHDist = Math.max(2, Math.min(5, Math.floor(userHeight / 40)));
   const maxVDist = Math.max(3, Math.floor(userHeight / 50));
 

@@ -555,12 +555,12 @@
 
             const maxReach = Math.floor(0.75 * parseInt(heightInput.value) / 15);
 
-            if (hold.row <= 6) {
+            if (hold.row <= 8) {
                 handleStartClick(holdId, hold, cell, maxReach);
             } else if (hold.row >= 16) {
                 handleFinishClick(holdId, cell);
             } else {
-                statusArea.innerHTML = `<span class="status-error">Click holds in the bottom 6 rows (start) or top 3 rows (finish).</span>`;
+                statusArea.innerHTML = `<span class="status-error">Click holds in the bottom 8 rows (start) or top 3 rows (finish).</span>`;
                 setTimeout(updateSelectionUI, 2000);
             }
         });
@@ -612,7 +612,7 @@
 
             if (sc === 0) {
                 html = '<strong>Step 1: Select Start Holds</strong>';
-                html += '<span>Click 1–2 holds in the bottom 6 rows (rows 1–6).</span>';
+                html += '<span>Click 1–2 holds in the bottom 8 rows (rows 1–8).</span>';
                 html += '<span class="status-selection-hint">Green dashed outline = your selection</span>';
             } else if (!hasFinish) {
                 html = `<strong>Step 2: Select Finish Hold</strong>`;
