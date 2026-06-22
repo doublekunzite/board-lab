@@ -57,7 +57,7 @@ if (navScriptTag) {
         { name: 'Home', href: `${rootPath}index.html` },
         { name: 'Board Map', href: `${rootPath}board-layout.html` },
         { name: 'AI Setter', href: `${rootPath}ai-setter.html` },
-        { name: 'Moves', href: `${rootPath}#moves` }, // Adjust if your moves index has a different name
+        { name: 'Moves', href: `${rootPath}index.html#moves` }, // Adjust if your moves index has a different name
 		{ name: 'Process', href: `${rootPath}process.html` },
 		{ name: 'About', href: `${rootPath}links.html` }
 	];
