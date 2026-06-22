@@ -427,11 +427,26 @@
     }
 
     /* ============================================
-       MOBILE OVERRIDES FOR BOARD LAYOUT
+       MOBILE OVERRIDES
        ============================================ */
 
-    /* Nav: force visible on this page even if global CSS
-       still has the old 767px display:none (defense in depth) */
+    @media (max-width: 900px) {
+        .ai-setter-page {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            height: auto;
+            max-height: 50vh;
+            border-right: none;
+            border-bottom: 1px solid var(--border);
+        }
+        .main-content {
+            padding: 1rem;
+            align-items: flex-start;
+        }
+    }
+
     @media (max-width: 768px) {
         .ai-setter-page .site-header .nav-links {
             display: flex !important;
@@ -439,7 +454,6 @@
             gap: 0.4rem;
             justify-content: flex-end;
         }
-
         .ai-setter-page .site-header .nav-links li a {
             font-size: 0.72rem;
             padding: 0.2rem 0.5rem;
@@ -450,34 +464,12 @@
             text-decoration: none;
             white-space: nowrap;
         }
-
         .ai-setter-page .site-header .nav-links li a:hover {
             color: var(--fg);
             border-color: var(--accent);
         }
-
-        /* Remove hover underline on mobile nav */
         .ai-setter-page .site-header .nav-links li a::after {
             display: none;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .ai-setter-page {
-            flex-direction: column;
-        }
-
-        .sidebar {
-            width: 100%;
-            height: auto;
-            max-height: 50vh;
-            border-right: none;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .main-content {
-            padding: 1rem;
-            align-items: flex-start;
         }
     }
 
@@ -486,25 +478,20 @@
             padding: 1.25rem;
             gap: 1rem;
         }
-
         .sidebar h2 {
             font-size: 1.25rem;
         }
-
         .btn-generate {
             padding: 0.85rem;
             font-size: 0.9rem;
         }
-
         .legend {
             grid-template-columns: 1fr;
             gap: 0.5rem;
         }
-
         .note-box {
             font-size: 0.8rem;
         }
-
         .main-content {
             padding: 0.75rem;
         }
