@@ -7,27 +7,92 @@
   <link rel="stylesheet" href="style.css">
   <style>
     /* ============================================
-       PROCESS PAGE STYLES
+       ACCESSIBLE PROCESS PAGE STYLES
+       WCAG 2.2 AA Compliant
        ============================================ */
+
+    /* Base typography improvements */
+    .process-page {
+      font-size: 16px;
+      line-height: 1.6;
+    }
 
     .process-page .hero-section {
       padding-bottom: 2rem;
+      text-align: center;
     }
 
     .process-page .page-subtitle {
-      color: var(--fg-muted);
-      font-size: 1.1rem;
+      color: #e0e0e0;
+      font-size: 1.125rem;
       max-width: 600px;
       margin: 0 auto;
       line-height: 1.6;
     }
 
-    /* Section Titles */
+    /* Section Titles - large text for 3:1 contrast allowance */
     .section-title {
-      font-size: 1.8rem;
-      margin-top: 50px;
-      margin-bottom: 25px;
-      color: var(--fg);
+      font-size: 1.75rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* Accessible Dropdowns using details/summary */
+    .process-details {
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--card) 0%, rgba(255,255,255,0.02) 100%);
+      overflow: hidden;
+    }
+
+    .process-details > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1.25rem 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.2s;
+      position: relative;
+    }
+
+    .process-details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .process-details > summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--accent);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    .process-details[open] > summary::after {
+      content: '−';
+      transform: rotate(0deg);
+    }
+
+    .process-details > summary:hover,
+    .process-details > summary:focus {
+      background-color: rgba(255,255,255,0.03);
+      outline: none;
+    }
+
+    .process-details > summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    .process-details > .details-content {
+      padding: 0 1.5rem 1.5rem;
     }
 
     /* Dev Card Grid */
@@ -35,14 +100,14 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
     .dev-card {
-      background: linear-gradient(135deg, var(--card) 0%, rgba(255,255,255,0.02) 100%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 25px;
+      padding: 1.5rem;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
       position: relative;
       overflow: hidden;
@@ -65,7 +130,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       flex-wrap: wrap;
       gap: 8px;
     }
@@ -73,56 +138,46 @@
     .dev-card-title {
       font-size: 1.1rem;
       font-weight: 600;
-      color: var(--fg);
+      color: #ffffff;
       margin: 0;
     }
 
     .dev-card-badge {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--accent);
-      background: rgba(255,255,255,0.05);
-      padding: 0.2rem 0.6rem;
+      background: rgba(255,255,255,0.08);
+      padding: 0.25rem 0.6rem;
       border-radius: 20px;
       font-weight: 600;
     }
 
     .dev-challenge {
-      color: var(--fg-muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
+      color: #e0e0e0;
+      font-size: 1rem;
+      line-height: 1.6;
       margin-bottom: 12px;
     }
 
-    .dev-prompt {
-      background: rgba(255,255,255,0.03);
-      border-left: 2px solid var(--accent);
-      padding: 10px 15px;
-      margin: 12px 0;
-      font-style: italic;
-      color: #aaa;
-      font-size: 0.85rem;
-      line-height: 1.5;
-    }
-
     .dev-solution {
-      color: var(--fg-muted);
-      font-size: 0.9rem;
+      color: #e0e0e0;
+      font-size: 1rem;
       line-height: 1.6;
       margin: 0;
     }
 
     .dev-solution strong {
-      color: var(--fg);
+      color: #ffffff;
     }
 
     .dev-solution code {
-      background: rgba(255,255,255,0.05);
-      padding: 0.1rem 0.3rem;
-      border-radius: 3px;
-      font-size: 0.85em;
-      color: var(--accent);
+      background: rgba(255,255,255,0.08);
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #ffb088;
+      font-family: 'Courier New', monospace;
     }
 
     /* Feature Cards (Wide) */
@@ -130,13 +185,12 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 20px;
-      max-width: 900px;
-      margin: 0 auto 4rem;
+      margin-bottom: 20px;
     }
 
     .feature-card {
-      padding: 2.5rem;
-      background: linear-gradient(135deg, var(--card) 0%, rgba(255,255,255,0.02) 100%);
+      padding: 1.75rem;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
       border: 1px solid var(--border);
       border-radius: 16px;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
@@ -161,18 +215,19 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
 
     .feature-card .feature-title {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       margin: 0;
-      color: var(--fg);
+      color: #ffffff;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
+      font-weight: 600;
     }
 
     .feature-card .feature-badge {
@@ -182,22 +237,22 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--accent);
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.08);
       padding: 0.25rem 0.75rem;
       border-radius: 20px;
       font-weight: 600;
     }
 
     .feature-card .feature-desc {
-      font-size: 1.05rem;
+      font-size: 1rem;
       line-height: 1.6;
-      color: var(--fg-muted);
+      color: #e0e0e0;
       margin: 0;
     }
 
     @media (min-width: 768px) {
       .feature-card {
-        min-height: 140px;
+        min-height: 120px;
       }
       .feature-card .feature-content {
         display: flex;
@@ -207,7 +262,7 @@
         gap: 2rem;
       }
       .feature-card .feature-header {
-        flex: 0 0 35%;
+        flex: 0 0 32%;
         flex-direction: column;
         align-items: flex-start;
         margin-bottom: 0;
@@ -223,7 +278,7 @@
     .timeline-container {
       position: relative;
       padding-left: 30px;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
     .timeline-line {
@@ -237,7 +292,7 @@
 
     .timeline-node {
       position: relative;
-      margin-bottom: 30px;
+      margin-bottom: 1.5rem;
     }
 
     .timeline-dot {
@@ -253,13 +308,14 @@
 
     .timeline-title {
       font-size: 1.1rem;
-      color: var(--fg);
-      margin-bottom: 8px;
+      color: #ffffff;
+      margin-bottom: 6px;
+      font-weight: 600;
     }
 
     .timeline-desc {
-      color: var(--fg-muted);
-      font-size: 0.95rem;
+      color: #e0e0e0;
+      font-size: 1rem;
       line-height: 1.6;
     }
 
@@ -267,34 +323,104 @@
     .intro-block {
       max-width: 700px;
       margin: 0 auto 3rem;
-      padding: 20px;
-      background: rgba(255,255,255,0.03);
+      padding: 1.5rem;
+      background: rgba(255,255,255,0.04);
       border-radius: 8px;
       border-left: 3px solid var(--accent);
     }
 
     .intro-block p {
-      color: var(--fg-muted);
+      color: #e0e0e0;
       font-size: 1rem;
-      line-height: 1.8;
+      line-height: 1.7;
       margin: 0;
+    }
+
+    /* Architecture intro block */
+    .arch-block {
+      margin-bottom: 20px;
+      padding: 1.25rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .arch-block p,
+    .arch-block li {
+      color: #e0e0e0;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .arch-block ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .arch-block li {
+      margin-bottom: 0.5rem;
+    }
+
+    .arch-block strong {
+      color: #ffffff;
+    }
+
+    /* Tool card links */
+    .tool-link {
+      color: var(--accent);
+      font-size: 0.95rem;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.25rem 0;
+    }
+
+    .tool-link:hover {
+      text-decoration: underline;
+    }
+
+    .tool-link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* Focus styles for all interactive elements */
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 4px;
     }
 
     /* Responsive */
     @media (max-width: 767px) {
+      .process-page {
+        font-size: 15px;
+      }
       .dev-grid {
         grid-template-columns: 1fr;
       }
       .feature-card {
-        padding: 1.5rem;
+        padding: 1.25rem;
       }
       .feature-card .feature-title {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+      }
+      .process-details > summary {
+        font-size: 1.1rem;
+        padding: 1rem 1.25rem;
+      }
+      .process-details > .details-content {
+        padding: 0 1.25rem 1.25rem;
       }
     }
 
     /* ============================================
-       CENTERED CONTAINER FIX
+       CENTERED CONTAINER
        ============================================ */
     .process-container {
       max-width: 1100px;
@@ -330,8 +456,8 @@
 
   <main class="main-content">
     <!-- Hero -->
-    <section class="hero-section" style="text-align: center;">
-      <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-size: 0.8rem; margin-bottom: 10px;">Development</p>
+    <section class="hero-section">
+      <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-size: 0.85rem; margin-bottom: 10px;">Development</p>
       <h1 class="hero-title font-display">
         <span>PROCESS</span>
         <span class="accent-line">NOTES</span>
@@ -342,271 +468,292 @@
     <div class="process-container">
 
     <!-- Intro Narrative -->
-    <div class="intro-block" style="margin: 0 auto 3rem;">
-      <p>Board Lab started as something I was building purely for fun: a way to study Kilter holds outside the gym, to memorize their shapes and angles before I even touched the wall. I had no intention of turning it into a portfolio piece. But as the scope grew, so did the problems, and solving them became the real project. This page documents the architectural decisions, debugging strategies, and product thinking that shaped the site.</p>
+    <div class="intro-block">
+      <p>Board Lab started as something I was building purely for fun. At first I just documented climbing techniques and made gifs from my board videos, but as I built the site I kept having more and more ambitious ideas. As the scope grew, so did the problems, and solving them became the real project. This page documents the architectural decisions, debugging strategies, and product thinking that shaped the site.</p>
     </div>
 
     <!-- SECTION 1: SITE FEATURES -->
-    <h2 class="section-title">Site Features</h2>
-    <div class="feature-grid">
+    <details class="process-details">
+      <summary>Site Features</summary>
+      <div class="details-content">
+        <div class="feature-grid">
 
-      <div class="feature-card">
-        <div class="feature-content">
-          <div class="feature-header">
-            <h3 class="feature-title">Interactive Board Map</h3>
-            <span class="feature-badge">Frontend</span>
+          <div class="feature-card">
+            <div class="feature-content">
+              <div class="feature-header">
+                <h3 class="feature-title">Interactive Board Map</h3>
+                <span class="feature-badge">Frontend</span>
+              </div>
+              <p class="feature-desc">A fully interactive 12x12 grid mapping every Kilter hold with calibrated 3D perspective. Click any hold to open a detail modal with grip and profile photos, hold data, and routesetting notes. Built with CSS Grid, absolute positioning, and real-time coordinate mapping.</p>
+            </div>
           </div>
-          <p class="feature-desc">A fully interactive 12x12 grid mapping every Kilter hold with calibrated 3D perspective. Click any hold to open a detail modal with grip photos, edge measurements, and routesetting notes. Built with CSS Grid, absolute positioning, and real-time coordinate mapping.</p>
+
+          <div class="feature-card">
+            <div class="feature-content">
+              <div class="feature-header">
+                <h3 class="feature-title">Hold Tier System</h3>
+                <span class="feature-badge">Data Architecture</span>
+              </div>
+              <p class="feature-desc">A new grading framework classifying every hold into tiers (Jugs, Intermediates, Bad Holds) with sub-grades from 1.1 to 3.5. The system accounts for hold orientation, edge depth, and wall angle sensitivity, enabling the AI setter to generate physically realistic problems.</p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-content">
+              <div class="feature-header">
+                <h3 class="feature-title">AI Problem Setter</h3>
+                <span class="feature-badge">Full Stack</span>
+              </div>
+              <p class="feature-desc">A three-layer architecture where an LLM handles creative hold selection while deterministic JavaScript enforces biomechanical constraints: max reach, Euclidean distance, left/right zoning, and hold orientation rules. Problems are validated, repaired, and rendered as climbable sequences on the board.</p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-content">
+              <div class="feature-header">
+                <h3 class="feature-title">Hold Database & JSON API</h3>
+                <span class="feature-badge">Backend</span>
+              </div>
+              <p class="feature-desc">Hold data (IDs, coordinates, descriptions, tier ratings, image paths) lives in a structured JSON file fetched at runtime. This separation of data from presentation logic keeps the codebase clean and allows non-destructive updates to hold information without touching JavaScript.</p>
+            </div>
+          </div>
+
         </div>
       </div>
-
-      <div class="feature-card">
-        <div class="feature-content">
-          <div class="feature-header">
-            <h3 class="feature-title">Hold Tier System</h3>
-            <span class="feature-badge">Data Architecture</span>
-          </div>
-          <p class="feature-desc">A proprietary grading framework classifying every hold into tiers (Jugs, Intermediates, Bad Holds) with sub-grades from 1.1 to 3.5. The system accounts for hold orientation, edge depth, and wall angle sensitivity, enabling the AI setter to generate physically realistic problems.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-content">
-          <div class="feature-header">
-            <h3 class="feature-title">AI Problem Setter</h3>
-            <span class="feature-badge">Full Stack</span>
-          </div>
-          <p class="feature-desc">A three-layer architecture where an LLM handles creative hold selection while deterministic JavaScript enforces biomechanical constraints: max reach, Euclidean distance, left/right zoning, and hold orientation rules. Problems are validated, repaired, and rendered as climbable sequences on the board.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-content">
-          <div class="feature-header">
-            <h3 class="feature-title">Hold Database & JSON API</h3>
-            <span class="feature-badge">Backend</span>
-          </div>
-          <p class="feature-desc">Hold data (IDs, coordinates, descriptions, tier ratings, image paths) lives in a structured JSON file fetched at runtime. This separation of data from presentation logic keeps the codebase clean and allows non-destructive updates to hold information without touching JavaScript.</p>
-        </div>
-      </div>
-
-    </div>
+    </details>
 
     <!-- SECTION 2: DEVELOPMENT TOOLKIT -->
-    <h2 class="section-title">Tools Used</h2>
-    <div class="dev-grid">
+    <details class="process-details">
+      <summary>Tools Used</summary>
+      <div class="details-content">
+        <div class="dev-grid">
 
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Zhipu GLM-5</span>
-          <span class="dev-card-badge">Coding Assistant</span>
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Zhipu GLM-5</span>
+              <span class="dev-card-badge">Coding Assistant</span>
+            </div>
+            <p class="dev-solution" style="margin-bottom: 10px;">
+              Coded with assistance from Zhipu AI. Provided logic, debugging, and layout structure throughout the development process.
+            </p>
+            <a href="https://chat.z.ai" target="_blank" class="tool-link">
+              Visit chat.z.ai &rarr;
+            </a>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Canva</span>
+              <span class="dev-card-badge">Image Editing</span>
+            </div>
+            <p class="dev-solution" style="margin-bottom: 10px;">
+              Used for editing hold photos, creating background assets, and optimizing visuals for the web.
+            </p>
+            <a href="https://www.canva.com/" target="_blank" class="tool-link">
+              Visit Canva &rarr;
+            </a>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Notepad++</span>
+              <span class="dev-card-badge">Code Editing</span>
+            </div>
+            <p class="dev-solution" style="margin-bottom: 10px;">
+              Used for editing HTML, JavaScript, and CSS.
+            </p>
+            <a href="https://notepad-plus-plus.org/" target="_blank" class="tool-link">
+              Visit Notepad++ &rarr;
+            </a>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">DeepSeek API</span>
+              <span class="dev-card-badge">Backend</span>
+            </div>
+            <p class="dev-solution" style="margin-bottom: 10px;">
+              DeepSeek V4 Flash powers the AI problem setter, handling creative hold selection and style-based reasoning for a fraction of a cent per query.
+            </p>
+            <a href="https://chat.deepseek.com/" target="_blank" class="tool-link">
+              Visit DeepSeek &rarr;
+            </a>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Vercel</span>
+              <span class="dev-card-badge">Deployment</span>
+            </div>
+            <p class="dev-solution" style="margin-bottom: 10px;">
+              Used for seamless frontend hosting and serverless backend deployment to hide the DeepSeek API key and minimize costs associated with running a dedicated server.
+            </p>
+            <a href="https://vercel.com/" target="_blank" class="tool-link">
+              Visit Vercel &rarr;
+            </a>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">GitHub</span>
+              <span class="dev-card-badge">Version Control</span>
+            </div>
+            <p class="dev-solution" style="margin-bottom: 10px;">
+              Used for version control and source code management throughout the project.
+            </p>
+            <a href="https://github.com/doublekunzite/board-lab" target="_blank" class="tool-link">
+              View Source Code &rarr;
+            </a>
+          </div>
+
         </div>
-        <p class="dev-solution" style="margin-bottom: 15px;">
-          Coded with assistance from Zhipu AI. Provided logic, debugging, and layout structure throughout the development process.
-        </p>
-        <a href="https://chat.z.ai" target="_blank" style="color: var(--accent); font-size: 0.9rem; text-decoration: none; font-weight: 500;">
-          Visit chat.z.ai &rarr;
-        </a>
       </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Canva</span>
-          <span class="dev-card-badge">Image Editing</span>
-        </div>
-        <p class="dev-solution" style="margin-bottom: 15px;">
-          Used for editing hold photos, creating background assets, and optimizing visuals for the web.
-        </p>
-        <a href="https://www.canva.com/" target="_blank" style="color: var(--accent); font-size: 0.9rem; text-decoration: none; font-weight: 500;">
-          Visit Canva &rarr;
-        </a>
-      </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Notepad++</span>
-          <span class="dev-card-badge">Code Editing</span>
-        </div>
-        <p class="dev-solution" style="margin-bottom: 15px;">
-          Used for editing HTML, JavaScript, and CSS.
-        </p>
-        <a href="https://notepad-plus-plus.org/" target="_blank" style="color: var(--accent); font-size: 0.9rem; text-decoration: none; font-weight: 500;">
-          Visit Notepad++ &rarr;
-        </a>
-      </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">DeepSeek API</span>
-          <span class="dev-card-badge">Backend</span>
-        </div>
-        <p class="dev-solution" style="margin-bottom: 15px;">
-          DeepSeek V3 powers the AI problem setter, handling creative hold selection and style-based reasoning for a fraction of a cent per query.
-        </p>
-        <a href="https://chat.deepseek.com/" target="_blank" style="color: var(--accent); font-size: 0.9rem; text-decoration: none; font-weight: 500;">
-          Visit DeepSeek &rarr;
-        </a>
-      </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Vercel</span>
-          <span class="dev-card-badge">Deployment</span>
-        </div>
-        <p class="dev-solution" style="margin-bottom: 15px;">
-          Used for seamless frontend hosting and serverless backend deployment to hide the DeepSeek API key and minimize costs associated with running a dedicated server.
-        </p>
-        <a href="https://vercel.com/" target="_blank" style="color: var(--accent); font-size: 0.9rem; text-decoration: none; font-weight: 500;">
-          Visit Vercel &rarr;
-        </a>
-      </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">GitHub</span>
-          <span class="dev-card-badge">Version Control</span>
-        </div>
-        <p class="dev-solution" style="margin-bottom: 15px;">
-          Used for version control and source code management throughout the project.
-        </p>
-        <a href="https://github.com/doublekunzite/board-lab" target="_blank" style="color: var(--accent); font-size: 0.9rem; text-decoration: none; font-weight: 500;">
-          View Source Code &rarr;
-        </a>
-      </div>
-
-    </div>
+    </details>
 
     <!-- SECTION 3: AI & BACKEND ARCHITECTURE -->
-    <h2 class="section-title">AI Integration & Problem Setter Architecture</h2>
-    <div style="margin-bottom: 30px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 8px; border-left: 3px solid var(--accent);">
-      <p class="dev-solution" style="margin-bottom: 15px;">The backend system utilizes a custom three-layer architecture to ensure accurate, climbable problems:</p>
-      <ul style="list-style-type: none; padding: 0; color: var(--fg-muted); font-size: 0.95rem; line-height: 1.8;">
-        <li style="margin-bottom: 8px;">&#10022; <strong style="color: var(--fg);">Layer 1 (Data):</strong> Hold data structured with row/column coordinates, tier ratings, and orientation flags for spatial reasoning.</li>
-        <li style="margin-bottom: 8px;">&#10022; <strong style="color: var(--fg);">Layer 2 (Validation):</strong> Deterministic JavaScript enforces biomechanical constraints: max reach, Euclidean distance, row/column zoning, and hold orientation rules.</li>
-        <li>&#10022; <strong style="color: var(--fg);">Layer 3 (Generation):</strong> The LLM handles creative hold selection and style-based reasoning, restricted to tasks it performs well.</li>
-      </ul>
-    </div>
-
-    <div class="dev-grid">
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Generate &rarr; Validate &rarr; Repair</span>
-          <span class="dev-card-badge">Architecture</span>
+    <details class="process-details">
+      <summary>AI Integration & Problem Setter Architecture</summary>
+      <div class="details-content">
+        <div class="arch-block">
+          <p style="margin-bottom: 15px;">The backend system utilizes a custom three-layer architecture to ensure accurate, climbable problems:</p>
+          <ul>
+            <li style="margin-bottom: 8px;">&#10022; <strong>Layer 1 (Data):</strong> Hold data structured with row/column coordinates, tier ratings, and orientation flags for spatial reasoning.</li>
+            <li style="margin-bottom: 8px;">&#10022; <strong>Layer 2 (Validation):</strong> Deterministic JavaScript enforces biomechanical constraints: max reach, Euclidean distance, row/column zoning, and hold orientation rules.</li>
+            <li>&#10022; <strong>Layer 3 (Generation):</strong> The LLM handles creative hold selection and style-based reasoning, restricted to tasks it performs well.</li>
+          </ul>
         </div>
-        <p class="dev-challenge">Challenge: The LLM was generating physically impossible boulders, ignoring hold orientations, placing start holds too far apart, and setting undercling feet.</p>
-        <p class="dev-solution"><strong>Solution:</strong> Instead of forcing the LLM to do spatial math, we architected a loop where the AI picks holds based on style and creativity, then a JavaScript validator checks every constraint (distance, reach, zoning, orientation). Failed problems are sent back to the LLM with specific error messages for repair.</p>
-      </div>
 
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Domain Expertise as Code</span>
-          <span class="dev-card-badge">Data</span>
+        <div class="dev-grid">
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Generate &rarr; Validate &rarr; Repair</span>
+              <span class="dev-card-badge">Architecture</span>
+            </div>
+            <p class="dev-challenge">Challenge: The LLM was generating physically impossible boulders, ignoring hold orientations, placing start holds too far apart, and setting undercling feet.</p>
+            <p class="dev-solution"><strong>Solution:</strong> Instead of forcing the LLM to do spatial math, we architected a loop where the AI picks holds based on style and creativity, then a JavaScript validator checks every constraint (distance, reach, zoning, orientation). Failed problems are sent back to the LLM with specific error messages for repair.</p>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Domain Expertise as Code</span>
+              <span class="dev-card-badge">Data</span>
+            </div>
+            <p class="dev-challenge">Challenge: The AI didn't understand climbing concepts like opposition, gastons, or compression. It had no physical intuition.</p>
+            <p class="dev-solution"><strong>Solution:</strong> We translated biomechanics into explicit conditional logic. Rules like: "If a start hand is a left-facing sidepull, place a foot on the RIGHT side." The tier system (1.1 to 3.5) lets the AI combine bad holds with positive holds to force tension, mimicking how real setters think.</p>
+          </div>
+
         </div>
-        <p class="dev-challenge">Challenge: The AI didn't understand climbing concepts like opposition, gastons, or compression. It had no physical intuition.</p>
-        <p class="dev-solution"><strong>Solution:</strong> We translated biomechanics into explicit conditional logic. Rules like: "If a start hand is a left-facing sidepull, place a foot on the RIGHT side." The tier system (1.1 to 3.5) lets the AI combine bad holds with positive holds to force tension, mimicking how real setters think.</p>
       </div>
-
-    </div>
+    </details>
 
     <!-- SECTION 4: FRONTEND ENGINEERING & UX -->
-    <h2 class="section-title">Frontend Engineering & UX</h2>
-    <div class="dev-grid">
+    <details class="process-details">
+      <summary>Frontend Engineering & UX</summary>
+      <div class="details-content">
+        <div class="dev-grid">
 
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Calibration Mode</span>
-          <span class="dev-card-badge">Interactive Debugging</span>
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Calibration Mode</span>
+              <span class="dev-card-badge">Interactive Debugging</span>
+            </div>
+            <p class="dev-challenge">Challenge: The photograph of the physical board had slight perspective distortion, making a rigid CSS grid misalign with the holds.</p>
+            <p class="dev-solution"><strong>Solution:</strong> Built a temporary "Calibration Slider" UI to interactively adjust 3D transform values (rotateX, rotateY) in real time until the grid matched the photo perfectly. Noted the final values, hardcoded them, and stripped out the debugging tools.</p>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Pragmatic De-scoping</span>
+              <span class="dev-card-badge">Product Thinking</span>
+            </div>
+            <p class="dev-challenge">Challenge: An interactive "Wall Angle Slider" would require mapping 300+ holds across 7 angles: over 2,000 manual data entries.</p>
+            <p class="dev-solution"><strong>Solution:</strong> Pivoted to a "Static Tier + Contextual Warning" system. The tier stays the same, but a warning badge appears for holds that degrade poorly on steep angles. This preserved the UI value without the unmanageable data cost.</p>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Separation of Concerns</span>
+              <span class="dev-card-badge">Code Architecture</span>
+            </div>
+            <p class="dev-challenge">Challenge: The board layout file was becoming massive because hold data was hardcoded into the HTML script tag.</p>
+            <p class="dev-solution"><strong>Solution:</strong> Moved all hold data to an external <code>holds.json</code> file and loaded it via fetch. This separated content from logic, made the codebase cleaner, and allowed updating hold descriptions without risking JavaScript errors.</p>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Invisible Elements Debugging</span>
+              <span class="dev-card-badge">QA</span>
+            </div>
+            <p class="dev-challenge">Challenge: Elements were rendering invisible across multiple pages. Text labels, floating holds, and modal content kept disappearing.</p>
+            <p class="dev-solution"><strong>Solution:</strong> Used a "force visibility" strategy: set elements to bright red with <code>opacity: 1 !important</code> to confirm they existed in the DOM. This isolated CSS issues (z-index stacking contexts, missing root variables, overflow clipping) from structural problems. DevTools computed styles revealed text was rendering as light beige on a black background due to stripped CSS variables.</p>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">URL Hash State Management</span>
+              <span class="dev-card-badge">Frontend Logic</span>
+            </div>
+            <p class="dev-challenge">Challenge: Users couldn't link directly to specific holds or use the browser back button to close modals.</p>
+            <p class="dev-solution"><strong>Solution:</strong> Implemented URL hash routing (<code>#A1</code>, <code>#list</code>, <code>#quality</code>). This introduced a bug where <code>#list</code> accidentally matched hold ID formats. Fixed by moving tab checks to the top of the handler with strict <code>else if</code> hierarchy, preventing state logic collisions.</p>
+          </div>
+
+          <div class="dev-card">
+            <div class="dev-card-header">
+              <span class="dev-card-title">Vercel Static + API Coexistence</span>
+              <span class="dev-card-badge">DevOps</span>
+            </div>
+            <p class="dev-challenge">Challenge: Adding an <code>/api</code> folder for serverless functions broke Vercel's ability to serve static HTML files, causing 404s.</p>
+            <p class="dev-solution"><strong>Solution:</strong> Methodically isolated the issue by testing old vs. new pages. Moved files to <code>/public</code>, created <code>package.json</code> and <code>vercel.json</code> with explicit <code>outputDirectory: "public"</code> configuration. Also removed unnecessary <code>node-fetch</code> import when native fetch became available in Vercel's Node runtime.</p>
+          </div>
+
         </div>
-        <p class="dev-challenge">Challenge: The photograph of the physical board had slight perspective distortion, making a rigid CSS grid misalign with the holds.</p>
-        <p class="dev-solution"><strong>Solution:</strong> Built a temporary "Calibration Slider" UI to interactively adjust 3D transform values (rotateX, rotateY) in real time until the grid matched the photo perfectly. Noted the final values, hardcoded them, and stripped out the debugging tools.</p>
       </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Pragmatic De-scoping</span>
-          <span class="dev-card-badge">Product Thinking</span>
-        </div>
-        <p class="dev-challenge">Challenge: An interactive "Wall Angle Slider" would require mapping 300+ holds across 7 angles: over 2,000 manual data entries.</p>
-        <p class="dev-solution"><strong>Solution:</strong> Pivoted to a "Static Tier + Contextual Warning" system. The tier stays the same, but a warning badge appears for holds that degrade poorly on steep angles. This preserved the UI value without the unmanageable data cost.</p>
-      </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Separation of Concerns</span>
-          <span class="dev-card-badge">Code Architecture</span>
-        </div>
-        <p class="dev-challenge">Challenge: The board layout file was becoming massive because hold data was hardcoded into the HTML script tag.</p>
-        <p class="dev-solution"><strong>Solution:</strong> Moved all hold data to an external <code>holds.json</code> file and loaded it via fetch. This separated content from logic, made the codebase cleaner, and allowed updating hold descriptions without risking JavaScript errors.</p>
-      </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Invisible Elements Debugging</span>
-          <span class="dev-card-badge">QA</span>
-        </div>
-        <p class="dev-challenge">Challenge: Elements were rendering invisible across multiple pages. Text labels, floating holds, and modal content kept disappearing.</p>
-        <p class="dev-solution"><strong>Solution:</strong> Used a "force visibility" strategy: set elements to bright red with <code>opacity: 1 !important</code> to confirm they existed in the DOM. This isolated CSS issues (z-index stacking contexts, missing root variables, overflow clipping) from structural problems. DevTools computed styles revealed text was rendering as light beige on a black background due to stripped CSS variables.</p>
-      </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">URL Hash State Management</span>
-          <span class="dev-card-badge">Frontend Logic</span>
-        </div>
-        <p class="dev-challenge">Challenge: Users couldn't link directly to specific holds or use the browser back button to close modals.</p>
-        <p class="dev-solution"><strong>Solution:</strong> Implemented URL hash routing (<code>#A1</code>, <code>#list</code>, <code>#quality</code>). This introduced a bug where <code>#list</code> accidentally matched hold ID formats. Fixed by moving tab checks to the top of the handler with strict <code>else if</code> hierarchy, preventing state logic collisions.</p>
-      </div>
-
-      <div class="dev-card">
-        <div class="dev-card-header">
-          <span class="dev-card-title">Vercel Static + API Coexistence</span>
-          <span class="dev-card-badge">DevOps</span>
-        </div>
-        <p class="dev-challenge">Challenge: Adding an <code>/api</code> folder for serverless functions broke Vercel's ability to serve static HTML files, causing 404s.</p>
-        <p class="dev-solution"><strong>Solution:</strong> Methodically isolated the issue by testing old vs. new pages. Moved files to <code>/public</code>, created <code>package.json</code> and <code>vercel.json</code> with explicit <code>outputDirectory: "public"</code> configuration. Also removed unnecessary <code>node-fetch</code> import when native fetch became available in Vercel's Node runtime.</p>
-      </div>
-
-    </div>
+    </details>
 
     <!-- SECTION 5: WORKFLOW STRATEGIES -->
-    <h2 class="section-title">Workflow Strategies</h2>
-    <div class="timeline-container">
-      <div class="timeline-line"></div>
+    <details class="process-details">
+      <summary>Workflow Strategies</summary>
+      <div class="details-content">
+        <div class="timeline-container">
+          <div class="timeline-line"></div>
 
-      <div class="timeline-node">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3 class="timeline-title">Diagnostic First</h3>
-          <p class="timeline-desc">When something breaks, I don't rewrite code blindly. I use browser DevTools to verify the element exists in the DOM, check computed styles, and trace errors through the Network tab. A frontend error is often a symptom of a backend crash or a stale Git commit.</p>
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Diagnostic First</h3>
+              <p class="timeline-desc">When something breaks, I don't rewrite code blindly. I use browser DevTools to verify the element exists in the DOM, check computed styles, and trace errors through the Network tab. A frontend error is often a symptom of a backend crash or a stale Git commit.</p>
+            </div>
+          </div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Temporary Scaffolding</h3>
+              <p class="timeline-desc">For dynamic visual adjustments like the board calibration, I build temporary UI controls to find exact values interactively, then hardcode them and remove the scaffolding. This beats guessing CSS values and refreshing hundreds of times.</p>
+            </div>
+          </div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Architectural Separation</h3>
+              <p class="timeline-desc">When a tool fails at a specific type of logic, don't force it. The LLM is great at creative reasoning but terrible at spatial math. We built a system where each layer handles the tasks it is uniquely suited for: JSON for data, JavaScript for validation, LLM for generation.</p>
+            </div>
+          </div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Pragmatic De-scoping</h3>
+              <p class="timeline-desc">Always weigh the UI "cool factor" against data entry and maintenance cost. The wall angle slider would have required 2,000+ manual entries. A boolean flag and a warning badge achieved 80% of the value for 5% of the work.</p>
+            </div>
+          </div>
+
         </div>
       </div>
+    </details>
 
-      <div class="timeline-node">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3 class="timeline-title">Temporary Scaffolding</h3>
-          <p class="timeline-desc">For dynamic visual adjustments like the board calibration, I build temporary UI controls to find exact values interactively, then hardcode them and remove the scaffolding. This beats guessing CSS values and refreshing hundreds of times.</p>
-        </div>
-      </div>
-
-      <div class="timeline-node">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3 class="timeline-title">Architectural Separation</h3>
-          <p class="timeline-desc">When a tool fails at a specific type of logic, don't force it. The LLM is great at creative reasoning but terrible at spatial math. We built a system where each layer handles the tasks it is uniquely suited for: JSON for data, JavaScript for validation, LLM for generation.</p>
-        </div>
-      </div>
-
-      <div class="timeline-node">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3 class="timeline-title">Pragmatic De-scoping</h3>
-          <p class="timeline-desc">Always weigh the UI "cool factor" against data entry and maintenance cost. The wall angle slider would have required 2,000+ manual entries. A boolean flag and a warning badge achieved 80% of the value for 5% of the work.</p>
-        </div>
-      </div>
-
-    </div>
     </div>
   </main>
 
