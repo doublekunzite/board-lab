@@ -1,5 +1,5 @@
 // ============================================
-// LAYER 1: DATA (Movement Archetypes)
+// LAYER 1: MOVEMENT ARCHETYPES
 // ============================================
 
 const MOVEMENT_ARCHETYPES = [
@@ -7,7 +7,7 @@ const MOVEMENT_ARCHETYPES = [
     id: "compression-sidepulls",
     name: "Compression Sidepulls",
     description: "Two opposing sidepulls or steeply angled holds facing each other, requiring body tension between them.",
-    holdProfile: "2x sidepull (opposing) or 2x angled hold (60°+ opposing) + feet for opposition",
+    holdProfile: "2x sidepull (opposing) or 2x angled hold (60°+ opposing)",
     keyPrinciple: "Opposing force vectors create stability without needing positive downward pulls.",
     exampleConfigurations: ["Left sidepull + right sidepull, feet below", "Left 70° angled + right 70° angled, feet staggered"]
   },
@@ -133,9 +133,6 @@ const calculateDistance = (p1, p2) => {
   return Math.sqrt(Math.pow(p1.row - p2.row, 2) + Math.pow(p1.col - p2.col, 2));
 };
 
-/**
- * Get the compass direction of a move between two holds.
- */
 const getMoveDirection = (from, to) => {
   const dr = to.row - from.row;
   const dc = to.col - from.col;
@@ -153,7 +150,50 @@ const getMoveDirection = (from, to) => {
 };
 
 // ============================================
-// LAYER 3: VALIDATORS
+// LAYER 3: STYLE/DIFFICULTY CONFIG
+// ============================================
+
+function getStyleConfig(style, difficulty, userHeight) {
+  const configs = {
+    tension: {
+      easy: {
+        maxReach: Math.floor(0.60 * userHeight / 15),
+        holdDistribution: "Mostly Tier 1 (1.3-1.5) with some easy Tier 2 (2.4-2.5). Avoid Tier 3.",
+        moveSize: "Small, controlled moves. Max 2-3 units between consecutive holds.",
+        holdTypes: "Favor jugs, good slopers, and easy pinches. Avoid crimps and bad slopers.",
+        description: "Tension style (Easy): Small moves on comfortable holds. Focus on body positioning and control."
+      },
+      hard: {
+        maxReach: Math.floor(0.70 * userHeight / 15),
+        holdDistribution: "Mostly Tier 2 (2.1-2.3) with some Tier 3 (3.1-3.3). Avoid Tier 1.",
+        moveSize: "Moderate moves. Can be 3-4 units between holds.",
+        holdTypes: "Favor slopers, pinches, and bad crimps. Use the worst Tier 2 holds. Mix of angled and non-angled holds.",
+        description: "Tension style (Hard): Moderate moves on poor holds. Requires strong body tension and precise footwork."
+      }
+    },
+    dynamic: {
+      easy: {
+        maxReach: Math.floor(0.75 * userHeight / 15),
+        holdDistribution: "Mostly Tier 1 (1.3-1.5) and the best Tier 2 (2.4-2.5).",
+        moveSize: "BIG moves. Dynos and deadpoints. Full span or close to it between holds.",
+        holdTypes: "Favor positive, non-angled, incut holds. Jugs, mini-jugs, and the best crimps. Avoid slopers and angled holds.",
+        description: "Dynamic style (Easy): Big moves between positive holds. Full-span dynos and deadpoints on jugs and good crimps."
+      },
+      hard: {
+        maxReach: Math.floor(0.75 * userHeight / 15),
+        holdDistribution: "Positive Tier 2 holds (2.3-2.5). No jugs. No slopers.",
+        moveSize: "BIG moves. Full span or close to it. Committing deadpoints.",
+        holdTypes: "Favor positive, non-angled incut crimps and pinches. Examples: F9 (2.5) to G14 (2.5), N7 to N13. Avoid slopers, angled holds, and jugs.",
+        description: "Dynamic style (Hard): Big moves between positive Tier 2 holds. Committing deadpoints on good crimps and pinches. No jugs, no slopers."
+      }
+    }
+  };
+
+  return configs[style]?.[difficulty] || configs.tension.easy;
+}
+
+// ============================================
+// LAYER 4: VALIDATORS
 // ============================================
 
 const validateIntermediate = (intermediate, holdsMap, maxReach, startIds, finishIds) => {
@@ -242,108 +282,18 @@ const validateQuality = (intermediate, holdsMap, startIds, finishIds) => {
 };
 
 // ============================================
-// LAYER 3B: FOOT PAIRING VALIDATOR
+// LAYER 5: CONTEXT BUILDERS
 // ============================================
 
-/**
- * Validates that each foot is intentionally paired with a specific handhold.
- * Rules:
- * 1. Every foot must be below its paired hand (lower row number)
- * 2. Foot must be within reasonable horizontal distance (not scrunched)
- * 3. Foot must not be in the same row as its paired hand
- * 4. Foot must not be an undercling
- * 5. Foot must be positive (jugs, crimps, edges — not slopers unless specified)
- * 6. No two feet should occupy the same hold
- */
-const validateFootPairing = (feet, handSequence, holdsMap, userHeight) => {
-  const warnings = [];
-  const usedFootIds = new Set();
-
-  // Calculate ideal foot distance based on height
-  // Taller climbers need wider stances
-  const minVerticalDist = 1; // at least 1 row below
-  const idealHorizontalDist = Math.max(2, Math.min(5, Math.floor(userHeight / 40)));
-  const maxVerticalDist = Math.max(3, Math.floor(userHeight / 50)); // rows below hand
-
-  for (let i = 0; i < feet.length; i++) {
-    const footId = feet[i];
-    const foot = holdsMap[footId];
-
-    if (!foot) {
-      warnings.push(`Foot "${footId}" does not exist on the board.`);
-      continue;
-    }
-
-    if (usedFootIds.has(footId)) {
-      warnings.push(`Duplicate foot: ${footId}`);
-      continue;
-    }
-    usedFootIds.add(footId);
-
-    // Check if foot is an undercling
-    const footTypes = Array.isArray(foot.type) ? foot.type : [foot.type];
-    const isUndercling = footTypes.some(t => t && t.toLowerCase().includes('undercling'));
-    if (isUndercling) {
-      warnings.push(`Foot ${footId} is an undercling — not usable as a foothold.`);
-    }
-
-    // Find the paired handhold (cycle through hand sequence)
-    const pairedHandIndex = i % handSequence.length;
-    const pairedHandId = handSequence[pairedHandIndex];
-    const pairedHand = holdsMap[pairedHandId];
-
-    if (!pairedHand) continue;
-
-    // Rule: foot must be below paired hand
-    const verticalDist = pairedHand.row - foot.row;
-    if (verticalDist < minVerticalDist) {
-      warnings.push(`Foot ${footId} (row ${foot.row}) is not below paired hand ${pairedHandId} (row ${pairedHand.row}). Need at least ${minVerticalDist} row(s) below.`);
-    }
-    if (verticalDist > maxVerticalDist) {
-      warnings.push(`Foot ${footId} (row ${foot.row}) is too far below paired hand ${pairedHandId} (row ${pairedHand.row}). Max ${maxVerticalDist} rows below.`);
-    }
-
-    // Rule: foot must not be in same row as paired hand
-    if (foot.row === pairedHand.row) {
-      warnings.push(`Foot ${footId} is in the same row as paired hand ${pairedHandId} — awkward body position.`);
-    }
-
-    // Rule: horizontal distance should be reasonable
-    const horizontalDist = Math.abs(foot.col - pairedHand.col);
-    if (horizontalDist < 1) {
-      warnings.push(`Foot ${footId} is directly below paired hand ${pairedHandId} — too scrunched.`);
-    }
-    if (horizontalDist > idealHorizontalDist + 2) {
-      warnings.push(`Foot ${footId} is too far horizontally from paired hand ${pairedHandId} (${horizontalDist} cols vs ideal ~${idealHorizontalDist}).`);
-    }
-
-    // Rule: foot should be on the opposite side of the body from the hand it's supporting
-    // (prevents barn-dooring)
-    const handForce = pairedHand.forceDirection || '';
-    if (handForce.includes('left') && foot.col < pairedHand.col) {
-      warnings.push(`Foot ${footId} is on the same side as left-pulling hand ${pairedHandId} — risk of barn-door.`);
-    }
-    if (handForce.includes('right') && foot.col > pairedHand.col) {
-      warnings.push(`Foot ${footId} is on the same side as right-pulling hand ${pairedHandId} — risk of barn-door.`);
-    }
-  }
-
-  return { valid: warnings.length === 0, warnings };
-};
-
-// ============================================
-// LAYER 4: CONTEXT BUILDERS
-// ============================================
-
-function buildIntermediateContext(holdsMap, startIds, finishIds) {
+function buildIntermediateContext(holdsMap, startIds, finishIds, styleConfig) {
   const startRows = startIds.map(id => holdsMap[id]?.row).filter(Boolean);
   const finishRows = finishIds.map(id => holdsMap[id]?.row).filter(Boolean);
 
   const minRow = Math.max(1, Math.min(...startRows) - 1);
   const maxRow = Math.min(18, Math.max(...finishRows) + 1);
 
-  let ctx = "ID | Row | Col | Type | Grade | Angle | Force | Gaston | Family | Desc\n";
-  ctx += "------------------------------------------------------------------------\n";
+  let ctx = `ID | Row | Col | Type | Grade | Angle | Force | Gaston | Family | Desc\n`;
+  ctx += `------------------------------------------------------------------------\n`;
 
   for (const [id, hold] of Object.entries(holdsMap)) {
     const isStart = startIds.includes(id);
@@ -368,89 +318,8 @@ function buildIntermediateContext(holdsMap, startIds, finishIds) {
   return ctx;
 }
 
-/**
- * Build foot pairing context for Phase 2.
- * Each handhold gets paired with an intentional foot.
- */
-function buildFootPairingContext(holdsMap, fullProblem, userHeight) {
-  const allHandIds = [
-    ...(fullProblem.start || []),
-    ...(fullProblem.intermediate || []),
-    ...(fullProblem.finish || [])
-  ];
-
-  const handRows = allHandIds.map(id => holdsMap[id]?.row).filter(Boolean);
-  const handCols = allHandIds.map(id => holdsMap[id]?.col).filter(Boolean);
-
-  const minRow = Math.max(1, Math.min(...handRows) - 3);
-  const maxRow = Math.max(...handRows);
-  const minCol = Math.max(1, Math.min(...handCols) - 5);
-  const maxCol = Math.min(17, Math.max(...handCols) + 5);
-
-  // Build hand sequence with pairing instructions
-  const handDetails = allHandIds.map((id, idx) => {
-    const h = holdsMap[id];
-    if (!h) return `${id}: UNKNOWN`;
-    const t = Array.isArray(h.type) ? h.type.join('/') : h.type;
-    const force = h.forceDirection || 'N/A';
-    const angle = h.angleCategory || 'N/A';
-
-    // Determine ideal foot position for this hand
-    let idealFoot = "";
-    if (force.includes('left')) {
-      idealFoot = "Place foot on RIGHT side, below this hand";
-    } else if (force.includes('right')) {
-      idealFoot = "Place foot on LEFT side, below this hand";
-    } else if (force.includes('down')) {
-      idealFoot = "Place foot directly below or slightly to either side";
-    } else {
-      idealFoot = "Place foot below and slightly to the side for stability";
-    }
-
-    return `HAND ${idx + 1}: ${id} | row=${h.row} col=${h.col} | type=${t} | force=${force} | angle=${angle} | IDEAL FOOT: ${idealFoot}`;
-  }).join('\n');
-
-  const minVerticalDist = 1;
-  const idealHDist = Math.max(2, Math.min(5, Math.floor(userHeight / 40)));
-  const maxVDist = Math.max(3, Math.floor(userHeight / 50));
-
-  let ctx = `FOOT PAIRING RULES (based on user height ${userHeight}cm):\n`;
-  ctx += `- Each foot must be paired with a specific handhold below\n`;
-  ctx += `- Foot must be ${minVerticalDist}-${maxVDist} rows BELOW its paired hand\n`;
-  ctx += `- Foot must be ~${idealHDist} columns horizontally from its paired hand\n`;
-  ctx += `- Foot must NOT be in the same row as its paired hand\n`;
-  ctx += `- Foot must NOT be an undercling\n`;
-  ctx += `- Foot should be on the OPPOSITE side from the hand's pull direction to prevent barn-dooring\n`;
-  ctx += `- Select ${allHandIds.length} feet total (one per handhold)\n\n`;
-
-  ctx += "HAND SEQUENCE (pair each with a foot below):\n";
-  ctx += handDetails;
-  ctx += "\n\n";
-
-  ctx += "AVAILABLE FOOTHOLDS (do NOT select [HAND] holds):\n";
-  ctx += "ID | Row | Col | Type | Grade | Force | Desc\n";
-  ctx += "--------------------------------------------------\n";
-
-  for (const [id, hold] of Object.entries(holdsMap)) {
-    if (hold.row < minRow || hold.row > maxRow) continue;
-    if (hold.col < minCol || hold.col > maxCol) continue;
-
-    const typeStr = Array.isArray(hold.type) ? hold.type.join('/') : (hold.type || 'N/A');
-    const gradeStr = hold.grade || 'N/A';
-    const forceDir = hold.forceDirection || 'N/A';
-
-    let desc = `${hold.desc || ""}`.replace(/\n/g, ' ').trim();
-    if (desc.length > 30) desc = desc.substring(0, 30) + '…';
-
-    const marker = allHandIds.includes(id) ? ' [HAND — DO NOT SELECT]' : '';
-    ctx += `${id} | ${hold.row} | ${hold.col} | ${typeStr} | ${gradeStr} | ${forceDir} | ${desc}${marker}\n`;
-  }
-
-  return ctx;
-}
-
 // ============================================
-// LAYER 5: LLM CALL
+// LAYER 6: LLM CALL
 // ============================================
 
 function getRandomArchetypes(count = 3) {
@@ -464,20 +333,16 @@ function formatArchetypes(archetypes) {
   ).join('\n\n');
 }
 
-async function callDeepSeek(context, userHeight, feedback, phase, extra = {}) {
-  const maxReach = Math.floor(0.75 * userHeight / 15);
+async function callDeepSeek(context, userHeight, style, difficulty, feedback, extra = {}) {
+  const styleConfig = getStyleConfig(style, difficulty, userHeight);
 
   if (!process.env.DEEPSEEK_API_KEY) {
     throw new Error("DEEPSEEK_API_KEY environment variable is not set.");
   }
 
-  let systemPrompt = '';
-  let userPrompt = '';
+  const archetypes = formatArchetypes(getRandomArchetypes(3));
 
-  if (phase === 'intermediate') {
-    const archetypes = formatArchetypes(getRandomArchetypes(3));
-
-    systemPrompt = `You are an expert Kilter Board routesetter.
+  const systemPrompt = `You are an expert Kilter Board routesetter.
 Your ONLY job is to select INTERMEDIATE handholds between a fixed START and a fixed FINISH.
 Do NOT change the start or finish. Do NOT generate feet.
 
@@ -494,7 +359,7 @@ FIXED FINISH HOLD:
  ${extra.finishDetails}
 
 HOLD PROPERTIES:
-- Tier 1 = Jug (grades 1.1-1.5). Tier 2 = Medium (2.1-2.5). Tier 3 = Crimp (3.1-3.5)
+- Tier 1 = Jug (grades 1.1-1.5). Tier 2 = Intermediate (2.1-2.5). Tier 3 = Bad Hold (3.1-3.5)
 - .1 = worst in tier, .5 = best in tier
 - angleCategory: vertical, angled-left, angled-right, sidepull-left, sidepull-right, undercling-left, undercling-right
 - forceDirection: down, down-left, down-right, left, right, up, up-left, up-right, outward-left, outward-right
@@ -506,17 +371,24 @@ BIOMECHANICS:
 - Vertical pinches are hardest; angled pinches are more positive
 - Slopers: body must stay directly under the hold
 
-DIFFICULTY (Medium):
-- Mostly Tier 2 (2.1-2.3) + some Tier 3 (3.4-3.5)
+STYLE & DIFFICULTY:
+${styleConfig.description}
+
+HOLD SELECTION RULES:
+${styleConfig.holdDistribution}
+${styleConfig.moveSize}
+${styleConfig.holdTypes}
+
+MAX REACH: ${styleConfig.maxReach} units (based on ${userHeight}cm climber)
 
 MOVEMENT INSPIRATION (do NOT copy these exactly):
- ${archetypes}
+${archetypes}
 
 STRICT RULES:
 1. Generate 1-8 intermediate holds
-2. First intermediate must be within ${maxReach} units of the LAST start hold
-3. Last intermediate must be within ${maxReach} units of the finish hold
-4. Every consecutive pair must be within ${maxReach} units
+2. First intermediate must be within MAX REACH of the LAST start hold
+3. Last intermediate must be within MAX REACH of the finish hold
+4. Every consecutive pair must be within MAX REACH
 5. No duplicates — do NOT reuse start or finish hold IDs
 6. DIRECTION CHANGES: At least 2 changes in movement direction across the full sequence
 7. NO MORE THAN 2 consecutive moves in the same direction
@@ -529,43 +401,11 @@ OUTPUT — Return ONLY this JSON:
 AVAILABLE HOLDS (marked ← START / ← FINISH):
  ${context}`;
 
-    if (feedback) {
-      userPrompt = `FIX THESE ISSUES with the intermediate sequence:\n${feedback.join('\n')}\n\nOutput the corrected JSON.`;
-    } else {
-      userPrompt = `Create an interesting intermediate sequence. Output ONLY the JSON.`;
-    }
-
-  } else if (phase === 'feet') {
-    const idealHDist = Math.max(2, Math.min(5, Math.floor(userHeight / 40)));
-    const maxVDist = Math.max(3, Math.floor(userHeight / 50));
-
-    systemPrompt = `You are an expert Kilter Board routesetter.
-Your ONLY job is to select FEET for a given hand sequence.
-
-SPATIAL ORIENTATION:
-- Row 1 = BOTTOM of wall. Row 18 = TOP of wall.
-- Climbers move upward from low to high row numbers.
-
-CRITICAL FOOT PAIRING RULES:
-1. Each foot must be INTENTIONALLY PAIRED with a specific handhold
-2. Foot must be BELOW its paired hand (lower row number)
-3. Foot must be 1-${maxVDist} rows below paired hand, NOT in the same row
-4. Foot must be ~${idealHDist} columns horizontally from paired hand (not directly below, not too far)
-5. Foot must NOT be an undercling
-6. Foot should be on the OPPOSITE side from the hand's pull direction:
-   - Left-pulling hand → foot on RIGHT side
-   - Right-pulling hand → foot on LEFT side
-   - Down-pulling hand → foot directly below or slightly to either side
-7. Do NOT select holds that are already in the hand sequence
-8. Select exactly as many feet as there are handholds (one foot per hand)
-9. Feet should be positive holds: jugs, crimps, edges, pinches
-
-OUTPUT — Return ONLY this JSON:
-{"feet": ["FootID", ...]}
-
-${context}`;
-
-    userPrompt = `Select appropriate feet paired with each handhold. Output ONLY the JSON.`;
+  let userPrompt;
+  if (feedback) {
+    userPrompt = `FIX THESE ISSUES with the intermediate sequence:\n${feedback.join('\n')}\n\nOutput the corrected JSON.`;
+  } else {
+    userPrompt = `Create a ${style} ${difficulty} problem. Output ONLY the JSON.`;
   }
 
   const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
@@ -610,7 +450,7 @@ ${context}`;
 }
 
 // ============================================
-// LAYER 6: MAIN HANDLER
+// LAYER 7: MAIN HANDLER
 // ============================================
 
 export default async function handler(req, res) {
@@ -622,11 +462,11 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: "Method not allowed" });
 
   try {
-    const { holdsMap, userHeight, start, finish } = req.body;
+    const { holdsMap, userHeight, style, difficulty, start, finish } = req.body;
 
-    if (!holdsMap || !userHeight || !start || !finish) {
+    if (!holdsMap || !userHeight || !style || !difficulty || !start || !finish) {
       return res.status(400).json({
-        error: "Missing required fields: holdsMap, userHeight, start, finish"
+        error: "Missing required fields: holdsMap, userHeight, style, difficulty, start, finish"
       });
     }
 
@@ -643,7 +483,8 @@ export default async function handler(req, res) {
       }
     }
 
-    const maxReach = Math.floor(0.75 * userHeight / 15);
+    const styleConfig = getStyleConfig(style, difficulty, userHeight);
+    const maxReach = styleConfig.maxReach;
 
     const buildHoldDetail = (id) => {
       const h = holdsMap[id];
@@ -657,15 +498,14 @@ export default async function handler(req, res) {
     // ========================================
     // PHASE 1: Generate Intermediate Holds
     // ========================================
-    console.log(`[Phase 1] Generating intermediate, maxReach=${maxReach}`);
+    console.log(`[Phase 1] ${style} ${difficulty}, maxReach=${maxReach}`);
     console.log(`[Phase 1] Start: ${start.join(', ')} | Finish: ${finish.join(', ')}`);
 
-    const intermediateContext = buildIntermediateContext(holdsMap, start, finish);
+    const intermediateContext = buildIntermediateContext(holdsMap, start, finish, styleConfig);
 
     let result = await callDeepSeek(
-      intermediateContext, userHeight,
-      null, 'intermediate',
-      { startDetails, finishDetails }
+      intermediateContext, userHeight, style, difficulty,
+      null, { startDetails, finishDetails }
     );
 
     let intermediate = result?.intermediate || [];
@@ -690,9 +530,8 @@ export default async function handler(req, res) {
       console.log(`[Phase 1] Retry ${attempts}/${MAX_ATTEMPTS}: ${feedback.slice(0, 3).join(' | ')}`);
 
       result = await callDeepSeek(
-        intermediateContext, userHeight,
-        feedback, 'intermediate',
-        { startDetails, finishDetails }
+        intermediateContext, userHeight, style, difficulty,
+        feedback, { startDetails, finishDetails }
       );
 
       intermediate = result?.intermediate || [];
@@ -716,72 +555,22 @@ export default async function handler(req, res) {
     console.log(`[Phase 1] ✓ Valid: ${start.join(',')} → ${intermediate.join(' → ')} → ${finish.join(',')}`);
 
     // ========================================
-    // PHASE 2: Generate Paired Feet
-    // ========================================
-    console.log(`[Phase 2] Generating paired feet...`);
-
-    const fullProblem = { start, intermediate, finish };
-    const allHandIds = [...start, ...intermediate, ...finish];
-    const feetContext = buildFootPairingContext(holdsMap, fullProblem, userHeight);
-
-    let feetResult = null;
-    let feetWarnings = [];
-    let feetAttempts = 0;
-    const MAX_FEET_ATTEMPTS = 3;
-
-    try {
-      feetResult = await callDeepSeek(
-        feetContext, userHeight,
-        null, 'feet'
-      );
-
-      if (feetResult?.feet) {
-        // Validate foot pairing with geometric rules
-        let feetValidation = validateFootPairing(feetResult.feet, allHandIds, holdsMap, userHeight);
-
-        while (!feetValidation.valid && feetAttempts < MAX_FEET_ATTEMPTS) {
-          feetAttempts++;
-          console.log(`[Phase 2] Feet retry ${feetAttempts}:`, feetValidation.warnings);
-
-          feetResult = await callDeepSeek(
-            feetContext, userHeight,
-            feetValidation.warnings, 'feet'
-          );
-
-          if (feetResult?.feet) {
-            feetValidation = validateFootPairing(feetResult.feet, allHandIds, holdsMap, userHeight);
-          } else {
-            break;
-          }
-        }
-
-        if (!feetValidation.valid) {
-          feetWarnings = feetValidation.warnings;
-        }
-      }
-    } catch (feetError) {
-      console.warn(`[Phase 2] Feet generation failed:`, feetError.message);
-    }
-
-    // ========================================
-    // Assemble Result
+    // Assemble Result (no feet)
     // ========================================
     const finalProblem = {
       start,
       intermediate,
-      finish,
-      feet: feetResult?.feet || []
+      finish
     };
 
     const allWarnings = [];
     if (!qualityResult.valid) allWarnings.push(...qualityResult.warnings);
-    if (feetWarnings.length > 0) allWarnings.push(...feetWarnings);
 
     if (allWarnings.length > 0) {
-      finalProblem.feetWarnings = allWarnings;
+      finalProblem.warnings = allWarnings;
     }
 
-    console.log(`[Complete] ${finalProblem.start.length} start + ${finalProblem.intermediate.length} intermediate + ${finalProblem.finish.length} finish + ${finalProblem.feet.length} feet`);
+    console.log(`[Complete] ${finalProblem.start.length} start + ${finalProblem.intermediate.length} intermediate + ${finalProblem.finish.length} finish`);
 
     return res.status(200).json(finalProblem);
 

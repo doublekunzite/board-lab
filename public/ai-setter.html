@@ -76,7 +76,8 @@
             color: var(--fg-muted);
         }
 
-        .control-group input {
+        .control-group input,
+        .control-group select {
             padding: 0.75rem;
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -86,10 +87,18 @@
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        .control-group input:focus {
+        .control-group input:focus,
+        .control-group select:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 2px rgba(255, 176, 136, 0.2);
+        }
+
+        /* Style dropdown options for legibility */
+        .control-group select option {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            font-size: 1rem;
         }
 
         .btn-generate {
@@ -235,6 +244,16 @@
             flex-shrink: 0;
         }
 
+        .note-box {
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--fg-muted);
+            line-height: 1.5;
+        }
+
         /* Main content area */
         .main-content {
             flex: 1;
@@ -336,13 +355,6 @@
             background-color: #2dd4bf;
             border: 2px solid rgba(255,255,255,0.5);
             box-shadow: 0 0 4px rgba(45, 212, 191, 0.4);
-        }
-
-        .hold-cell.is-feet::after {
-            opacity: 1;
-            background-color: #facc15;
-            border: 2px solid rgba(255,255,255,0.5);
-            box-shadow: 0 0 4px rgba(250, 204, 21, 0.4);
         }
 
         .hold-cell.is-finish::after {
@@ -457,11 +469,31 @@
             <input type="number" id="userHeight" value="175" min="150" max="200">
         </div>
 
+        <div class="control-group">
+            <label for="styleSelect">Style</label>
+            <select id="styleSelect">
+                <option value="tension">Tension</option>
+                <option value="dynamic">Dynamic</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="difficultySelect">Difficulty</label>
+            <select id="difficultySelect">
+                <option value="easy">Easy</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+
         <button id="generateBtn" class="btn-generate" disabled>Generate Problem</button>
         <button id="clearBtn" class="btn-generate btn-secondary">Clear All</button>
 
         <div id="statusArea" class="status-area">
             Loading board data...
+        </div>
+
+        <div class="note-box">
+            <strong>Note:</strong> Feet are not auto-generated. Add your own feet as needed for the hand sequence.
         </div>
 
         <div class="legend">
@@ -470,7 +502,6 @@
             <div class="legend-item"><div class="legend-dot" style="background:#4ade80;"></div> Start (AI)</div>
             <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div> Finish (AI)</div>
             <div class="legend-item"><div class="legend-dot" style="background:#2dd4bf;"></div> Hands</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#facc15;"></div> Feet</div>
         </div>
     </aside>
 
@@ -502,6 +533,8 @@
         const statusArea = document.getElementById('statusArea');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const heightInput = document.getElementById('userHeight');
+        const styleInput = document.getElementById('styleSelect');
+        const difficultyInput = document.getElementById('difficultySelect');
 
         document.addEventListener('DOMContentLoaded', init);
 
@@ -651,7 +684,7 @@
 
         function clearBoardVisuals() {
             document.querySelectorAll('.hold-cell').forEach(cell => {
-                cell.classList.remove('is-start', 'is-hand', 'is-feet', 'is-finish');
+                cell.classList.remove('is-start', 'is-hand', 'is-finish');
             });
         }
 
@@ -666,6 +699,8 @@
                 const payload = {
                     holdsMap: holdsData,
                     userHeight: parseInt(heightInput.value),
+                    style: styleInput.value,
+                    difficulty: difficultyInput.value,
                     start: selectedStarts,
                     finish: [selectedFinish]
                 };
@@ -719,25 +754,19 @@
             if (data.start) lightUp(data.start, 'is-start');
             if (data.intermediate) lightUp(data.intermediate, 'is-hand');
             if (data.finish) lightUp(data.finish, 'is-finish');
-            if (data.feet) lightUp(data.feet, 'is-feet');
 
             let html = '';
             const totalHands = (data.start?.length || 0) + (data.intermediate?.length || 0) + (data.finish?.length || 0);
 
-            html += `<span class="status-success">Problem generated: ${totalHands} hands, ${data.feet?.length || 0} feet</span>`;
+            html += `<span class="status-success">Problem generated: ${totalHands} hands</span>`;
 
             if (data.warning) {
                 html += `<span class="status-error">${escapeHtml(data.warning)}</span>`;
             }
 
-            const allMessages = [
-                ...(data.errors || []),
-                ...(data.feetWarnings || [])
-            ];
-
-            if (allMessages.length > 0) {
-                html += `<details><summary>Warnings (${allMessages.length})</summary><ul>`;
-                allMessages.forEach(msg => { html += `<li>${escapeHtml(msg)}</li>`; });
+            if (data.errors && data.errors.length > 0) {
+                html += `<details><summary>Errors (${data.errors.length})</summary><ul>`;
+                data.errors.forEach(msg => { html += `<li>${escapeHtml(msg)}</li>`; });
                 html += `</ul></details>`;
             }
 
