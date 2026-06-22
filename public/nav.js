@@ -50,22 +50,33 @@ if (navScriptTag) {
 // ============================================
 (function injectNavLinks() {
     const navList = document.querySelector('.nav-links');
-    if (!navList) return; // If there's no nav list on this page, do nothing
+    if (!navList) {
+        // If nav-links doesn't exist, create it
+        const nav = document.querySelector('nav');
+        if (nav) {
+            const ul = document.createElement('ul');
+            ul.className = 'nav-links';
+            nav.appendChild(ul);
+            // Re-query
+            const newNavList = document.querySelector('.nav-links');
+            if (newNavList) {
+                // Continue with injection using newNavList
+                injectLinks(newNavList);
+            }
+        }
+        return;
+    }
+    injectLinks(navList);
+})();
 
-    // Define your navigation links using the calculated rootPath
+function injectLinks(navList) {
+    const rootPath = getRootPath(); // Your existing rootPath logic
     const links = [
         { name: 'Home', href: `${rootPath}index.html` },
         { name: 'Board Map', href: `${rootPath}board-layout.html` },
-        { name: 'AI Setter', href: `${rootPath}ai-setter.html` },
-        { name: 'Moves', href: `${rootPath}index.html#moves` }, // Adjust if your moves index has a different name
-		{ name: 'Process', href: `${rootPath}process.html` },
-		{ name: 'About', href: `${rootPath}links.html` }
-	];
-
-    let html = '';
-    links.forEach(link => {
-        html += `<li><a href="${link.href}">${link.name}</a></li>`;
-    });
-    
-    navList.innerHTML = html;
-})();
+        { name: 'Moves', href: `${rootPath}index.html#moves` },
+        { name: 'Process', href: `${rootPath}process.html` },
+        { name: 'About', href: `${rootPath}links.html` }
+    ];
+    navList.innerHTML = links.map(l => `<li><a href="${l.href}">${l.name}</a></li>`).join('');
+}

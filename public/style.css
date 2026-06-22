@@ -539,6 +539,26 @@ body {
   .climbing-hold { animation: none; opacity: 0.4; }
 }
 
+/* Mobile Nav */
+@media (max-width: 768px) {
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: flex-end;
+    }
+    .nav-links li {
+        list-style: none;
+    }
+    .nav-links li a {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: 4px;
+        border: 1px solid var(--border, rgba(255,255,255,0.1));
+    }
+}
+
 /* ============================================
    MOVES SECTION (Clean Block)
    ============================================ */
