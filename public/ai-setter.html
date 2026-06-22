@@ -21,7 +21,6 @@
             font-family: system-ui, -apple-system, sans-serif;
         }
 
-        /* Floating holds background (optional, subtle) */
         .ai-setter-page .bg-atmosphere,
         .ai-setter-page .noise-overlay {
             position: fixed;
@@ -77,8 +76,7 @@
             color: var(--fg-muted);
         }
 
-        .control-group input, 
-        .control-group select {
+        .control-group input {
             padding: 0.75rem;
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -88,8 +86,7 @@
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        .control-group input:focus,
-        .control-group select:focus {
+        .control-group input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 2px rgba(255, 176, 136, 0.2);
@@ -418,16 +415,6 @@
             100% { transform: rotate(360deg); } 
         }
 
-.ai-setter-page .header-inner {
-    padding-left: 360px;
-}
-
-@media (max-width: 900px) {
-    .ai-setter-page .header-inner {
-        padding-left: 2rem;
-    }
-}
-
         /* Responsive */
         @media (max-width: 900px) {
             .ai-setter-page {
@@ -468,26 +455,6 @@
         <div class="control-group">
             <label for="userHeight">User Height (cm)</label>
             <input type="number" id="userHeight" value="175" min="150" max="200">
-        </div>
-
-        <div class="control-group">
-            <label for="styleSelect">Climbing Style</label>
-            <select id="styleSelect">
-                <option value="Static/Technical">Static / Technical</option>
-                <option value="Powerful/Dynamic">Powerful / Dynamic</option>
-                <option value="Compression">Compression</option>
-                <option value="Crimp Strength">Crimp Strength</option>
-                <option value="Random">Surprise Me</option>
-            </select>
-        </div>
-
-        <div class="control-group">
-            <label for="gradeSelect">Difficulty</label>
-            <select id="gradeSelect">
-                <option value="Easy">Easy</option>
-                <option value="Medium" selected>Medium</option>
-                <option value="Hard">Hard</option>
-            </select>
         </div>
 
         <button id="generateBtn" class="btn-generate" disabled>Generate Problem</button>
@@ -535,8 +502,6 @@
         const statusArea = document.getElementById('statusArea');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const heightInput = document.getElementById('userHeight');
-        const styleInput = document.getElementById('styleSelect');
-        const gradeInput = document.getElementById('gradeSelect');
 
         document.addEventListener('DOMContentLoaded', init);
 
@@ -663,7 +628,7 @@
                     return;
                 }
                 html = '<strong>Ready</strong>';
-                html += `<span>${sc} start + 1 finish selected. Adjust settings and click Generate.</span>`;
+                html += `<span>${sc} start + 1 finish selected. Click Generate.</span>`;
                 html += '<span class="status-selection-hint">Click holds to adjust selection. Purple dashed = finish.</span>';
             }
 
@@ -701,8 +666,6 @@
                 const payload = {
                     holdsMap: holdsData,
                     userHeight: parseInt(heightInput.value),
-                    style: styleInput.value,
-                    grade: gradeInput.value,
                     start: selectedStarts,
                     finish: [selectedFinish]
                 };
