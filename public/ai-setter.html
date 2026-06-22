@@ -8,38 +8,61 @@
     <link rel="icon" href="favicon.png?v=2" type="image/png">
 
     <style>
-        body {
+        /* ============================================
+           AI SETTER DARK THEME
+           ============================================ */
+
+        .ai-setter-page {
             display: flex;
             min-height: 100vh;
             margin: 0;
+            background-color: var(--bg);
+            color: var(--fg);
             font-family: system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-color, #f4f4f4);
-            color: var(--text-color, #333);
         }
 
+        /* Floating holds background (optional, subtle) */
+        .ai-setter-page .bg-atmosphere,
+        .ai-setter-page .noise-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Sidebar */
         .sidebar {
-            width: 320px;
-            background: var(--panel-bg, #fff);
+            width: 340px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
             padding: 2rem;
-            border-right: 1px solid var(--border-color, #ddd);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            gap: 1.25rem;
             z-index: 20;
             flex-shrink: 0;
             height: 100vh;
             overflow-y: auto;
+            position: relative;
         }
 
         .sidebar h2 {
             margin-top: 0;
             font-size: 1.5rem;
-            border-bottom: 2px solid var(--accent-color, #007bff);
+            border-bottom: 2px solid var(--accent);
             padding-bottom: 0.5rem;
             font-family: Impact, 'Arial Narrow Bold', sans-serif;
             text-transform: uppercase;
             letter-spacing: 0.02em;
+            color: var(--fg);
+        }
+
+        .sidebar > p {
+            font-size: 0.95rem;
+            opacity: 0.7;
+            margin-bottom: 0;
+            color: var(--fg-muted);
+            line-height: 1.5;
         }
 
         .control-group {
@@ -51,55 +74,103 @@
         .control-group label {
             font-weight: 600;
             font-size: 0.9rem;
-            opacity: 0.8;
+            color: var(--fg-muted);
         }
 
         .control-group input, 
         .control-group select {
             padding: 0.75rem;
-            border: 1px solid var(--border-color, #ccc);
+            border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 1rem;
-            background: var(--input-bg, #fff);
-            color: inherit;
+            background: rgba(255,255,255,0.05);
+            color: var(--fg);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .control-group input:focus,
+        .control-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 176, 136, 0.2);
         }
 
         .btn-generate {
-            background-color: var(--accent-color, #007bff);
-            color: white;
+            background-color: var(--accent);
+            color: var(--bg);
             padding: 1rem;
             border: none;
             border-radius: 6px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s, opacity 0.2s;
+            transition: opacity 0.2s, transform 0.1s;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        .btn-generate:hover:not(:disabled) { opacity: 0.9; }
-        .btn-generate:disabled { background-color: #ccc; cursor: not-allowed; opacity: 0.6; }
+        .btn-generate:hover:not(:disabled) { 
+            opacity: 0.9; 
+            transform: translateY(-1px);
+        }
+
+        .btn-generate:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-generate:disabled { 
+            background-color: var(--border); 
+            color: var(--fg-muted);
+            cursor: not-allowed; 
+            opacity: 0.5; 
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--fg-muted);
+            border: 1px solid var(--border);
+            margin-top: -0.5rem;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            border-color: var(--accent);
+            color: var(--fg);
+            opacity: 1;
+        }
 
         .status-area {
             padding: 1rem;
-            background: var(--status-bg, #eef2f7);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
             border-radius: 6px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             min-height: 80px;
-            line-height: 1.5;
+            line-height: 1.6;
             word-break: break-word;
+            color: var(--fg-muted);
         }
+
         .status-area strong {
             font-size: 1.05rem;
             display: block;
             margin-bottom: 0.25rem;
+            color: var(--fg);
         }
+
         .status-area span {
             display: block;
         }
-        .status-error { color: #dc3545; font-weight: bold; }
-        .status-success { color: #28a745; font-weight: bold; }
+
+        .status-error { 
+            color: #ff6b6b; 
+            font-weight: 600; 
+        }
+
+        .status-success { 
+            color: #51cf66; 
+            font-weight: 600; 
+        }
+
         .status-beta {
             font-size: 0.85rem;
             opacity: 0.75;
@@ -107,23 +178,27 @@
             margin-top: 0.25rem;
             display: block;
         }
+
         .status-area details {
             margin-top: 0.5rem;
         }
+
         .status-area summary {
-            color: #dc3545;
+            color: #ff6b6b;
             cursor: pointer;
             font-weight: 600;
             font-size: 0.85rem;
         }
+
         .status-area ul {
             margin: 0.5rem 0 0 1.2rem;
             padding: 0;
             font-size: 0.85rem;
-            color: #dc3545;
+            color: #ff6b6b;
         }
+
         .status-selection-hint {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             opacity: 0.6;
             margin-top: 0.25rem;
             display: block;
@@ -132,39 +207,48 @@
         .legend {
             margin-top: auto;
             padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color, #eee);
+            border-top: 1px solid var(--border);
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0.75rem;
         }
+
         .legend-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.85rem;
+            color: var(--fg-muted);
         }
+
         .legend-dot {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            flex-shrink: 0;
         }
+
         .legend-outline {
             width: 14px;
             height: 14px;
             border-radius: 50%;
             border: 2px dashed;
             background: transparent;
+            flex-shrink: 0;
         }
 
+        /* Main content area */
         .main-content {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 2rem;
-            background: #e9ecef;
+            background: var(--bg);
             overflow: auto;
+            position: relative;
+            z-index: 1;
         }
 
         .board-wrapper {
@@ -172,7 +256,7 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            background: #111;
+            background: #0a0a0a;
             border-radius: 8px;
             overflow: visible;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -182,12 +266,16 @@
             width: 100%; 
             height: auto; 
             display: block; 
-            opacity: 0.8; 
+            opacity: 0.85; 
             border-radius: 8px;
         }
 
         .grid-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
             display: grid;
             grid-template-columns: repeat(17, 1fr);
             grid-template-rows: repeat(18, 1fr);
@@ -196,26 +284,27 @@
 
         .hold-cell {
             position: relative; 
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.06);
             cursor: default;
             transition: background 0.2s; 
             z-index: 1;
         }
 
-        /* Clickable holds get a pointer */
         .hold-cell.has-hold {
             cursor: pointer;
         }
+
         .hold-cell.has-hold:hover {
-            background: rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.08);
         }
 
-        /* User selection: dashed outlines (distinct from AI filled circles) */
+        /* User selection: dashed outlines */
         .hold-cell.selected-start {
             outline: 2px dashed #4ade80;
             outline-offset: 1px;
             z-index: 5;
         }
+
         .hold-cell.selected-finish {
             outline: 2px dashed #a855f7;
             outline-offset: 1px;
@@ -274,7 +363,7 @@
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.9);
             color: #fff;
             padding: 4px 8px;
             border-radius: 4px;
@@ -285,36 +374,86 @@
             transition: opacity 0.15s;
             z-index: 100;
             margin-bottom: 4px;
+            border: 1px solid var(--border);
         }
+
         .hold-cell[data-info]:hover::before {
             opacity: 1;
         }
 
+        /* Loading overlay */
         .loading-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(5px); z-index: 1000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 1.5rem; color: white;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px); 
+            z-index: 1000;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            gap: 1.5rem; 
+            color: var(--fg);
+            opacity: 0; 
+            pointer-events: none; 
+            transition: opacity 0.3s;
         }
-        .loading-overlay.active { opacity: 1; pointer-events: all; }
+
+        .loading-overlay.active { 
+            opacity: 1; 
+            pointer-events: all; 
+        }
 
         .spinner {
-            border: 4px solid rgba(255,255,255,0.2);
-            border-top: 4px solid var(--accent-color, #fff);
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid var(--accent);
             border-radius: 50%;
-            width: 50px; height: 50px;
+            width: 50px; 
+            height: 50px;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .ai-setter-page {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 50vh;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+        }
     </style>
 <base target="_blank">
 </head>
-<body>
+<body class="ai-setter-page">
+    <div class="bg-atmosphere" aria-hidden="true"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="site-header" id="siteHeader" style="position: fixed; top: 0; left: 0; right: 0; z-index: 100;">
+        <div class="header-inner">
+            <a href="index.html" class="logo font-display">BOARD LAB</a>
+            <nav>
+                <ul class="nav-links"></ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Spacer for fixed header -->
+    <div style="height: 60px; flex-shrink: 0;"></div>
 
     <aside class="sidebar">
         <h2>AI Setter</h2>
-        <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 0;">Click holds on the board to set start & finish, then generate.</p>
+        <p>Click holds on the board to set start & finish, then generate.</p>
 
         <div class="control-group">
             <label for="userHeight">User Height (cm)</label>
@@ -342,7 +481,7 @@
         </div>
 
         <button id="generateBtn" class="btn-generate" disabled>Generate Problem</button>
-        <button id="clearBtn" class="btn-generate" style="background-color: #6c757d; margin-top: -0.5rem;">Clear All</button>
+        <button id="clearBtn" class="btn-generate btn-secondary">Clear All</button>
 
         <div id="statusArea" class="status-area">
             Loading board data...
@@ -453,7 +592,6 @@
 
         function handleStartClick(holdId, hold, cell, maxReach) {
             if (selectedStarts.includes(holdId)) {
-                // Deselect
                 selectedStarts = selectedStarts.filter(id => id !== holdId);
                 cell.classList.remove('selected-start');
             } else if (selectedStarts.length >= 2) {
@@ -461,7 +599,6 @@
                 setTimeout(updateSelectionUI, 2000);
                 return;
             } else {
-                // Check spacing if this is the 2nd start
                 if (selectedStarts.length === 1) {
                     const existing = holdsData[selectedStarts[0]];
                     const dist = Math.sqrt(Math.pow(existing.row - hold.row, 2) + Math.pow(existing.col - hold.col, 2));
@@ -479,11 +616,9 @@
 
         function handleFinishClick(holdId, cell) {
             if (selectedFinish === holdId) {
-                // Deselect
                 selectedFinish = null;
                 cell.classList.remove('selected-finish');
             } else {
-                // Remove previous finish selection
                 if (selectedFinish) {
                     const prevCell = gridOverlay.querySelector(`[data-id="${selectedFinish}"]`);
                     if (prevCell) prevCell.classList.remove('selected-finish');
@@ -509,7 +644,6 @@
                 html += `<span>${sc} start hold${sc > 1 ? 's' : ''} selected. Now click 1 hold in the top 3 rows (rows 16–18).</span>`;
                 html += '<span class="status-selection-hint">Click a selected start hold to remove it</span>';
             } else {
-                // Check if start and finish are too close
                 const startMaxRow = Math.max(...selectedStarts.map(id => holdsData[id]?.row || 0));
                 const finishHold = holdsData[selectedFinish];
                 if (finishHold && (finishHold.row - startMaxRow) <= 2) {
@@ -609,13 +743,11 @@
                 });
             };
 
-            // Light up all hands as 'is-hand', then override start/finish
             if (data.start) lightUp(data.start, 'is-start');
             if (data.intermediate) lightUp(data.intermediate, 'is-hand');
             if (data.finish) lightUp(data.finish, 'is-finish');
             if (data.feet) lightUp(data.feet, 'is-feet');
 
-            // Build status
             let html = '';
             const totalHands = (data.start?.length || 0) + (data.intermediate?.length || 0) + (data.finish?.length || 0);
 
@@ -646,5 +778,6 @@
             return div.innerHTML;
         }
     </script>
+    <script src="nav.js"></script>
 </body>
 </html>
