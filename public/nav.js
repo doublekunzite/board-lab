@@ -69,8 +69,8 @@ if (navScriptTag) {
     injectLinks(navList);
 })();
 
+// nav.js — replace the entire injectLinks function
 function injectLinks(navList) {
-    const rootPath = getRootPath(); // Your existing rootPath logic
     const links = [
         { name: 'Home', href: `${rootPath}index.html` },
         { name: 'Board Map', href: `${rootPath}board-layout.html` },
