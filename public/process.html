@@ -657,15 +657,6 @@
 
           <div class="dev-card">
             <div class="dev-card-header">
-              <span class="dev-card-title">Calibration Mode</span>
-              <span class="dev-card-badge">Interactive Debugging</span>
-            </div>
-            <p class="dev-challenge">Challenge: The photograph of the physical board had slight perspective distortion, making a rigid CSS grid misalign with the holds.</p>
-            <p class="dev-solution"><strong>Solution:</strong> Built a temporary "Calibration Slider" UI to interactively adjust 3D transform values (rotateX, rotateY) in real time until the grid matched the photo perfectly. Noted the final values, hardcoded them, and stripped out the debugging tools.</p>
-          </div>
-
-          <div class="dev-card">
-            <div class="dev-card-header">
               <span class="dev-card-title">Pragmatic De-scoping</span>
               <span class="dev-card-badge">Product Thinking</span>
             </div>
@@ -684,30 +675,12 @@
 
           <div class="dev-card">
             <div class="dev-card-header">
-              <span class="dev-card-title">Invisible Elements Debugging</span>
-              <span class="dev-card-badge">QA</span>
-            </div>
-            <p class="dev-challenge">Challenge: Elements were rendering invisible across multiple pages. Text labels, floating holds, and modal content kept disappearing.</p>
-            <p class="dev-solution"><strong>Solution:</strong> Used a "force visibility" strategy: set elements to bright red with <code>opacity: 1 !important</code> to confirm they existed in the DOM. This isolated CSS issues (z-index stacking contexts, missing root variables, overflow clipping) from structural problems. DevTools computed styles revealed text was rendering as light beige on a black background due to stripped CSS variables.</p>
-          </div>
-
-          <div class="dev-card">
-            <div class="dev-card-header">
               <span class="dev-card-title">URL Hash State Management</span>
               <span class="dev-card-badge">Frontend Logic</span>
             </div>
             <p class="dev-challenge">Challenge: Users couldn't link directly to specific holds or use the browser back button to close modals.</p>
             <p class="dev-solution"><strong>Solution:</strong> Implemented URL hash routing (<code>#A1</code>, <code>#list</code>, <code>#quality</code>). This introduced a bug where <code>#list</code> accidentally matched hold ID formats. Fixed by moving tab checks to the top of the handler with strict <code>else if</code> hierarchy, preventing state logic collisions.</p>
-          </div>
-
-          <div class="dev-card">
-            <div class="dev-card-header">
-              <span class="dev-card-title">Vercel Static + API Coexistence</span>
-              <span class="dev-card-badge">DevOps</span>
-            </div>
-            <p class="dev-challenge">Challenge: Adding an <code>/api</code> folder for serverless functions broke Vercel's ability to serve static HTML files, causing 404s.</p>
-            <p class="dev-solution"><strong>Solution:</strong> Methodically isolated the issue by testing old vs. new pages. Moved files to <code>/public</code>, created <code>package.json</code> and <code>vercel.json</code> with explicit <code>outputDirectory: "public"</code> configuration. Also removed unnecessary <code>node-fetch</code> import when native fetch became available in Vercel's Node runtime.</p>
-          </div>
+          </div> 
 
         </div>
       </div>
@@ -732,7 +705,7 @@
             <div class="timeline-dot"></div>
             <div class="timeline-content">
               <h3 class="timeline-title">Temporary Scaffolding</h3>
-              <p class="timeline-desc">For dynamic visual adjustments like the board calibration, I build temporary UI controls to find exact values interactively, then hardcode them and remove the scaffolding. This beats guessing CSS values and refreshing hundreds of times.</p>
+              <p class="timeline-desc">For dynamic visual adjustments like the board calibration, I build temporary UI controls to find exact values interactively, then hardcode them and remove the scaffolding. This beats guessing CSS values and refreshing dozens of times.</p>
             </div>
           </div>
 
@@ -741,14 +714,6 @@
             <div class="timeline-content">
               <h3 class="timeline-title">Architectural Separation</h3>
               <p class="timeline-desc">When a tool fails at a specific type of logic, don't force it. The LLM is great at creative reasoning but terrible at spatial math. We built a system where each layer handles the tasks it is uniquely suited for: JSON for data, JavaScript for validation, LLM for generation.</p>
-            </div>
-          </div>
-
-          <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3 class="timeline-title">Pragmatic De-scoping</h3>
-              <p class="timeline-desc">Always weigh the UI "cool factor" against data entry and maintenance cost. The wall angle slider would have required 2,000+ manual entries. A boolean flag and a warning badge achieved 80% of the value for 5% of the work.</p>
             </div>
           </div>
 
