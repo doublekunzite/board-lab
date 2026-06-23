@@ -316,18 +316,10 @@
       .modal-content { width: 100%; max-width: 100%; border-radius: 0 0 12px 12px; margin-top: 0; }
       .modal-img-container { height: 200px; }
       .board-controls { width: 100%; }
-                  .modal-nav-btn.modal-nav-btn { 
-        width: 36px; 
-        height: 36px; 
-        font-size: 1.2rem; 
-        border-radius: 8px;
-        top: calc(100% - 60px) !important;
-        bottom: auto !important;
-        transform: none !important;
-      }
-      .modal-nav-left.modal-nav-left { left: 1rem !important; }
-      .modal-nav-right.modal-nav-right { right: 1rem !important; }
-
+      
+      /* Modal arrows: sizing only, positioning handled by the unified block below */
+      .modal-nav-btn { width: 36px; height: 36px; font-size: 1.2rem; border-radius: 8px; }
+      
       /* Quality arrow: match track padding, extend gradient, shrink labels */
       .spectrum-end-labels { 
         font-size: 0.8rem; 
@@ -369,6 +361,34 @@
     .accordion-inner strong { color: var(--fg); }
     .accordion-warning { background: rgba(250, 204, 21, 0.1); border-left: 3px solid var(--tier-2); padding: 0.75rem; font-size: 0.875rem; color: var(--fg); margin-top: 1rem; }
     
+	    /* === FORCE MOBILE MODAL ARROWS TO BOTTOM CORNERS === */
+    @media (max-width: 900px) {
+      .modal-content {
+        overflow: visible !important;
+        padding-bottom: 70px !important; /* Physically makes the modal taller to hold the arrows */
+      }
+      .modal-nav-btn {
+        top: auto !important;
+        bottom: 15px !important;
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 1.2rem !important;
+        border-radius: 8px !important;
+        transform: none !important;
+      }
+      .modal-nav-btn:hover {
+        transform: none !important;
+      }
+      .modal-nav-left {
+        left: 12px !important;
+        right: auto !important;
+      }
+      .modal-nav-right {
+        right: 12px !important;
+        left: auto !important;
+      }
+    }
+	
   </style>
   <link rel="icon" href="favicon.png?v=2" type="image/png">
 </head>
