@@ -193,8 +193,8 @@
     .info-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 12px; font-weight: bold; cursor: help; transition: background 0.2s; border: none; flex-shrink: 0; }
     .info-icon:hover { background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); }
 
-    .tier-tooltip { position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); width: 320px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-size: 0.8rem; line-height: 1.5; color: var(--fg); box-shadow: 0 10px 25px rgba(0,0,0,0.4); opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; z-index: 50; text-align: left; pointer-events: none; }
-    .tier-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--border); }
+    .tier-tooltip { position: absolute; bottom: 130%; right: 0; transform: translateX(0); width: 320px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-size: 0.8rem; line-height: 1.5; color: var(--fg); box-shadow: 0 10px 25px rgba(0,0,0,0.4); opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; z-index: 50; text-align: left; pointer-events: none; }
+    .tier-tooltip::after { content: ''; position: absolute; top: 100%; right: 24px; transform: translateX(0); border: 6px solid transparent; border-top-color: var(--border); }
     .toggle-group:hover .tier-tooltip { opacity: 1; visibility: visible; }
     .tier-tooltip p { margin: 0; color: rgba(255,255,255,0.8); }
     .t1-desc { color: var(--tier-1); font-weight: 600; }
@@ -316,9 +316,17 @@
       .modal-content { width: 100%; max-width: 100%; border-radius: 0 0 12px 12px; margin-top: 0; }
       .modal-img-container { height: 200px; }
       .board-controls { width: 100%; }
-      .modal-nav-btn { width: 36px; height: 36px; font-size: 1.2rem; border-radius: 8px; }
-      .modal-nav-left { left: 8px; }
-      .modal-nav-right { right: 8px; }
+            .modal-nav-btn { 
+        width: 36px; 
+        height: 36px; 
+        font-size: 1.2rem; 
+        border-radius: 8px;
+        top: auto !important;
+        bottom: 1rem !important;
+        transform: none !important;
+      }
+      .modal-nav-left { left: 1rem !important; }
+      .modal-nav-right { right: 1rem !important; }
 
       /* Quality arrow: match track padding, extend gradient, shrink labels */
       .spectrum-end-labels { 
@@ -343,44 +351,7 @@
       }
     }
     
-    /* Modal Arrow Navigation - Mobile Fix */
-    @media (max-width: 768px) {
-        .modal-nav-arrow {
-            position: relative !important;
-            top: auto !important;
-            right: auto !important;
-            left: auto !important;
-            bottom: auto !important;
-            transform: none !important;
-            display: inline-flex !important;
-            margin: 0 0.5rem !important;
-            padding: 0.5rem 1rem !important;
-            background: rgba(255,255,255,0.1) !important;
-            border-radius: 4px !important;
-            border: 1px solid var(--border, rgba(255,255,255,0.15)) !important;
-        }
-        
-        .modal-nav-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 0;
-            flex-wrap: wrap;
-        }
-        
-        .modal-nav-container .modal-counter {
-            order: 2;
-        }
-        
-        .modal-nav-arrow.prev {
-            order: 1;
-        }
-        
-        .modal-nav-arrow.next {
-            order: 3;
-        }
-    }
+    
     
     /* ============================================
        ACCORDION STYLES
