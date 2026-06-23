@@ -663,7 +663,7 @@
               <span class="dev-card-badge">Product Thinking</span>
             </div>
             <p class="dev-challenge">Challenge: An interactive "Wall Angle Slider" would require mapping 300+ holds across 7 angles: over 2,000 manual data entries.</p>
-            <p class="dev-solution"><strong>Solution:</strong> Pivoted to a "Static Tier + Contextual Warning" system. The tier stays the same, but a warning badge appears for holds that degrade poorly on steep angles. This preserved the UI value without the unmanageable data cost.</p>
+            <p class="dev-solution"><strong>Solution:</strong> Pivoted to a "Static Tier + Contextual Warning" system. The tier stays the same, but a warning badge appears for holds that degrade significantly on steep angles. This preserved the UI value without the unmanageable data cost.</p>
           </div>
 
           <div class="dev-card">
@@ -699,25 +699,18 @@
             <div class="timeline-dot"></div>
             <div class="timeline-content">
               <h3 class="timeline-title">Diagnostic First</h3>
-              <p class="timeline-desc">When something breaks, I don't rewrite code blindly. I use browser DevTools to verify the element exists in the DOM, check computed styles, and trace errors through the Network tab. A frontend error is often a symptom of a backend crash or a stale Git commit.</p>
+              <p class="timeline-desc">When something breaks, I don't rewrite code blindly. I use browser DevTools to inspect elements and observe runtime errors, reporting them back to the AI to improve troubleshooting precision.</p>
             </div>
           </div>
 
           <div class="timeline-node">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <h3 class="timeline-title">Temporary Scaffolding</h3>
-              <p class="timeline-desc">For dynamic visual adjustments like the board calibration, I build temporary UI controls to find exact values interactively, then hardcode them and remove the scaffolding. This beats guessing CSS values and refreshing dozens of times.</p>
+              <h3 class="timeline-title">Prompt Engineering</h3>
+              <p class="timeline-desc">I use a "Diagnostic First" approach. When I get an error, instead of just telling the AI what happened and letting it implement a solution, I ask it to hold off on changing the code and think through possible causes and solutions first. This forces the AI to reason more carefully and provide multiple solutions.</p>
             </div>
           </div>
 
-          <div class="timeline-node">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3 class="timeline-title">Architectural Separation</h3>
-              <p class="timeline-desc">When a tool fails at a specific type of logic, don't force it. The LLM is great at creative reasoning but terrible at spatial math. We built a system where each layer handles the tasks it is uniquely suited for: JSON for data, JavaScript for validation, LLM for generation.</p>
-            </div>
-          </div>
 
         </div>
       </div>
